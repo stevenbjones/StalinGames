@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagment.Controllers
 {
+    // [Authorize(Roles = "Admin")] // onder elkaar => Role="Admin" && Role="User"
+    //[Authorize(Roles = "User")] // naast elkaar => Role="Admin, User" => Admin || User
     [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
