@@ -21,6 +21,7 @@ namespace EmployeeManagment
                 })
                 .ConfigureLogging(logging =>
                 {
+                    //test
                     logging.AddConsole();
                     logging.AddDebug();
                     logging.AddEventSourceLogger();
