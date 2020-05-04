@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StalinGames", "StalinGames\StalinGames.csproj", "{BF851873-0BBB-497A-AE6A-6CAB6AC1802B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StalinGames.DAL", "StalinGames.DAL\StalinGames.DAL.csproj", "{E293B3EE-B20A-412E-BBF3-106BDFDCEDC8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF851873-0BBB-497A-AE6A-6CAB6AC1802B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF851873-0BBB-497A-AE6A-6CAB6AC1802B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF851873-0BBB-497A-AE6A-6CAB6AC1802B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF851873-0BBB-497A-AE6A-6CAB6AC1802B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E293B3EE-B20A-412E-BBF3-106BDFDCEDC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E293B3EE-B20A-412E-BBF3-106BDFDCEDC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E293B3EE-B20A-412E-BBF3-106BDFDCEDC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E293B3EE-B20A-412E-BBF3-106BDFDCEDC8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51B834ED-1AE2-4EED-A22C-A489F17ABD19}
+	EndGlobalSection
+EndGlobal
