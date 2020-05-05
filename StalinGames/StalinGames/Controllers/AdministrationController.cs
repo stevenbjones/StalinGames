@@ -6,12 +6,13 @@ using StalinGames.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace StalinGames.Controllers
 {
-    // [Authorize(Roles = "Admin")] // onder elkaar => Role="Admin" && Role="User"
-    //[Authorize(Roles = "User")] // naast elkaar => Role="Admin, User" => Admin || User
-    //[Authorize(Roles = "Admin")]
+   
+    [Authorize(Roles = "SuperAdmin, Admin")] 
+
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -26,7 +27,21 @@ namespace StalinGames.Controllers
         [HttpGet]
         public IActionResult ListUsers()
         {
-            var users = _userManager.Users.ToList();
+            List<string> roles = new List<string>();
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            roles.Add("User");
+            if (User.IsInRole("Admin"))
+            {
+  
+                users = GetUsersByRole(roles);
+            }
+            else if (User.IsInRole("SuperAdmin"))
+            {
+
+                roles.Add("Admin");
+                users = GetUsersByRole(roles);
+
+            }
             return View(users);
         }
 
@@ -44,17 +59,19 @@ namespace StalinGames.Controllers
             // GetClaimsAsync retunrs the list of user Claims
             var userClaims = await _userManager.GetClaimsAsync(user);
             // GetRolesAsync returns the list of user Roles
-            var userRoles = await _userManager.GetRolesAsync(user);
+            var userRole = await _userManager.GetRolesAsync(user);
 
             var model = new EditUserViewModel
             {
                 Id = user.Id,
-                Email = user.Email,
                 UserName = user.UserName,
-                City = user.City,
-                Claims = userClaims.Select(c => c.Value).ToList(),
-                Roles = userRoles
+                Blyats = user.Blyats,
+                Role = userRole[0].ToString()
             };
+            List<SelectListItem> roles = new List<SelectListItem>();
+            roles.Add(new SelectListItem("Admin", "Admin"));
+            roles.Add(new SelectListItem("User", "User"));
+            model.Roles = roles;
 
             return View(model);
         }
@@ -65,16 +82,21 @@ namespace StalinGames.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(model.Id);
+                var roles = _roleManager.Roles;
 
                 if (user == null)
                 {
                     ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
                     return View("NotFound");
                 }
+                user.Blyats = model.Blyats;
 
-                user.Email = model.Email;
-                user.UserName = model.UserName;
-                user.City = model.City;
+               await _userManager.RemoveFromRoleAsync(user, _userManager.GetRolesAsync(user).Result[0]);
+                await _userManager.AddToRoleAsync(user, model.Role);
+
+
+
+
 
                 var result = await _userManager.UpdateAsync(user);
 
@@ -308,5 +330,27 @@ namespace StalinGames.Controllers
 
             return RedirectToAction("EditRole", new { Id = roleId });
         }
+
+        public List<ApplicationUser> GetUsersByRole(List<string> roles)
+        {
+            List<ApplicationUser> users = _userManager.Users.ToList();
+
+            List<ApplicationUser> usersWithCorrectRole = new List<ApplicationUser>();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                for (int j = 0; j < roles.Count; j++)
+                {
+                    if (_userManager.GetRolesAsync(users[i]).Result[0] == roles[j])
+                    {
+                        usersWithCorrectRole.Add(users[i]);
+                    }
+                }
+               
+            }
+
+            return usersWithCorrectRole;
+        }
+
     }
 }

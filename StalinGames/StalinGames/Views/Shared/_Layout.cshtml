@@ -1,4 +1,10 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager;
+@inject UserManager<ApplicationUser> userManager;
+
+@{
+  //  var _user=await userManager.FindByNameAsync(User.Identity.Name); //neemt de ingelogde user en zet die in _user zodat ik meer dan alleen de naam kan gebruiken
+    //var profilePicturePath = $"/images/{_user.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
+}
 
 <!DOCTYPE html>
 
@@ -42,7 +48,7 @@
                 <li class="nav-item">
                     <a asp-action="Create" asp-controller="Home" class="nav-link">Create</a>
                 </li>
-                @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))*@
+                @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")))
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -51,7 +57,6 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" asp-controller="Administration" asp-action="ListUsers">Users</a>
-                            <a class="dropdown-item" asp-controller="Administration" asp-action="ListRoles">Roles</a>
                         </div>
                     </li>
                 }
@@ -60,12 +65,26 @@
                 @if (signInManager.IsSignedIn(User))
                 {
                     <li class="nav-item">
+                        <form method="post" asp-action="TODO" asp-controller="Account">
+                            <button type="submit" class="nav-link btn btn-link py-0" style="width:auto;">
+                                @User.Identity.Name
+                            </button>
+                        </form>
+                        
+                    </li>
+                    <li class="nav-item">
+                            @*<img src=@profilePicturePath style="border-radius: 50%; width: 4%;">*@
+                    </li>
+
+                    <li class="nav-item">
                         <form method="post" asp-action="logout" asp-controller="Account">
                             <button type="submit" class="nav-link btn btn-link py-0" style="width:auto;">
-                                Logout @User.Identity.Name
+                                Logout
                             </button>
                         </form>
                     </li>
+
+
                 }
                 else
                 {

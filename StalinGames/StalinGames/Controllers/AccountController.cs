@@ -4,6 +4,9 @@ using StalinGames.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace StalinGames.Controllers
 {
@@ -11,12 +14,14 @@ namespace StalinGames.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpPost]
@@ -51,27 +56,44 @@ namespace StalinGames.Controllers
             }
         }
 
+        //[HttpPost]
+        //[HttpGet]
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public async Task<IActionResult> IsUsernameInUse(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Username {username} is already in use");
+            }
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
+                string _photoFileName = ProcessUploadedFile(model);
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    City = model.City,
+                    ProfilePicturePath = _photoFileName
                 };
 
-                var identityResult = await _userManager.CreateAsync(user, model.Password);
+                IdentityResult identityResult = await _userManager.CreateAsync(user, model.Password);
 
                 if (identityResult.Succeeded)
                 {
-                    // If the user is signed in and in the Admin role, then it is
-                    // the Admin user that is creating a new user. So redirect the
-                    // Admin user to ListUsers action
-                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    //redirect naar listUsers als de user een admin of sueradmin is die de gebruiker heeft aangemaakt
+                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || _signInManager.IsSignedIn(User) && User.IsInRole("SuperAdmin"))
                     {
                         return RedirectToAction("ListUsers", "Administration");
                     }
@@ -119,6 +141,25 @@ namespace StalinGames.Controllers
             }
 
             return View(model);
+        }
+
+        private string ProcessUploadedFile(RegisterViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.Photo != null)
+            {
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = $"{Guid.NewGuid().ToString()}_{model.Photo.FileName}";
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.Photo.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
         }
 
         [HttpGet]

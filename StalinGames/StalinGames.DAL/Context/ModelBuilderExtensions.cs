@@ -21,6 +21,7 @@ namespace StalinGames.DAL.Context
             jens.SecurityStamp = Guid.NewGuid().ToString();
             jens.Blyats = 2000;
 
+
             ApplicationUser frederik = new ApplicationUser();
             frederik.Id = Guid.NewGuid().ToString();
             frederik.UserName = "frederik";
@@ -44,17 +45,20 @@ namespace StalinGames.DAL.Context
           new IdentityRole
           {
               Name = "SuperAdmin",
-              Id = "1"
+              Id = "1",
+              NormalizedName = "SUPERADMIN"
           },
            new IdentityRole
            {
                Name = "Admin",
-               Id = "2"
+               Id = "2",
+               NormalizedName = "ADMIN"
            },
             new IdentityRole
             {
                 Name = "User",
-                Id = "3"
+                Id = "3",
+                NormalizedName = "USER"
             }
 
           );
