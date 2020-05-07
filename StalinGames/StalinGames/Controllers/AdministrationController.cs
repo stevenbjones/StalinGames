@@ -82,7 +82,6 @@ namespace StalinGames.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(model.Id);
-                var roles = _roleManager.Roles;
 
                 if (user == null)
                 {

@@ -1,30 +1,25 @@
-﻿@model IEnumerable<ApplicationUser>
-
+﻿@model IEnumerable<ApplicationUser>;
 @{
-    ViewBag.Title = "All Users";
+    ViewData["Title"] = "Player Search";
+  
 }
 
 <h1>All Users</h1>
 
 @if (Model.Any())
 {
-    <a asp-action="Register" asp-controller="Account" class="btn btn-success mb-3" style="width:auto">
-        Add new user
-    </a>
 
     foreach (var user in Model)
     {
+        var profilePicturePath = $"/images/{user.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
         <div class="card mb-3  bg-dark">
-            <div class="card-header">
-                User Id : @user.Id
-            </div>
             <div class="card-body">
-                <h5 class="card-title">@user.UserName</h5>
+                <img style="width: 10em;"src=@profilePicturePath >
+                <h5 style="display: inline; vertical-align: top; margin-left: 1em;" class="card-title">@user.UserName</h5>
             </div>
             <div class="card-footer">
                 <form asp-action="DeleteUser" asp-controller="Administration" asp-route-id="@user.Id" method="post">
-                    <a asp-action="EditUser" asp-controller="Administration" asp-route-id="@user.Id" class="btn btn-warning">Edit</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a asp-action="PlayerDetails" asp-controller="Account" asp-route-id="@user.Id" class="btn btn-warning">Check profile</a>
                 </form>
             </div>
         </div>
@@ -46,3 +41,4 @@ else
         </div>
     </div>
 }
+

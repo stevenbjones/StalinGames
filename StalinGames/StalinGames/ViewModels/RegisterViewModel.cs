@@ -18,7 +18,6 @@ namespace StalinGames.ViewModels
             ErrorMessage = "Email must be a valid Address Email.")]
         [Remote(action: "IsEmailInUse",
             controller: "Account")]
-        //hier checkt ge voor of username in use is
         public string Email { get; set; }
 
         [Required]

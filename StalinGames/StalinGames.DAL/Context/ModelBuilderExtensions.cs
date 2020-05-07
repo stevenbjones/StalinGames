@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace StalinGames.DAL.Context
 {
@@ -20,6 +21,15 @@ namespace StalinGames.DAL.Context
             jens.PasswordHash = passwordHasher.HashPassword(jens, "$Admin12345");
             jens.SecurityStamp = Guid.NewGuid().ToString();
             jens.Blyats = 2000;
+
+            ApplicationUser steven = new ApplicationUser();
+            steven.Id = Guid.NewGuid().ToString();
+            steven.UserName = "steven";
+            steven.Email = "steven@StalinGames.com";
+            steven.NormalizedUserName = "steven";
+            steven.PasswordHash = passwordHasher.HashPassword(steven, "$Admin12345");
+            steven.SecurityStamp = Guid.NewGuid().ToString();
+            steven.Blyats = 2000;
 
 
             ApplicationUser frederik = new ApplicationUser();
@@ -40,7 +50,7 @@ namespace StalinGames.DAL.Context
             peter.SecurityStamp = Guid.NewGuid().ToString();
             peter.Blyats = 2000;
             #endregion
-            modelBuilder.Entity<ApplicationUser>().HasData(jens, frederik, peter);
+            modelBuilder.Entity<ApplicationUser>().HasData(jens, frederik, peter, steven);
             modelBuilder.Entity<IdentityRole>().HasData(
           new IdentityRole
           {
@@ -78,11 +88,95 @@ namespace StalinGames.DAL.Context
             {
                 UserId = peter.Id,
                 RoleId = "3"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = steven.Id,
+                RoleId = "1"
             }
-
+           
           );
 
+            ListItems.Items = new List<PlayerItem>()
+            {
+               new ProfileTitle
+               {
+                ItemID = Guid.NewGuid().ToString(),
+                Price = 0,
+                itemType = ItemType.ProfileTitle,
+                ProfileTitleName = "Gambler"
+               },
+               new ProfileTitle
+               {
+                  ItemID = Guid.NewGuid().ToString(),
+                   ProfileTitleName =  "Simp",
+                   Price = 2000,
+                   itemType = ItemType.ProfileTitle
+               },
+               new ProfileTitle
+               {
+                   ItemID = Guid.NewGuid().ToString(),
+                   ProfileTitleName = "Local Champion",
+                  Price = 10000,
+                  itemType = ItemType.ProfileTitle
+               },
+               new ProfileTitle
+               {
+                   ItemID = Guid.NewGuid().ToString(),
+                   ProfileTitleName =  "Absolute Legend",
+                    Price = 100000,
+                    itemType = ItemType.ProfileTitle
+               },
+              
+                new BackgroundPicture
+                {
+                   ItemID = Guid.NewGuid().ToString(),
+                    BackgroundPath = "DefaultBackground.jpg",
+                    Price = 0,
+                    itemType = ItemType.Background
+                },
+                new BackgroundPicture
+                {
+                   ItemID = Guid.NewGuid().ToString(),
+                    BackgroundPath = "BackgroundStars.jpg",
+                    Price = 5000,
+                    itemType = ItemType.Background
+                }
+            };
+            ProfileTitle wolfOfWallStreet = new ProfileTitle
+            {
 
+                ItemID = Guid.NewGuid().ToString(),
+                Price = 1000000,
+                itemType = ItemType.ProfileTitle,
+                ProfileTitleName = "KingPin"
+
+            };
+            ProfileTitle kingPin = new ProfileTitle
+            {
+
+                ItemID = Guid.NewGuid().ToString(),
+                Price = 1000000,
+                itemType = ItemType.ProfileTitle,
+                ProfileTitleName = "KingPin"
+
+            };
+            ListItems.Items.Add(wolfOfWallStreet);
+            ListItems.Items.Add(kingPin);
+            modelBuilder.Entity<PlayerPurchase>().HasData(
+                new PlayerPurchase
+                {
+                    OrderID = Guid.NewGuid().ToString(),
+                    UserID = jens.Id,
+                    ItemID = wolfOfWallStreet.ItemID
+                },
+                 new PlayerPurchase
+                 {
+                     OrderID = Guid.NewGuid().ToString(),
+                     UserID = jens.Id,
+                     ItemID = kingPin.ItemID
+                 }
+                );
         }
     }
 }

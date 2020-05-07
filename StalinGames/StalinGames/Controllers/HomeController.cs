@@ -7,164 +7,80 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace StalinGames.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IEmployeeRepository _employeeRepository;
+
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(IEmployeeRepository employeeRepository,
+        public HomeController(
             IWebHostEnvironment webHostEnvironment,
-            ILogger<HomeController> logger)
+            ILogger<HomeController> logger, UserManager<ApplicationUser> userManager)
         {
-            _employeeRepository = employeeRepository;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _userManager = userManager;
         }
 
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Index()
         {
-            var employeeList = _employeeRepository.GetAll();
-            return View(employeeList);
+
+            return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Details(int id)
+        public  IActionResult Create()
         {
-            //throw new Exception("Test Logging.");
-            _logger.LogTrace("Trace Log");
-            _logger.LogDebug("Debug Log");
-            _logger.LogInformation("Information Log");
-            _logger.LogWarning("Warning Log");
-            _logger.LogError("Error Log");
-            _logger.LogCritical("Critical Log");
-
-            var employee = _employeeRepository.GetById(id);
-
-            if (employee == null)
-            {
-                Response.StatusCode = 404;
-                return View("EmployeeNotFound", id);
-            }
-
-            HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
-            {
-                Employee = employee,
-                PageTitle = "Employee Details"
-            };
-
-            return View(homeDetailsViewModel);
-        }
-
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
+            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            return View(user);
         }
 
         [HttpPost]
-        public IActionResult Create(EmployeeCreateViewModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> PlayerSearch(string userName)
         {
-            if (ModelState.IsValid)
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            List<string> roles = new List<string>() { "User"} ;
+            foreach (ApplicationUser user in GetUsersByRole(roles))
             {
-                string uniqueFileName = ProcessUploadedFile(model);
-
-                var newEmployee = new Employee
-                {
-                    Name = model.Name,
-                    Email = model.Email,
-                    Department = model.Department,
-                    BankAccountNumber = model.BankAccountNumber,
-                    PhotoPath = uniqueFileName
-                };
-
-                var response = _employeeRepository.Add(newEmployee);
-
-                if (response != null && response.Id != 0)
-                {
-                    return RedirectToAction("Details", new { id = response.Id });
-                }
+                if (user.UserName.ToLower().Contains(userName.ToLower()))
+                    users.Add(user);
             }
-
-            return View();
+            return View(users);
         }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
+        public List<ApplicationUser> GetUsersByRole(List<string> roles) 
         {
-            var employee = _employeeRepository.GetById(id);
+            List<ApplicationUser> users = _userManager.Users.ToList();
 
-            var employeeEditVM = new EmployeeEditViewModel()
+            List<ApplicationUser> usersWithCorrectRole = new List<ApplicationUser>();
+
+            for (int i = 0; i < users.Count; i++)
             {
-                Id = employee.Id,
-                Name = employee.Name,
-                BankAccountNumber = employee.BankAccountNumber,
-                Department = employee.Department,
-                Email = employee.Email,
-                ExistingPhotoPath = employee.PhotoPath,
-            };
-
-            return View(employeeEditVM);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(EmployeeEditViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var employee = _employeeRepository.GetById(model.Id);
-
-                employee.Name = model.Name;
-                employee.Email = model.Email;
-                employee.Department = model.Department;
-                employee.BankAccountNumber = model.BankAccountNumber;
-
-                if (model.Photo != null)
+                for (int j = 0; j < roles.Count; j++)
                 {
-                    if (model.ExistingPhotoPath != null)
+                    if (_userManager.GetRolesAsync(users[i]).Result[0] == roles[j])
                     {
-                        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", model.ExistingPhotoPath);
-
-                        System.IO.File.Delete(filePath);
+                        usersWithCorrectRole.Add(users[i]);
                     }
-
-                    employee.PhotoPath = ProcessUploadedFile(model);
                 }
 
-                var response = _employeeRepository.Update(employee);
-
-                if (response != null && response.Id != 0)
-                {
-                    return RedirectToAction("Index");
-                }
             }
-
-            return View();
+            return usersWithCorrectRole;
         }
 
-        private string ProcessUploadedFile(EmployeeCreateViewModel model)
-        {
-            string uniqueFileName = null;
 
-            if (model.Photo != null)
-            {
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                uniqueFileName = $"{Guid.NewGuid().ToString()}_{model.Photo.FileName}";
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.Photo.CopyTo(fileStream);
-                }
-            }
-
-            return uniqueFileName;
-        }
     }
 }

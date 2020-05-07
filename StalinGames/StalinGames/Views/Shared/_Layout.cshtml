@@ -1,10 +1,6 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager;
 @inject UserManager<ApplicationUser> userManager;
 
-@{
-  //  var _user=await userManager.FindByNameAsync(User.Identity.Name); //neemt de ingelogde user en zet die in _user zodat ik meer dan alleen de naam kan gebruiken
-    //var profilePicturePath = $"/images/{_user.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
-}
 
 <!DOCTYPE html>
 
@@ -31,11 +27,21 @@
     </environment>
 
     @RenderSection("Style", required: false)
+
+    <style>
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        body {
+            background-color: #3d3d3d;
+            color:lightgray;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark" style="font-size: 1.4rem; background-color: #702c2c; ">
         <a asp-action="Index" asp-controller="Home" class="navbar-brand">
-            <img src="~/images/employees.png" height="30" width="30" asp-append-version="false" />
+            <img src="~/images/StalinGames.png"height="80" width="420" asp-append-version="false" />
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -64,25 +70,31 @@
             <ul class="navbar-nav ml-auto">
                 @if (signInManager.IsSignedIn(User))
                 {
+
+                    var _user = await userManager.FindByNameAsync(User.Identity.Name); //neemt de ingelogde user en zet die in _user zodat ik meer dan alleen de naam kan gebruiken
+                    var profilePicturePath = $"/images/{_user.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
                     <li class="nav-item">
-                        <form method="post" asp-action="TODO" asp-controller="Account">
-                            <button type="submit" class="nav-link btn btn-link py-0" style="width:auto;">
+                        <form method="post" asp-action="PlayerDetails" asp-controller="Account" asp-route-id="@_user.Id">
+                            <button type="submit" class="nav-link btn btn-link py-0" style="width:auto; font-size: 1.4rem; margin-top: 7%;">
                                 @User.Identity.Name
                             </button>
                         </form>
-                        
+
                     </li>
+
                     <li class="nav-item">
-                            @*<img src=@profilePicturePath style="border-radius: 50%; width: 4%;">*@
+                        <img src=@profilePicturePath style="border-radius: 50%; width: 2.5em; margin-right: 2em;">
                     </li>
 
                     <li class="nav-item">
                         <form method="post" asp-action="logout" asp-controller="Account">
-                            <button type="submit" class="nav-link btn btn-link py-0" style="width:auto;">
+                            <button type="submit" class="nav-link btn btn-link py-0" style="width:auto; font-size: 1.4rem;margin-top: 8%; ">
                                 Logout
                             </button>
                         </form>
                     </li>
+
+
 
 
                 }
@@ -95,6 +107,10 @@
                         <a asp-action="Login" asp-controller="Account" class="nav-link">Login</a>
                     </li>
                 }
+                <form asp-action="PlayerSearch" asp-controller="Home" class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" name="userName" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </ul>
         </div>
     </nav>

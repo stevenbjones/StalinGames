@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StalinGames.DAL.Context;
 
 namespace StalinGames.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200507162702_AddPlayerPurchasesAndItemType")]
+    partial class AddPlayerPurchasesAndItemType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,21 +51,21 @@ namespace StalinGames.DAL.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "d5558286-d9cd-4621-8173-588573315a1d",
+                            ConcurrencyStamp = "e648e3ba-aa22-4217-ae78-86ca918050c7",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "8755c973-2581-4a64-9f03-2895d0634c6f",
+                            ConcurrencyStamp = "6a72f0c7-b808-4134-b62b-07fc21f3d7a6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "a464e3ff-e891-4a10-a238-ad55d0145dea",
+                            ConcurrencyStamp = "2028719c-46ad-4dc1-beb8-8b86a98f14e7",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -227,22 +229,22 @@ namespace StalinGames.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "5abde424-c88b-49ff-ace2-9e5b7124e572",
+                            UserId = "735113a5-6a3b-435f-8e1e-77bc2451ae90",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "23152f98-5317-478a-a1d7-3b54ccfd9c57",
+                            UserId = "896b468b-13c9-4ac9-b470-86948fed8297",
                             RoleId = "2"
                         },
                         new
                         {
-                            UserId = "6b59c1e0-bd8b-49d4-ace8-ec80de9afbe8",
+                            UserId = "bf8c1951-c6a7-49e7-b216-7bd3ef5c561c",
                             RoleId = "3"
                         },
                         new
                         {
-                            UserId = "6530f76a-6714-456f-85db-53dd29b40371",
+                            UserId = "8d4e4805-5b57-4ebe-92e0-ab82da192d8c",
                             RoleId = "1"
                         });
                 });
@@ -268,19 +270,13 @@ namespace StalinGames.DAL.Migrations
 
             modelBuilder.Entity("StalinGames.DAL.Models.BackgroundPicture", b =>
                 {
-                    b.Property<string>("ItemID")
+                    b.Property<string>("BackgroundPath")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BackgroundPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
+                    b.Property<int>("BackgroundPrice")
                         .HasColumnType("int");
 
-                    b.Property<int>("itemType")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemID");
+                    b.HasKey("BackgroundPath");
 
                     b.ToTable("BackgroundPicture");
                 });
@@ -290,9 +286,12 @@ namespace StalinGames.DAL.Migrations
                     b.Property<string>("OrderID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ItemID")
+                    b.Property<string>("Item")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ItemType")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserID")
                         .IsRequired()
@@ -305,33 +304,29 @@ namespace StalinGames.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            OrderID = "81324328-d4a7-4001-9e73-a893a8f22c2a",
-                            ItemID = "e1cae4a0-911e-47f4-8980-305dbfb1581b",
-                            UserID = "5abde424-c88b-49ff-ace2-9e5b7124e572"
+                            OrderID = "1dd22ff8-f7d9-40dc-a74d-18b368df3af1",
+                            Item = "Gambler",
+                            ItemType = 0,
+                            UserID = "735113a5-6a3b-435f-8e1e-77bc2451ae90"
                         },
                         new
                         {
-                            OrderID = "7c151428-8fc2-46a1-b830-6995694443fd",
-                            ItemID = "c5b3c034-93d9-40c7-ac21-fc15ac752e01",
-                            UserID = "5abde424-c88b-49ff-ace2-9e5b7124e572"
+                            OrderID = "677ddac5-f745-4d68-8234-2005ace134a3",
+                            Item = "KingPin",
+                            ItemType = 0,
+                            UserID = "735113a5-6a3b-435f-8e1e-77bc2451ae90"
                         });
                 });
 
             modelBuilder.Entity("StalinGames.DAL.Models.ProfileTitle", b =>
                 {
-                    b.Property<string>("ItemID")
+                    b.Property<string>("ProfileTitleName")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("ProfileTitlePrice")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProfileTitleName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("itemType")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemID");
+                    b.HasKey("ProfileTitleName");
 
                     b.ToTable("ProfileTitle");
                 });
@@ -343,7 +338,7 @@ namespace StalinGames.DAL.Migrations
                     b.Property<DateTime>("AccountCreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("BackGroundItemID")
+                    b.Property<string>("BackgroundPath")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Blyats")
@@ -355,7 +350,7 @@ namespace StalinGames.DAL.Migrations
                     b.Property<string>("ProfilePicturePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProfileTitleItemID")
+                    b.Property<string>("ProfileTitleName")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("TotalBlyatsLost")
@@ -364,25 +359,25 @@ namespace StalinGames.DAL.Migrations
                     b.Property<int>("TotalGamesPlayed")
                         .HasColumnType("int");
 
-                    b.HasIndex("BackGroundItemID");
+                    b.HasIndex("BackgroundPath");
 
-                    b.HasIndex("ProfileTitleItemID");
+                    b.HasIndex("ProfileTitleName");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
 
                     b.HasData(
                         new
                         {
-                            Id = "5abde424-c88b-49ff-ace2-9e5b7124e572",
+                            Id = "735113a5-6a3b-435f-8e1e-77bc2451ae90",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ae2fd285-13c8-42d6-8349-55614b9ca064",
+                            ConcurrencyStamp = "41ea0276-6949-473d-821d-af2a81d89f9b",
                             Email = "Jens@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "JENS",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF7+icv7FZfqLu/e0nH3ahAhbE8sw9lsysTDxMqWjLMNxln2nDPsEsQqjjFzsqMpkw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKs+f9VZzsMbZdppBLvPNnDr3ZkkhxOOgyjI18mugG2S+CqcSNLLbHzM41pY01cOSA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1d3135c7-5109-4c92-9920-4c3770f824fa",
+                            SecurityStamp = "a0318001-49ed-4487-bcda-5ec3f350de6e",
                             TwoFactorEnabled = false,
                             UserName = "Jens",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -393,16 +388,16 @@ namespace StalinGames.DAL.Migrations
                         },
                         new
                         {
-                            Id = "23152f98-5317-478a-a1d7-3b54ccfd9c57",
+                            Id = "896b468b-13c9-4ac9-b470-86948fed8297",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1dc0c253-f098-47d8-a237-d0a1fd54da9f",
+                            ConcurrencyStamp = "490db074-0246-42f6-bfbb-635c269a7584",
                             Email = "frederik@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "FREDERIK",
-                            PasswordHash = "AQAAAAEAACcQAAAAED0vyfcWh7nPzPTQ/TZUjgmvKf9EP+mQHkh8jlTHs85lBjwtrAJi6qZZmN/1UjX5nw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBeNL3IfUlGcz0vWtGHQxhFh5e50G/pwwZK/8wRT0G2Ixc4HBvBLzkA/Gx/QFqocQg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd5c23d3-d57b-4281-a605-21e324fc8693",
+                            SecurityStamp = "a9d8eef2-8de4-43f4-9934-4570122d6189",
                             TwoFactorEnabled = false,
                             UserName = "frederik",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -413,16 +408,16 @@ namespace StalinGames.DAL.Migrations
                         },
                         new
                         {
-                            Id = "6b59c1e0-bd8b-49d4-ace8-ec80de9afbe8",
+                            Id = "bf8c1951-c6a7-49e7-b216-7bd3ef5c561c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d9ea61c5-6cf6-4500-b014-ae2f73ff0128",
+                            ConcurrencyStamp = "3caf496e-252a-4e5c-b6d5-4fdab1b19e5e",
                             Email = "peter@Gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "PETER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPFjXcHe185XaHI1l33j5nmk8GHPWGHkAA5M8pzBKFW35QQX29mVAn/O3wn3gfh6tw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPnKaiWr1vSU4y/UTEIJO/bTfQYbJo/2UIMftukSECJSbK9ye+JLUfppDXKgk88xig==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "05033f69-79cb-49be-9ede-96a3ef22b237",
+                            SecurityStamp = "86f95de3-1aac-4eac-a33c-8fde6defc5c0",
                             TwoFactorEnabled = false,
                             UserName = "peter",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -433,16 +428,16 @@ namespace StalinGames.DAL.Migrations
                         },
                         new
                         {
-                            Id = "6530f76a-6714-456f-85db-53dd29b40371",
+                            Id = "8d4e4805-5b57-4ebe-92e0-ab82da192d8c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d9dbec2c-a9f2-4274-a0a9-d91fdc48bf07",
+                            ConcurrencyStamp = "0f1f0b8c-b43e-471a-b4d9-6d0bdd758398",
                             Email = "steven@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "steven",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEyU1GuEi+8DtuwH33TX65gzC6beq+CQ5f2s40vfonjfvTz2ILVnCZY/h51vY/uRXg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO4MwskbTtlikX0xvBDqur4Qz0e6PuQ3Cv25AOeeQp/1LGBTXRMwfvADguQsVzaf0Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d15de8bc-f2de-4be1-8071-ed74eaba0293",
+                            SecurityStamp = "80445652-7e69-415c-953f-1b68e4bcfc22",
                             TwoFactorEnabled = false,
                             UserName = "steven",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -508,11 +503,11 @@ namespace StalinGames.DAL.Migrations
                 {
                     b.HasOne("StalinGames.DAL.Models.BackgroundPicture", "BackGround")
                         .WithMany()
-                        .HasForeignKey("BackGroundItemID");
+                        .HasForeignKey("BackgroundPath");
 
                     b.HasOne("StalinGames.DAL.Models.ProfileTitle", "ProfileTitle")
                         .WithMany()
-                        .HasForeignKey("ProfileTitleItemID");
+                        .HasForeignKey("ProfileTitleName");
                 });
 #pragma warning restore 612, 618
         }

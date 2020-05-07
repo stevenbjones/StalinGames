@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace StalinGames.DAL.Models
 {
@@ -6,9 +7,10 @@ namespace StalinGames.DAL.Models
     {
         public int Blyats { get; set; }
         public string ProfilePicturePath { get; set; }
-        public string LastGamePlayed { get; set; } //Opgelet: formaat is unixtimeseconds -> yyyyMMddHHmmssffff dus je kan gewoon convertere naar int en dan vergelijke of het getal 10 miljard keer groter is
-        public string BackGroundPath { get; set; }
-        public ProfileTitles ProfileTitle { get; set; }
+        public long LastGamePlayed { get; set; } //Opgelet: formaat is unixtimeseconds -> yyyyMMddHHmmssffff dus je kan gewoon convertere naar int en dan vergelijke of het getal 10 miljard keer groter is
+        public string BackGround { get; set; }
+        public DateTime AccountCreatedDate { get; set; }
+        public string ProfileTitle { get; set; }
         public int TotalGamesPlayed { get; set; }
         public int TotalBlyatsLost { get; set; }
 
