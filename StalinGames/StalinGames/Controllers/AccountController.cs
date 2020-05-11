@@ -1,16 +1,16 @@
-﻿using System.Threading.Tasks;
-using StalinGames.DAL.Models;
-using StalinGames.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Linq;
-using StalinGames.DAL.Repositories;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using StalinGames.DAL.Models;
+using StalinGames.DAL.Repositories;
+using StalinGames.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StalinGames.Controllers
 {
@@ -20,14 +20,17 @@ namespace StalinGames.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IPlayerPurchasesRepository _playerPurchasesRepository;
+        private readonly IPlayerItemRepository _playerItemRepository;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment webHostEnvironment, IPlayerPurchasesRepository playerPurchasesRepository)
+            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment webHostEnvironment,
+            IPlayerPurchasesRepository playerPurchasesRepository, IPlayerItemRepository playerItemRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _webHostEnvironment = webHostEnvironment;
             _playerPurchasesRepository = playerPurchasesRepository;
+            _playerItemRepository = playerItemRepository;
         }
 
         [HttpPost]
@@ -52,7 +55,6 @@ namespace StalinGames.Controllers
         {
             var user = await _userManager.FindByEmailAsync(email);
 
-
             if (user == null)
             {
                 return Json(true);
@@ -75,8 +77,6 @@ namespace StalinGames.Controllers
                 {
                     return Json($"Email {email} is already in use");
                 }
-
-
             }
         }
 
@@ -100,8 +100,6 @@ namespace StalinGames.Controllers
                 {
                     return Json($"Username {username} is already in use");
                 }
-
-
             }
         }
 
@@ -109,14 +107,19 @@ namespace StalinGames.Controllers
         [AllowAnonymous]
         public IActionResult PlayerDetails(string id)
         {
-
             ApplicationUser user = _userManager.FindByIdAsync(id).Result;
+            string backGroundPath = _playerItemRepository.FindByName(user.BackGround).Value;
+            PlayerDetailsViewModel model = new PlayerDetailsViewModel()
+            {
+                Player = user,
+                BackgroundPath = backGroundPath
+            };
             if (user == null)
             {
                 Response.StatusCode = 404;
                 return View("UserNotFound", id);
             }
-            return View(user);
+            return View(model);
         }
 
         [HttpGet]
@@ -129,7 +132,7 @@ namespace StalinGames.Controllers
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
             }
-            
+
             if (_userManager.FindByNameAsync(User.Identity.Name).Result != user)
             {
                 ViewBag.ErrorMessage = "You are not allowed to do this action.";
@@ -143,33 +146,43 @@ namespace StalinGames.Controllers
                 Email = user.Email,
                 ProfilePicturePath = user.ProfilePicturePath,
                 Password = user.PasswordHash,
-                ConfirmPassword = user.PasswordHash
+                ConfirmPassword = user.PasswordHash,
+                ProfileTitle = user.ProfileTitle,
+                BackgroundName = user.BackGround
             };
 
-            var playerPurchaseList = _playerPurchasesRepository.GetAll().ToList();        
+            var playerPurchaseList = _playerPurchasesRepository.GetPlayerPurchasesByUser(user).ToList();
 
-            List<ProfileTitle> profileTitleUser = new List<ProfileTitle>();
-            List<BackgroundPicture> backgroundPictureUser = new List<BackgroundPicture>();
+            List<PlayerItem> profileTitleUser = new List<PlayerItem>();
+            List<PlayerItem> backgroundPictureUser = new List<PlayerItem>();
 
-            //for (int i = 0; i < playerPurchaseList.Count; i++)
-            //{
-            //    if (playerPurchaseList[i].UserID == model.Id)
-            //    {
-            //        for (int i = 0; i < PlayerItem; i++)
-            //        {
+            for (int i = 0; i < playerPurchaseList.Count(); i++)
+            {
+                var item = _playerItemRepository.FindByID(playerPurchaseList[i].ItemID);
+                if (item == null)
+                {
+                    ViewBag.ErrorMessage = "Something went wrong while trying to find the user's items. Please try again later or contact the support team";
+                    return View("Error");
+                }
 
-            //        }
-            //        if (playerPurchaseList[i].ItemID = )
-            //    }
-            //}
-            //List<SelectListItem> profileTitles = new List<SelectListItem>();
-            //List<SelectListItem> backgrounds = new List<SelectListItem>();
-            //foreach (ProfileTitle profileTitle in )
-            //    roles.Add(new SelectListItem());
-            //roles.Add(new SelectListItem("User", "User"));
-            //model.Roles = roles; TODO voor de user titles
+                if (item.itemType == ItemType.ProfileTitle)
+                    profileTitleUser.Add(item);
+                else
+                    backgroundPictureUser.Add(item);
+            }
 
-            //dus basically, maak repository voor player item, doe die for loop link item id aan item id, en dan checke voor profilelist of background en zet het in de juiste list, en dan gwn nog die lists convertere ewn klaar
+            List<SelectListItem> profileTitlesSelect = new List<SelectListItem>();
+            List<SelectListItem> backgroundsSelect = new List<SelectListItem>();
+            foreach (PlayerItem profileTitle in profileTitleUser)
+            {
+                profileTitlesSelect.Add(new SelectListItem(profileTitle.Name, profileTitle.Name));
+            }
+            foreach (PlayerItem backgroundPicture in backgroundPictureUser)
+            {
+                backgroundsSelect.Add(new SelectListItem(backgroundPicture.Name, backgroundPicture.Name));
+            }
+            model.ProfileTitles = profileTitlesSelect;
+            model.BackgroundNames = backgroundsSelect;
 
             return View(model);
         }
@@ -177,7 +190,7 @@ namespace StalinGames.Controllers
         [HttpPost]
         public async Task<IActionResult> PlayerEdit(PlayerEditViewModel model)
         {
-                var user = await _userManager.FindByIdAsync(model.Id);
+            var user = await _userManager.FindByIdAsync(model.Id);
             model.Password = user.PasswordHash;
             model.ConfirmPassword = user.PasswordHash;
             if (ModelState.IsValid)
@@ -187,8 +200,6 @@ namespace StalinGames.Controllers
                     ViewBag.ErrorMessage = $"User with username = {model.Username} cannot be found";
                     return View("NotFound");
                 }
-                user.UserName = model.Username;
-                user.Email = model.Email;
 
                 if (model.Photo != null)
                 {
@@ -202,10 +213,24 @@ namespace StalinGames.Controllers
                     user.ProfilePicturePath = ProcessUploadedFile(model);
                 }
 
+                user.ProfileTitle = model.ProfileTitle;
+                user.BackGround = model.BackgroundName;
+                bool checkIfUsernameChanged = false; ;
+                if (model.Username != user.UserName)
+                {
+                    user.UserName = model.Username;
+                    checkIfUsernameChanged = true;
+                }
+
+                user.Email = model.Email;
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignOutAsync();
+                    if (checkIfUsernameChanged)
+                    {
+                        await _signInManager.SignOutAsync();
+                    }
+
                     await _signInManager.PasswordSignInAsync(user, user.PasswordHash, false, false); //werkt niet
                     return RedirectToAction("PlayerDetails", new { id = user.Id });
                 }
@@ -215,11 +240,9 @@ namespace StalinGames.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-          
+
             return View(model);
         }
-
-        
 
         [HttpPost]
         [AllowAnonymous]
@@ -244,14 +267,19 @@ namespace StalinGames.Controllers
 
                 if (identityResult.Succeeded && isUserAddedToUserRole.Succeeded)
                 {
-                    ProfileTitle profileTitleDefault = (ProfileTitle)ListItems.Items[0];                   
+                    PlayerItem profileTitleDefault = _playerItemRepository.FindByName("Gambler");
                     _playerPurchasesRepository.Add(user, profileTitleDefault);
-                    user.ProfileTitle = profileTitleDefault.ProfileTitleName;
-                    BackgroundPicture backgroundPictureDefault = (BackgroundPicture)ListItems.Items[6];
+                    user.ProfileTitle = profileTitleDefault.Name;
+                    PlayerItem backgroundPictureDefault = _playerItemRepository.FindByName("Default background");
                     _playerPurchasesRepository.Add(user, backgroundPictureDefault);
-                    user.BackGround = backgroundPictureDefault.BackgroundPath;
+                    user.BackGround = backgroundPictureDefault.Name;
 
-                   
+                    if (!_userManager.UpdateAsync(user).Result.Succeeded)
+                    {
+                        ViewBag.ErrorMessage = "There was a problem trying to add the title and background to the user. Please contact the support team.";
+                        return View("Error");
+                    }
+
                     //redirect naar listUsers als de user een admin of superadmin is die de gebruiker heeft aangemaakt
                     if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || _signInManager.IsSignedIn(User) && User.IsInRole("SuperAdmin"))
                     {
@@ -284,9 +312,9 @@ namespace StalinGames.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
-             {
+            {
                 var temp = model.Username;
-                var signInResult =  await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+                var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
 
                 if (signInResult.Succeeded)
                 {
@@ -329,7 +357,6 @@ namespace StalinGames.Controllers
         //    List<>
         //    for (int i = 0; i < length; i++)
         //    {
-
         //    }
         //}
 

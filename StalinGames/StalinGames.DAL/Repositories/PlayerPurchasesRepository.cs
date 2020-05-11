@@ -4,11 +4,9 @@ using StalinGames.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace StalinGames.DAL.Repositories
 {
-
     public class PlayerPurchasesRepository : IPlayerPurchasesRepository
     {
         private readonly AppDbContext _context;
@@ -22,6 +20,21 @@ namespace StalinGames.DAL.Repositories
         {
             return _context.PlayerPurchases;
         }
+
+        public IEnumerable<PlayerPurchase> GetPlayerPurchasesByUser(ApplicationUser user)
+        {
+            List<PlayerPurchase> playerPurchases = _context.PlayerPurchases.ToList();
+            List<PlayerPurchase> playerPurchasesByUser = new List<PlayerPurchase>();
+            for (int i = 0; i < playerPurchases.Count(); i++)
+            {
+                if (playerPurchases[i].UserID == user.Id)
+                {
+                    playerPurchasesByUser.Add(playerPurchases[i]);
+                }
+            }
+            return playerPurchasesByUser;
+        }
+
         public PlayerPurchase Add(ApplicationUser user, PlayerItem item)
         {
             var newPlayerPurchase = _context.PlayerPurchases.Add(new PlayerPurchase
@@ -43,6 +56,5 @@ namespace StalinGames.DAL.Repositories
 
             return null;
         }
-
     }
 }

@@ -13,6 +13,5 @@ namespace StalinGames.DAL.Models
         public string ProfileTitle { get; set; }
         public int TotalGamesPlayed { get; set; }
         public int TotalBlyatsLost { get; set; }
-
     }
 }

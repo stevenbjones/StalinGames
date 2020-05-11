@@ -1,7 +1,4 @@
-﻿using StalinGames.DAL.Context;
-using StalinGames.DAL.Models;
-using StalinGames.DAL.Repositories;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
+using StalinGames.DAL.Context;
+using StalinGames.DAL.Models;
+using StalinGames.DAL.Repositories;
 
 namespace StalinGames
 {
@@ -48,6 +47,7 @@ namespace StalinGames
             }).AddXmlSerializerFormatters();
 
             services.AddScoped<IPlayerPurchasesRepository, PlayerPurchasesRepository>();
+            services.AddScoped<IPlayerItemRepository, PlayerItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,8 +72,6 @@ namespace StalinGames
 
             // Must be Put before Enpoints but after Routing
             app.UseAuthorization();
-
-           
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using StalinGames.DAL.Models;
-using StalinGames.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using StalinGames.DAL.Models;
+using StalinGames.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StalinGames.Controllers
 {
-   
-    [Authorize(Roles = "SuperAdmin, Admin")] 
-
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -32,15 +30,12 @@ namespace StalinGames.Controllers
             roles.Add("User");
             if (User.IsInRole("Admin"))
             {
-  
                 users = GetUsersByRole(roles);
             }
             else if (User.IsInRole("SuperAdmin"))
             {
-
                 roles.Add("Admin");
                 users = GetUsersByRole(roles);
-
             }
             return View(users);
         }
@@ -90,12 +85,8 @@ namespace StalinGames.Controllers
                 }
                 user.Blyats = model.Blyats;
 
-               await _userManager.RemoveFromRoleAsync(user, _userManager.GetRolesAsync(user).Result[0]);
+                await _userManager.RemoveFromRoleAsync(user, _userManager.GetRolesAsync(user).Result[0]);
                 await _userManager.AddToRoleAsync(user, model.Role);
-
-
-
-
 
                 var result = await _userManager.UpdateAsync(user);
 
@@ -345,11 +336,9 @@ namespace StalinGames.Controllers
                         usersWithCorrectRole.Add(users[i]);
                     }
                 }
-               
             }
 
             return usersWithCorrectRole;
         }
-
     }
 }

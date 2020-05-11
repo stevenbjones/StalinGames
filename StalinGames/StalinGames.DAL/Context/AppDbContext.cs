@@ -1,7 +1,6 @@
-﻿using StalinGames.DAL.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using StalinGames.DAL.Models;
 
 namespace StalinGames.DAL.Context
 {
@@ -9,9 +8,11 @@ namespace StalinGames.DAL.Context
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
         }
+
         public DbSet<PlayerPurchase> PlayerPurchases { get; set; }
+        public DbSet<PlayerItem> PlayerItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -20,6 +21,10 @@ namespace StalinGames.DAL.Context
             //{
             //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             //} gaf errors
+
+            //ShopItemsView, ShopItemsViewModel, shop toont u een lijst van backgrounds zoals employees, en een lijst van titles.
+            //card toont een buy optie (of een vinkje als de player het al heeft gekocht.)
+            //als je het koopt krijgt ge zo ne smooth popup van congratulations blabla en dan refresht de site na 4 seconde ofzo
         }
     }
 }

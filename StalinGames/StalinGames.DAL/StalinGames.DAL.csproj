@@ -5,21 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200503135207_AddUsers.cs" />
-    <Compile Remove="Migrations\20200503135207_AddUsers.Designer.cs" />
-    <Compile Remove="Migrations\20200503143726_add-users.cs" />
-    <Compile Remove="Migrations\20200503143726_add-users.Designer.cs" />
-    <Compile Remove="Migrations\20200507153830_AddPlayerPurchases+ItemTypes.cs" />
-    <Compile Remove="Migrations\20200507153830_AddPlayerPurchases+ItemTypes.Designer.cs" />
-    <Compile Remove="Migrations\20200507160610_AddPlayerPurchases+ItemTypes2.cs" />
-    <Compile Remove="Migrations\20200507160610_AddPlayerPurchases+ItemTypes2.Designer.cs" />
-    <Compile Remove="Migrations\20200507161120_AddPlayerPurchases+ItemTypes3.cs" />
-    <Compile Remove="Migrations\20200507161120_AddPlayerPurchases+ItemTypes3.Designer.cs" />
-    <Compile Remove="Migrations\20200507161402_AddPlayerPurchases+ItemTypes4.cs" />
-    <Compile Remove="Migrations\20200507161402_AddPlayerPurchases+ItemTypes4.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
   </ItemGroup>

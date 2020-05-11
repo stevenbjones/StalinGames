@@ -6,7 +6,10 @@ namespace StalinGames.DAL.Models
     {
         [Key]
         public string ItemID { get; set; }
+
         public ItemType itemType { get; set; }
         public int Price { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

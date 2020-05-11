@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using StalinGames.Utilities;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace StalinGames.ViewModels
 {

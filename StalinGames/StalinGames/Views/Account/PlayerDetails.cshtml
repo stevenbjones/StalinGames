@@ -1,25 +1,30 @@
-﻿@model ApplicationUser
+﻿@model PlayerDetailsViewModel
 @inject UserManager<ApplicationUser> userManager;
 @inject SignInManager<ApplicationUser> signInManager;
 
 @{
-    ViewBag.Title = "Player " + Model.UserName;
-    var profilePicturePath = $"/images/{Model.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
-    DateTime dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(Model.LastGamePlayed).Date;
-  
+    ViewBag.Title = "Player " + Model.Player.UserName;
+    var profilePicturePath = $"/images/{Model.Player.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
+    DateTime dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(Model.Player.LastGamePlayed).Date;
+    string background = $"/images/{Model.BackgroundPath}";
 
 }
-
+<style>
+    body
+    {
+        background-image: url(@background);
+        background-size: cover;
+    }
+</style>
 <div class="container">
 
     <hr>
     <div class="container bootstrap snippet">
         <div class="row">
-            <div class="col-sm-12" style="display:inline;"><h1 style="display:inline;">@Model.UserName</h1> <h1 style="margin-left: 15em;display:inline; ">Blyats:</h1> <input disabled style="width: 6em; display:inline;" asp-for="Blyats" class="form-control"></div>
-
+            <div class="col-sm-12" style="display:inline;"><h1 style="display:inline;">@Model.Player.UserName</h1> <span style="float:right;"><h1 style="margin-left: 13em;display:inline; ">Blyats:</h1> <input disabled style="width: 6em; display:inline;" asp-for="Player.Blyats" class="form-control"></span></div>
         </div>
         <div class="row">
-            <div class="col-sm-10"><h3>@Model.ProfileTitle</h3></div>
+            <div class="col-sm-10"><h3>@Model.Player.ProfileTitle</h3></div>
         </div>
         <div class="row">
             <div class="col-sm-3">
@@ -34,60 +39,51 @@
                     <div class="tab-pane active" id="home">
                         <hr>
                         <form class="form" action="##" method="post" id="registrationForm">
+                            <div class="card mb-3  bg-dark" style="padding: 1em;border-radius: 1em;">
+                                <table>
+                                    <tbody>
 
-                            <table >
-                                <tbody>
+                                        <tr class="form-group">
 
+                                            <td><label class="col-xs-6"><h4>Last game played:</h4></label></td>
+                                            <td><input disabled style="width: 10.5em; display:inline;" asp-for="@dateTimeOffset" class="form-control"></td>
+                                        </tr>
+                                        <tr class="form-group">
 
+                                            <td><label class="col-xs-6"><h4>Total games played:</h4></label></td>
+                                            <td><input disabled style="width: 7em; display:inline;" asp-for="Player.TotalGamesPlayed" class="form-control"></td>
+                                        </tr>
+                                        <tr class="form-group">
 
-                                    <tr class="form-group">
+                                            <td><label class="col-xs-6"><h4>Total blyats lost:</h4></label></td>
+                                            <td><input disabled style="width: 7em; display:inline;" asp-for="Player.TotalBlyatsLost" class="form-control"></td>
+                                        </tr>
+                                        <tr class="form-group">
 
-
-                                        <td><label class="col-xs-6"><h4>Last login:</h4></label></td>
-                                        <td><input disabled style="width: 7em; display:inline;" placeholder="@dateTimeOffset.ToString("dd/MM/yyyy")" class="form-control"></td>
-                                    </tr>
-                                    <tr class="form-group">
-
-
-                                        <td><label class="col-xs-6"><h4>Total games played:</h4></label></td>
-                                        <td><input disabled style="width: 7em; display:inline;" asp-for="TotalGamesPlayed" class="form-control"></td>
-                                    </tr>
-                                    <tr class="form-group">
-
-
-                                        <td><label class="col-xs-6"><h4>Total blyats lost:</h4></label></td>
-                                        <td><input disabled style="width: 7em; display:inline;" asp-for="TotalBlyatsLost" class="form-control"></td>
-                                    </tr>
-                                    <tr class="form-group">
-
-
-                                        <td><label class="col-xs-6"><h4>Account created date:</h4></label></td>
-                                        <td><input disabled style="width: 7em; display:inline;" asp-for="AccountCreatedDate" class="form-control"></td>
-                                    </tr>
-
-
-
-                                </tbody>
-                            </table>
+                                            <td><label class="col-xs-6"><h4>Account created date:</h4></label></td>
+                                            <td><input disabled style="width: 10.5em; display:inline;" asp-for="Player.AccountCreatedDate" class="form-control"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </form>
 
                         <hr>
                         @if (signInManager.IsSignedIn(User))
                         {
                             ApplicationUser _user = await userManager.FindByNameAsync(User.Identity.Name); //neemt de ingelogde user en zet die in _user zodat ik meer dan alleen de naam kan gebruiken
-                            if (_user.Id == Model.Id)
+                            if (_user.Id == Model.Player.Id)
                             {
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <br>
-                                        <a asp-controller="Account" asp-action="PlayerEdit" asp-route-id="@Model.Id" class="btn btn-lg btn-success">Edit</a>
+                                        <a asp-controller="Account" asp-action="PlayerEdit" asp-route-id="@Model.Player.Id" class="btn btn-lg btn-success">Edit</a>
                                     </div>
                                 </div>
                             }
                         }
-
                     </div><!--/tab-pane-->
-            </div><!--/tab-content-->
-        </div><!--/col-9-->
-    </div><!--/row-->
-</div>
+                </div><!--/tab-content-->
+            </div><!--/col-9-->
+        </div><!--/row-->
+    </div>

@@ -10,8 +10,8 @@ using StalinGames.DAL.Context;
 namespace StalinGames.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200504194604_normalizednamesForRoles")]
-    partial class normalizednamesForRoles
+    [Migration("20200511145455_addDefaultbackground")]
+    partial class addDefaultbackground
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,21 +51,21 @@ namespace StalinGames.DAL.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "c441e4a3-30f7-49bb-9ce1-f151b16f6c1a",
+                            ConcurrencyStamp = "ea1ad8f5-5746-46be-88bd-043fdbcbec6d",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "6a9465e5-2c95-4fd3-998e-754dc2ad980f",
+                            ConcurrencyStamp = "ef036c76-8765-44bd-bf78-062f9a394bfc",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "57a1ed20-559f-4b9a-8c63-bcd0c6c74004",
+                            ConcurrencyStamp = "8f7e9c37-769d-4d8e-95aa-7676060e88dd",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -229,18 +229,23 @@ namespace StalinGames.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "3c9a4d3d-35cf-4b1f-8ebb-78d333d98946",
+                            UserId = "96062e7d-7d6e-47ed-897f-447b22e97305",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "838e8960-26ab-4949-b908-b606fb61d894",
+                            UserId = "07539380-8a1c-4464-82c9-6cab4d3e76d4",
                             RoleId = "2"
                         },
                         new
                         {
-                            UserId = "98c4cfaf-22e9-492e-9b86-11ca67d0cd65",
+                            UserId = "c37270c9-ba51-4540-a44d-c5a29afb16e0",
                             RoleId = "3"
+                        },
+                        new
+                        {
+                            UserId = "9f016273-c56f-4de5-b46f-24d96c43a5d1",
+                            RoleId = "1"
                         });
                 });
 
@@ -263,58 +268,195 @@ namespace StalinGames.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("StalinGames.DAL.Models.Employee", b =>
+            modelBuilder.Entity("StalinGames.DAL.Models.PlayerItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BankAccountNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Department")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ItemID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("PhotoPath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
-                    b.ToTable("Employees");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("itemType")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemID");
+
+                    b.ToTable("PlayerItems");
+
+                    b.HasData(
+                        new
+                        {
+                            ItemID = "97753b01-cbd2-49b8-ba4d-3ed3f3c5e511",
+                            Name = "Gambler",
+                            Price = 0,
+                            itemType = 0
+                        },
+                        new
+                        {
+                            ItemID = "f2db0479-6a50-4881-9202-9c1efb67b7f4",
+                            Name = "Simp",
+                            Price = 2000,
+                            itemType = 0
+                        },
+                        new
+                        {
+                            ItemID = "c9dea5db-3f27-4556-9740-628824e040a6",
+                            Name = "Local Champion",
+                            Price = 10000,
+                            itemType = 0
+                        },
+                        new
+                        {
+                            ItemID = "7978257c-fa74-48db-b6f7-3e898ea07a9e",
+                            Name = "Absolute Legend",
+                            Price = 100000,
+                            itemType = 0
+                        },
+                        new
+                        {
+                            ItemID = "651ede18-fe00-43a2-9421-3fbdf3d9b1b1",
+                            Name = "Black jack master",
+                            Price = 200000,
+                            Value = "BlackJackMaster.jpg",
+                            itemType = 1
+                        },
+                        new
+                        {
+                            ItemID = "01d61fc7-07a9-464a-b647-fcaff11c2f72",
+                            Name = "Simple card pattern",
+                            Price = 5000,
+                            Value = "CardPattern.jpg",
+                            itemType = 1
+                        },
+                        new
+                        {
+                            ItemID = "6d3880cd-6357-4025-af6c-eabcd576e79c",
+                            Name = "Casino master",
+                            Price = 500000,
+                            Value = "CasinoMaster.jpg",
+                            itemType = 1
+                        },
+                        new
+                        {
+                            ItemID = "0e26388e-a9eb-4e71-bfdb-e8552bcedf31",
+                            Name = "Ace on fire",
+                            Price = 50000,
+                            Value = "FireAce.jpg",
+                            itemType = 1
+                        },
+                        new
+                        {
+                            ItemID = "cdb57f8d-822a-4aab-83c5-5a9be1004853",
+                            Name = "Roulette master",
+                            Price = 200000,
+                            Value = "RouletteMaster.jpg",
+                            itemType = 1
+                        },
+                        new
+                        {
+                            ItemID = "b6f35bdb-5160-4eb0-9193-5d56a665a261",
+                            Name = "Slot machine master",
+                            Price = 200000,
+                            Value = "SlotMachineMaster.jpg",
+                            itemType = 1
+                        },
+                        new
+                        {
+                            ItemID = "ae8d90f6-9166-4cb3-ac8e-205cf7c6c78b",
+                            Name = "Ultimate true StalinGames casino master",
+                            Price = 1000000,
+                            Value = "TrueStalinGamesMaster.jpg",
+                            itemType = 1
+                        },
+                        new
+                        {
+                            ItemID = "48ca10f1-6a8d-49f2-b117-77d2078b1b05",
+                            Name = "Wolf of Wall Street",
+                            Price = 1000000,
+                            itemType = 0
+                        },
+                        new
+                        {
+                            ItemID = "27ba45a5-ff3c-4fcc-b4c7-8199715cdff9",
+                            Name = "KingPin",
+                            Price = 1000000,
+                            itemType = 0
+                        },
+                        new
+                        {
+                            ItemID = "f1e6b317-7713-45ee-a427-8f1fdac72fd9",
+                            Name = "Default background",
+                            Price = 0,
+                            Value = "DefaultBackground.jpg",
+                            itemType = 1
+                        });
+                });
+
+            modelBuilder.Entity("StalinGames.DAL.Models.PlayerPurchase", b =>
+                {
+                    b.Property<string>("OrderID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ItemID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderID");
+
+                    b.ToTable("PlayerPurchases");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderID = "a2cd9a23-fcda-4cf2-80f9-c4bf7800c463",
+                            ItemID = "48ca10f1-6a8d-49f2-b117-77d2078b1b05",
+                            UserID = "96062e7d-7d6e-47ed-897f-447b22e97305"
+                        },
+                        new
+                        {
+                            OrderID = "252c4aed-504c-4a6c-af3a-7fab0de2f5af",
+                            ItemID = "27ba45a5-ff3c-4fcc-b4c7-8199715cdff9",
+                            UserID = "96062e7d-7d6e-47ed-897f-447b22e97305"
+                        },
+                        new
+                        {
+                            OrderID = "c8090f6b-5cb3-40ec-9e20-20f06a6c765f",
+                            ItemID = "f1e6b317-7713-45ee-a427-8f1fdac72fd9",
+                            UserID = "96062e7d-7d6e-47ed-897f-447b22e97305"
+                        });
                 });
 
             modelBuilder.Entity("StalinGames.DAL.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("BackGroundPath")
+                    b.Property<DateTime>("AccountCreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("BackGround")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Blyats")
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastGamePlayed")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("LastGamePlayed")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ProfilePicturePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProfileTitle")
-                        .HasColumnType("int");
+                    b.Property<string>("ProfileTitle")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalBlyatsLost")
                         .HasColumnType("int");
@@ -327,58 +469,83 @@ namespace StalinGames.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3c9a4d3d-35cf-4b1f-8ebb-78d333d98946",
+                            Id = "96062e7d-7d6e-47ed-897f-447b22e97305",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "33ce243a-dfba-4277-a6b4-fc50ef234685",
+                            ConcurrencyStamp = "8e4de258-cf89-40bb-9c5f-627f1e90dd4e",
                             Email = "Jens@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "JENS",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOk/XMtLtdgtQcHgJDJeD2h6bBrvaRV+5hCz9hpPE6ep+y+b27hF50s1di25+SifWA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPNQgFwLovuFubgx09jnxPaHUzktQlHTApGCdOiTfmEFjPeVEHVpih672AYmigs8Tg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2bdd74e3-f2db-47d3-b0de-e66f892f1b6e",
+                            SecurityStamp = "159a9553-b2a2-4850-8d1f-5463ef8029cb",
                             TwoFactorEnabled = false,
                             UserName = "Jens",
+                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BackGround = "Default background",
                             Blyats = 2000,
-                            ProfileTitle = 0,
+                            LastGamePlayed = 0L,
+                            ProfileTitle = "KingPin",
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "838e8960-26ab-4949-b908-b606fb61d894",
+                            Id = "07539380-8a1c-4464-82c9-6cab4d3e76d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c351e4f2-3698-4512-9ced-5a5c34962120",
+                            ConcurrencyStamp = "3948b3e2-5912-4c58-9bf0-b9cea2c0807e",
                             Email = "frederik@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "FREDERIK",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE8kAElvXt7DV1dVKJ+Uy9Ze01bDOO5+4eAhag43p3lE2KKNmJWk8zcW7s1LYoj7OQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA1Ov6TY2wjgSnl+zqn8W/UKdy6FBNUDv17QsmrKjDuVldgNhhhgNd0SteQ4ufb/Kw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ca3da98a-beb9-408a-a98c-23b2b561c24f",
+                            SecurityStamp = "3d2065f7-1f5e-40d7-87e9-9ff044afe48a",
                             TwoFactorEnabled = false,
                             UserName = "frederik",
+                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Blyats = 2000,
-                            ProfileTitle = 0,
+                            LastGamePlayed = 0L,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "98c4cfaf-22e9-492e-9b86-11ca67d0cd65",
+                            Id = "c37270c9-ba51-4540-a44d-c5a29afb16e0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c94eff93-d1e9-4315-a16c-82e409273a11",
+                            ConcurrencyStamp = "7b5bb1aa-b0b3-4e91-afd6-1694499ecfb4",
                             Email = "peter@Gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "PETER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFxoh+OmBtSWQp6bvhXikP1ERW1du7PSsJHhA3QCEsbkuZS5Gyo4fsVw6s++kDq33w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA38cMF2F56PD1G42G8uyOpOTjFolGFQcAn/7fPQvLwzEkWqX0H0Cixzn4PSGssWRg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fababc36-03f8-49cb-838a-72d127f8d004",
+                            SecurityStamp = "c02c20ee-086b-40cd-839f-d90b75fb1db0",
                             TwoFactorEnabled = false,
                             UserName = "peter",
+                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Blyats = 2000,
-                            ProfileTitle = 0,
+                            LastGamePlayed = 0L,
+                            TotalBlyatsLost = 0,
+                            TotalGamesPlayed = 0
+                        },
+                        new
+                        {
+                            Id = "9f016273-c56f-4de5-b46f-24d96c43a5d1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "13c008e1-3a01-4c66-beff-8e9eae7a9042",
+                            Email = "steven@StalinGames.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "steven",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEh5klYrZYwqPkxEwoEkQl2vN0ap85vVdlQLZmUmTlv3vbEBJS0dHONVo9E9AwYR4Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7f4d50db-3a69-4466-bf22-ba684f3efd84",
+                            TwoFactorEnabled = false,
+                            UserName = "steven",
+                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Blyats = 2000,
+                            LastGamePlayed = 0L,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         });
