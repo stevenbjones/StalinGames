@@ -139,16 +139,21 @@ namespace StalinGames.Controllers
             return RedirectToAction("Index");
         }
 
-      
+
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> PlayerSearch(string userName)
+        public IActionResult PlayerSearch(string userName)
         {
             List<ApplicationUser> users = new List<ApplicationUser>();
             List<string> roles = new List<string>() { "User" };
             foreach (ApplicationUser user in GetUsersByRole(roles))
             {
-                if (user.UserName.ToLower().Contains(userName.ToLower()))
+                if (userName == null || userName == "")
+                {
+                    users = _userManager.Users.ToList();
+                }
+
+                else if (user.UserName.ToLower().Contains(userName.ToLower()))
                     users.Add(user);
             }
             return View(users);
