@@ -108,17 +108,19 @@ namespace StalinGames.Controllers
         public IActionResult PlayerDetails(string id)
         {
             ApplicationUser user = _userManager.FindByIdAsync(id).Result;
+            
+            if (user == null)
+            {
+                Response.StatusCode = 404;
+                ViewBag.ErrorMessage = "The specific user with id " + id + " is not found";
+                return View("NotFound", id);
+            }
             string backGroundPath = _playerItemRepository.FindByName(user.BackGround).Value;
             PlayerDetailsViewModel model = new PlayerDetailsViewModel()
             {
                 Player = user,
                 BackgroundPath = backGroundPath
             };
-            if (user == null)
-            {
-                Response.StatusCode = 404;
-                return View("UserNotFound", id);
-            }
             return View(model);
         }
 
