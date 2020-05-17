@@ -1,17 +1,51 @@
-﻿@model SlotMachineViewModel
+﻿@model ApplicationUser
 
 @{
     ViewData["Title"] = "SlotMachine";
 }
+<style>
+    .img-inline {
+        display: inline;
+    }
 
-<h1>SlotMachine</h1>
+    .img-slotmachine {
+        border-radius: 1em;
+        width: 33%;
+        height: 20em;
+    }
+</style>
+
 
 <h2 id="getal"></h2>
+<div class="card mb-3  bg-danger" style="padding: 1.5em;">
+    <div class="card mb-3  bg-dark">
+        <div class="card-header" id="Message" style="font-size: 2.5em; text-align: center">
+            Play
+        </div>
+    </div>
+    <div class="card mb-3  bg-white">
+        <div class="card-body" style="height: 22em;">
+            <div class="img-inline" id="foto1"></div>
+            <div class="img-inline" id="foto2"></div>
+            <div class="img-inline" id="foto3"></div>
+        </div>
+    </div>
+    <div class="card mb-3  bg-primary " style="
+    height: 3.3em;">
 
-<div id="foto1"></div>
-<div id="foto2"></div>
-<div id="foto3"></div>
-<button id="btnSpeelSlot">PLAY THE PORNO GAME </button>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn bg-primary" style="width: auto;font-size:1.5em;color:white;height: auto;" id="btnSpeelSlot">PLAY THE PORNO GAME </button>
+
+            </div>
+            <input style="height: auto;margin-left: 65%;flex: 1 0 0% !important;" type="number" class="form-control" id="BetValue">
+        </div>
+    </div>
+
+  
+
+</div>
+
 
 <form>
     <input type="button" class="btn btn-success" id="SlotMachine" style="width:auto" value="getaltimestwo" />
@@ -24,26 +58,20 @@
     $(document).ready(function () {
         let btnSlot = document.querySelector("#btnSpeelSlot");
 
-        let getal = 0;
+        
+
         btnSlot.addEventListener("click", slotmachine);
-        document.getElementById("getal").innerHTML = "Getal: " + getal;
+        document.getElementById("getal").innerHTML = "Blyats: " + @Model.Blyats;
             $("#SlotMachine").click(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '/Games/SlotMachine',
-                    data: { getal: getal },
-                    success: function (result) {         
 
-                        document.getElementById("getal").innerHTML = "Getal: " + getal
-
-
-                    }
-                });
 
             });
     })
 
     function slotmachine() {
+
+        let getal = document.getElementById("BetValue");
+
         slotOne = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
         slotTwo = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
         slotThree = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
@@ -53,7 +81,7 @@
         let foto2 = document.querySelector("#foto2");
         let foto3 = document.querySelector("#foto3");
 
-        foto1url = "/images/foto1.jpg";        
+        foto1url = "/images/foto1.jpg";
         foto2url = "/images/foto2.jpg";
         foto3url = "/images/foto3.jpg";
 
@@ -70,24 +98,39 @@
 
         let img = document.createElement("img");
         img.setAttribute("src", `${dict[slotOne]}`);
+        img.classList.add("img-slotmachine");
         foto1.appendChild(img);
 
         let img2 = document.createElement("img");
         img2.setAttribute("src", `${dict[slotTwo]}`);
+        img2.classList.add("img-slotmachine");
         foto2.appendChild(img2);
 
         let img3 = document.createElement("img");
         img3.setAttribute("src", `${dict[slotThree]}`);
+        img3.classList.add("img-slotmachine");
         foto3.appendChild(img3);
+        let message = document.getElementById("Message");
 
         if (img.src == img2.src && img.src == img3.src) {
             getal = 100;
-            alert(getal);
+            message.innerHTML = "You win: " + getal + " Blyats!"
+
         }
         else {
             getal = -100;
-            alert(getal);
+            message.innerHTML = "You lose: " + Math.abs(getal) + " Blyats!"
+
         }
+        $.ajax({
+            type: 'POST',
+            url: '/Games/SlotMachine',
+            data: { getal: getal },
+            success: function (result) {
+                getal = result;
+                document.getElementById("getal").innerHTML = "Blyats " + getal;
+            }
+        });
     }
 </script>
 
