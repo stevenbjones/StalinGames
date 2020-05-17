@@ -9,7 +9,7 @@ namespace StalinGames.Controllers
 {
     public class GamesController : Controller
     {
-        [AcceptVerbs("Get", "Post")]
+        [HttpGet]
         public async Task<IActionResult> SlotMachine()
         {
             Random random = new Random();
@@ -20,6 +20,15 @@ namespace StalinGames.Controllers
             };
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult SlotMachine(int getal)
+        {
+            getal = getal * 2;
+            return Json(getal);
+            //return Ok("Success");
+        }
+
 
 
     }
