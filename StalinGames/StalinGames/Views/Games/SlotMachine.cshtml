@@ -1,0 +1,11 @@
+﻿@model SlotMachineViewModel
+
+@{
+    ViewData["Title"] = "SlotMachine";
+}
+
+<h1>SlotMachine</h1>
+
+<h2>Getal: @Model.random</h2>
+<a asp-controller="Games" asp-action="SlotMachine" class="btn btn-lg btn-success">Refresh</a>
+

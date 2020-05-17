@@ -160,26 +160,7 @@ namespace StalinGames.Controllers
             return View(users);
         }
 
-        [AcceptVerbs("Get", "Post")]
-        public async Task<IActionResult> SlotMachineMain()
-        {
-            Random random = new Random();
-            int getal = random.Next(0, 100);
-            SlotMachineViewModel model = new SlotMachineViewModel()
-            {
-                random = getal
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        [Route("/OnPostRandom")]
-        public async Task SlotMachine(SlotMachineViewModel model)
-        {
-            Random random = new Random();
-            int getal = random.Next(0, 100);
-            model.random = getal;
-        }
+        
 
         public List<ApplicationUser> GetUsersByRole(List<string> roles)
         {

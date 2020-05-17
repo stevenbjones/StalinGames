@@ -20,8 +20,4 @@
     <ProjectReference Include="..\StalinGames.DAL\StalinGames.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Games\" />
-  </ItemGroup>
-
 </Project>
