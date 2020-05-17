@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using StalinGames.DAL.Models;
 using StalinGames.DAL.Repositories;
 using StalinGames.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -157,6 +158,27 @@ namespace StalinGames.Controllers
                     users.Add(user);
             }
             return View(users);
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public async Task<IActionResult> SlotMachineMain()
+        {
+            Random random = new Random();
+            int getal = random.Next(0, 100);
+            SlotMachineViewModel model = new SlotMachineViewModel()
+            {
+                random = getal
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("/OnPostRandom")]
+        public async Task SlotMachine(SlotMachineViewModel model)
+        {
+            Random random = new Random();
+            int getal = random.Next(0, 100);
+            model.random = getal;
         }
 
         public List<ApplicationUser> GetUsersByRole(List<string> roles)
