@@ -42,7 +42,7 @@
         </div>
     </div>
 
-  
+
 
 </div>
 
@@ -58,7 +58,7 @@
     $(document).ready(function () {
         let btnSlot = document.querySelector("#btnSpeelSlot");
 
-        
+
 
         btnSlot.addEventListener("click", slotmachine);
         document.getElementById("getal").innerHTML = "Blyats: " + @Model.Blyats;
@@ -70,7 +70,7 @@
 
     function slotmachine() {
 
-        let getal = document.getElementById("BetValue");
+        let getal = document.getElementById("BetValue").value;
 
         slotOne = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
         slotTwo = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
@@ -100,27 +100,38 @@
         img.setAttribute("src", `${dict[slotOne]}`);
         img.classList.add("img-slotmachine");
         foto1.appendChild(img);
+        
 
         let img2 = document.createElement("img");
         img2.setAttribute("src", `${dict[slotTwo]}`);
         img2.classList.add("img-slotmachine");
         foto2.appendChild(img2);
+        
 
         let img3 = document.createElement("img");
         img3.setAttribute("src", `${dict[slotThree]}`);
         img3.classList.add("img-slotmachine");
         foto3.appendChild(img3);
+        
         let message = document.getElementById("Message");
 
         if (img.src == img2.src && img.src == img3.src) {
-            getal = 100;
+            if (img.src.includes("foto1")) {
+                getal = getal * 10;
+            }
+            if (img.src.includes("foto2")) {
+                getal = getal * 20;
+            }
+            if (img.src.includes("foto3")) {
+                getal = getal * 40;
+            }
+
             message.innerHTML = "You win: " + getal + " Blyats!"
 
         }
         else {
-            getal = -100;
-            message.innerHTML = "You lose: " + Math.abs(getal) + " Blyats!"
-
+            getal = 0 - getal;
+                        message.innerHTML = "You lose: " + Math.abs(getal) + " Blyats!"
         }
         $.ajax({
             type: 'POST',
