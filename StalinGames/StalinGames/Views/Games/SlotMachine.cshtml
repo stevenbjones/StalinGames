@@ -20,7 +20,7 @@
 <div class="card mb-3  bg-danger" style="padding: 1.5em;">
     <div class="card mb-3  bg-dark">
         <div class="card-header" id="Message" style="font-size: 2.5em; text-align: center">
-            Play
+            Play <input disabled style="width: 6em; display:inline; float:right;" asp-for="@Model.Blyats" class="form-control">
         </div>
     </div>
     <div class="card mb-3  bg-white">
@@ -30,16 +30,9 @@
             <div class="img-inline" id="foto3"></div>
         </div>
     </div>
-    <div class="card mb-3  bg-primary " style="
-    height: 3.3em;">
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <button class="btn bg-primary" style="width: auto;font-size:1.5em;color:white;height: auto;" id="btnSpeelSlot">PLAY THE PORNO GAME </button>
-
-            </div>
-            <input style="height: auto;margin-left: 65%;flex: 1 0 0% !important;" type="number" class="form-control" id="BetValue">
-        </div>
+    <div class="card mb-3  bg-primary" style="display: flex;flex: auto;flex-direction: row;">
+        <button class="btn bg-primary" style="width: 880%;font-size:1.5em;color:white;" id="btnSpeelSlot">PLAY THE PORNO GAME </button>
+        <input style="height: auto;" type="number" class="form-control" id="BetValue">
     </div>
 
 
@@ -47,11 +40,6 @@
 </div>
 
 
-<form>
-    <input type="button" class="btn btn-success" id="SlotMachine" style="width:auto" value="getaltimestwo" />
-
-
-</form>
 
 @*<script src="~/lib/jquery/jquery.js"></script>*@
 <script type="text/javascript">
