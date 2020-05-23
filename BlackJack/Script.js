@@ -2,6 +2,8 @@ window.addEventListener('load', function() {
   //Arrays voor kaarten
   var suits = ["Spades", "Diamonds", "Clubs", "Hearts"];
   var values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+
+  
   //Var die gebruikt wordt om totale waarde van kaarten te bereken
   let totaleWaardeSpeler = 0;
   let totaleWaardeDealer = 0;
