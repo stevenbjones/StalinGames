@@ -87,12 +87,15 @@
             }
             if (totaleWaardeDealer <= 21) {
                 alert("Dealer wint");
+                btnSpelerGetCard.disabled = true;
+                btnSpelerStop.disabled = true;
                 getal = 0 - getal;
 
             }
             else {
                 alert("speler wint");
                 getal = getal * 10;
+                btnSpelerGetCard.disabled = true;
 
             }
             $.ajax({
@@ -135,6 +138,8 @@
                     //hier komt code als speler meer als 21 heeft
                     alert("you lose");
                     getal = 0 - getal;
+                    btnSpelerGetCard.disabled = true;
+                    btnSpelerStop.disabled = true;
 
                     $.ajax({
                         type: 'POST',
