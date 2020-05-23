@@ -5,16 +5,16 @@
 <style>
 
     .img-blackjack-player {
-        border-radius: 0.2em;
+        border-radius: 0.5em;
         height: 10em;
-       /* box-shadow: 2px 2px 2px grey; */
-        padding-left: 2em;
+        /*box-shadow: 2px 2px 2px grey;*/ 
+        margin-left: 2em;
     }
     .img-blackjack-dealer {
-        border-radius: 0.2em;
+        border-radius: 0.5em;
         height: 100%;
-       /* box-shadow: 2px 2px 2px grey; */
-        padding-left: 2em;
+        /*box-shadow: 2px 2px 2px grey;*/ 
+        margin-left: 2em;
     }
 
     .img-inline {
@@ -33,26 +33,30 @@
 
         </div>
     </div>
-    <div class="card-body" style="height: 7em;">
+    <div class="card-body" style="height: 7em; background-color: #702c2c">
         <div class="img-inline" id="FotoDealer"></div>
     </div>
 </div>
-<div id="WaardeDealer">totale score : </div>
+<div id="WaardeDealer">Dealer score: </div>
 
 
-<div id="WaardeSpeler"> totale score: </div>
+<div id="WaardeSpeler">Player score: </div>
 
 <div class="card mb-3  bg-white">
-    <div class="card-body" style="height: 14em;">
-        <div class="img-inline" id="FotoKaartSpeler">Speler:</div>
+    <div class="card-body" style="height: 14em; background-color: #702c2c">
+        <div class="img-inline" id="FotoKaartSpeler">Player:</div>
+    </div>
+    <div class="card mb-3" style="display: flex;flex: auto;flex-direction: row;  background-color: #702c2c; height: 4em;">
+         <button class="btn bg-success" style="width: 17%; font-size:1.5em;color:white;" id="btnSpelerGetCard">Add card</button>
+        <button class="btn bg-danger" style="width: 15%; font-size:1.5em;color:white;" id="btnSpelerStop">Stop</button>
+        <button class="btn bg-warning" style="width: 25%;font-size:1.5em;color:white;" id="btnSpeelOpnieuw">New game</button>
+        <input style="height: auto;" type="number" class="form-control" placeholder="0" id="Bet">
     </div>
 </div>
 
 
-<input style="height: auto;" type="number" class="form-control" id="Bet">
-<button id="btnSpelerGetCard">SPeler get kaart</button>
-<button id="btnSpelerStop">stop</button>
-<button id="btnSpeelOpnieuw">Speel opnieuw</button>
+
+
 
 
 <script type="text/javascript">
@@ -104,13 +108,13 @@
                 btnSpelerGetCard.disabled = true;
                 btnSpelerStop.disabled = true;
                 getal = 0 - getal;
-                document.getElementById("Message").innerHTML = "Dealer wins! you lose " + getal + " Blyats!";
+                document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(getal) + " Blyats!";
 
             }
             else {
                 
-                getal = getal + (getal * 1.5);
-                 document.getElementById("Message").innerHTML = "Player wins! you win " + getal + " Blyats!";
+               let result = Number(getal) + (Number(getal) * 1.5);
+                 document.getElementById("Message").innerHTML = "Player wins! you win " + result + " Blyats!";
                 btnSpelerGetCard.disabled = true;
 
             }
@@ -126,7 +130,8 @@
 
         }
 
-        function getCard(divFoto,soortSpeler) {
+        function getCard(divFoto, soortSpeler) {
+            
             let getal = document.getElementById("Bet").value;
             let card;
             //Haal random waarde uit array waardes
@@ -148,6 +153,7 @@
                     waarde = 13
             }
             if (soortSpeler == "speler") {
+                document.getElementById("Bet").disabled = true;
                 totaleWaardeSpeler += parseInt(waarde);
 
                 console.log(totaleWaardeSpeler);
@@ -160,7 +166,7 @@
                 if (totaleWaardeSpeler > 21) {
                    
                     getal = 0 - getal;
-                       document.getElementById("Message").innerHTML = "Dealer wins! you lose " + getal + " Blyats!";
+                       document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(getal) + " Blyats!";
                     btnSpelerGetCard.disabled = true;
                     btnSpelerStop.disabled = true;
 
