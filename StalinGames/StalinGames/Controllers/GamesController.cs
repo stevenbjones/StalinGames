@@ -67,6 +67,35 @@ namespace StalinGames.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> BlackJack()
+        {
+
+            ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BlackJack(int getal)
+        {
+            ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.Blyats += getal;
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Json(user.Blyats);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Error while updating user blyats";
+                return View("Error");
+            }
+
+
+            //return Ok("Success");
+        }
+
+
 
     }
 }
