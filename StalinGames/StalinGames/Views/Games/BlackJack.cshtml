@@ -4,23 +4,34 @@
 }
 <style>
     .img-blackjack {
-        border-radius: 1em;
-        width: 15%;
-        height: 20em;
+            border-radius: 0.2em;
+    height: 5em;
+    box-shadow: 2px 2px 2px grey;
+    }
+    .img-blackjack-player {
+            border-radius: 0.2em;
+    height: 10em;
+    box-shadow: 2px 2px 2px grey;
     }
 
     .img-inline {
         display: inline;
     }
 </style>
-<h1>BlackJack</h1>
 
 
-<h2 id="getal" asp-for="@Model.Blyats"></h2>
+
 
 <div class="card mb-3  bg-white">
-    <div class="card-body" style="height: 22em;">
-        <div class="img-inline" id="FotoDealer"></div>      
+    <div class="card mb-3  bg-dark">
+        <div class="card-header" style="font-size: 2.5em; text-align: center">
+            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" asp-for="@Model.Blyats" class="form-control" id="Blyats">
+
+
+        </div>
+    </div>
+    <div class="card-body" style="height: 7em;">
+        <div class="img-inline" id="FotoDealer"></div>
     </div>
 </div>
 <div id="WaardeDealer">totale score : </div>
@@ -29,7 +40,7 @@
 <div id="WaardeSpeler"> totale score: </div>
 
 <div class="card mb-3  bg-white">
-    <div class="card-body" style="height: 22em;">
+    <div class="card-body" style="height: 14em;">
         <div class="img-inline" id="FotoKaartSpeler">Speler:</div>
     </div>
 </div>
@@ -86,15 +97,17 @@
                 getCard(kaartDealer, "dealer")
             }
             if (totaleWaardeDealer <= 21) {
-                alert("Dealer wint");
+                
                 btnSpelerGetCard.disabled = true;
                 btnSpelerStop.disabled = true;
                 getal = 0 - getal;
+                document.getElementById("Message").innerHTML = "Dealer wins! you lose " + getal + " Blyats!";
 
             }
             else {
-                alert("speler wint");
-                getal = getal * 10;
+                
+                getal = getal + (getal * 1.5);
+                 document.getElementById("Message").innerHTML = "Player wins! you win " + getal + " Blyats!";
                 btnSpelerGetCard.disabled = true;
 
             }
@@ -104,7 +117,7 @@
                 data: { getal: getal },
                 success: function (result) {
                     getal = result;
-                    document.getElementById("getal").innerHTML = "Blyats " + getal;
+                    document.getElementById("Blyats").value = getal;
                 }
             });
 
@@ -135,9 +148,10 @@
                 totaleWaardeSpeler += parseInt(waarde);
                 document.querySelector("#WaardeSpeler").innerHTML = `Score speler: ${totaleWaardeSpeler}`;
                 if (totaleWaardeSpeler > 21) {
-                    //hier komt code als speler meer als 21 heeft
-                    alert("you lose");
+                   
                     getal = 0 - getal;
+                       document.getElementById("Message").innerHTML = "Dealer wins! you lose " + getal + " Blyats!";
+
                     btnSpelerGetCard.disabled = true;
                     btnSpelerStop.disabled = true;
 
@@ -147,7 +161,7 @@
                         data: { getal: getal },
                         success: function (result) {
                             getal = result;
-                            document.getElementById("getal").innerHTML = "Blyats " + getal;
+                             document.getElementById("Blyats").value = getal;
                         }
                     });
                 }
@@ -160,7 +174,7 @@
             console.log(totaleWaardeSpeler);
             let img = document.createElement("img");
             img.setAttribute("src", `/images/Cards/${card}.jpg`);
-            img.classList.add("img-blackjack");
+            img.classList.add("img-blackjack-player");
             divFoto.appendChild(img);
 
 

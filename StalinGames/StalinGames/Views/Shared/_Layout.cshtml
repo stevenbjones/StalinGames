@@ -78,12 +78,8 @@
                 <li class="nav-item">
                     <a asp-action="Shop" asp-controller="Home" class="nav-link">Shop</a>
                 </li>
-                <li class="nav-item">
-                    <a asp-action="SlotMachine" asp-controller="Games" class="nav-link">SlotMachine</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-action="Blackjack" asp-controller="Games" class="nav-link">BlackJack</a>
-                </li>
+              
+               
                 @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")))
                 {
                     <li class="nav-item dropdown">

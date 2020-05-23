@@ -16,13 +16,14 @@
 </style>
 
 
-<h2 id="getal"></h2>
+
 <div class="card mb-3  bg-danger" style="padding: 1.5em;">
     <div class="card mb-3  bg-dark">
-        <div class="card-header" id="Message" style="font-size: 2.5em; text-align: center">
-            Play <input disabled style="width: 6em; display:inline; float:right;" asp-for="@Model.Blyats" class="form-control">
+        <div class="card-header" style="font-size: 2.5em; text-align: center">
+            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" asp-for="@Model.Blyats" class="form-control" id="Blyats">
+
         </div>
-    </div>
+        </div>
     <div class="card mb-3  bg-white">
         <div class="card-body" style="height: 22em;">
             <div class="img-inline" id="foto1"></div>
@@ -111,7 +112,7 @@
         }
         else {
             getal = 0 - getal;
-                        message.innerHTML = "You lose: " + Math.abs(getal) + " Blyats!"
+                        message.innerHTML = "You lose: " + Math.abs(getal) + " Blyats!" 
         }
         $.ajax({
             type: 'POST',
@@ -119,7 +120,7 @@
             data: { getal: getal },
             success: function (result) {
                 getal = result;
-                document.getElementById("getal").innerHTML = "Blyats " + getal;
+                document.getElementById("Blyats").value = getal;
             }
         });
     }
