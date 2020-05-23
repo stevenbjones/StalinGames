@@ -3,15 +3,18 @@
     ViewData["Title"] = "BlackJack";
 }
 <style>
-    .img-blackjack {
-            border-radius: 0.2em;
-    height: 5em;
-    box-shadow: 2px 2px 2px grey;
-    }
+
     .img-blackjack-player {
-            border-radius: 0.2em;
-    height: 10em;
-    box-shadow: 2px 2px 2px grey;
+        border-radius: 0.2em;
+        height: 10em;
+       /* box-shadow: 2px 2px 2px grey; */
+        padding-left: 2em;
+    }
+    .img-blackjack-dealer {
+        border-radius: 0.2em;
+        height: 100%;
+       /* box-shadow: 2px 2px 2px grey; */
+        padding-left: 2em;
     }
 
     .img-inline {
@@ -123,7 +126,7 @@
 
         }
 
-        function getCard(divFoto, soortSpeler) {
+        function getCard(divFoto,soortSpeler) {
             let getal = document.getElementById("Bet").value;
             let card;
             //Haal random waarde uit array waardes
@@ -146,14 +149,22 @@
             }
             if (soortSpeler == "speler") {
                 totaleWaardeSpeler += parseInt(waarde);
+
+                console.log(totaleWaardeSpeler);
+                let img = document.createElement("img");
+                img.setAttribute("src", `/images/Cards/${card}.jpg`);
+                img.classList.add("img-blackjack-player");
+                divFoto.appendChild(img);
+
                 document.querySelector("#WaardeSpeler").innerHTML = `Score speler: ${totaleWaardeSpeler}`;
                 if (totaleWaardeSpeler > 21) {
                    
                     getal = 0 - getal;
                        document.getElementById("Message").innerHTML = "Dealer wins! you lose " + getal + " Blyats!";
-
                     btnSpelerGetCard.disabled = true;
                     btnSpelerStop.disabled = true;
+
+                   
 
                     $.ajax({
                         type: 'POST',
@@ -167,17 +178,19 @@
                 }
             }
             if (soortSpeler == "dealer") {
+
+                console.log(totaleWaardeSpeler);
+                let img = document.createElement("img");
+                img.setAttribute("src", `/images/Cards/${card}.jpg`);
+                img.classList.add("img-blackjack-dealer");
+                divFoto.appendChild(img);
+
                 totaleWaardeDealer += parseInt(waarde);
                 document.querySelector("#WaardeDealer").innerHTML = `Score dealer: ${totaleWaardeDealer}`
+
+                
             }
-
-            console.log(totaleWaardeSpeler);
-            let img = document.createElement("img");
-            img.setAttribute("src", `/images/Cards/${card}.jpg`);
-            img.classList.add("img-blackjack-player");
-            divFoto.appendChild(img);
-
-
+      
         }
     })
 </script>
