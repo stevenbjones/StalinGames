@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit Employee";
-    var photoPath = $"~/Images/{Model.ExistingPhotoPath ?? "noimage.png"}";
+    var photoPath = $"~/Images/ProfilePictures/{Model.ExistingPhotoPath ?? "noimage.png"}";
 }
 
 <form enctype="multipart/form-data" asp-action="Edit" asp-controller="Home" method="post" class="mt-3">

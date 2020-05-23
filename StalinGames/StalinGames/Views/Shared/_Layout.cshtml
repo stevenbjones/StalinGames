@@ -7,7 +7,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-
+    <link rel="icon" type="image/x-icon" href="~/images/favicon.ico">
     <environment include="Development">
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
@@ -68,7 +68,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark" style="font-size: 1.4rem; background-color: #702c2c; ">
         <a asp-action="Index" asp-controller="Home" class="navbar-brand">
-            <img src="~/images/StalinGames.png" height="80" width="420" asp-append-version="false" />
+            <img src="~/images/WebsitePictures/StalinGames.png" height="80" width="420" asp-append-version="false" />
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -99,7 +99,7 @@
                 {
 
                     var _user = await userManager.FindByNameAsync(User.Identity.Name); //neemt de ingelogde user en zet die in _user zodat ik meer dan alleen de naam kan gebruiken
-                    var profilePicturePath = $"/images/{_user.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
+                    var profilePicturePath = $"/images/ProfilePictures/{_user.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
                     <li class="nav-item">
                         <form method="post" asp-action="PlayerDetails" asp-controller="Account" asp-route-id="@_user.Id">
                             <button type="submit" class="nav-link btn btn-link py-0" style="width:auto; font-size: 1.4rem; margin-top: 7%;">

@@ -4,9 +4,9 @@
 
 @{
     ViewBag.Title = "Player " + Model.Player.UserName;
-    var profilePicturePath = $"/images/{Model.Player.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
+    var profilePicturePath = $"/images/ProfilePictures/{Model.Player.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
     DateTime dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(Model.Player.LastGamePlayed).Date;
-    string background = $"/images/{Model.BackgroundPath}";
+    string background = $"/images/Backgrounds/{Model.BackgroundPath}";
 
 }
 <style>

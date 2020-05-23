@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "Player: " + Model.Username;
-    var profilePicturePath = $"/images/{Model.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
+    var profilePicturePath = $"/images/ProfilePictures/{Model.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
     var password = Model.Password;
 }
 

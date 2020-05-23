@@ -47,7 +47,7 @@
 <div class="card-deck">
     @foreach (var background in Model.Backgrounds)
     {
-        var photoPath = $"~/images/{background.Value}";
+        var photoPath = $"~/images/Backgrounds/{background.Value}";
 
         <div class="card m-3" style="min-width: 18rem; max-width: 30.5%;">
             <div class="card-header" style="display:inline;">
@@ -64,7 +64,7 @@
     {
         @foreach (var background in Model.BackgroundsPurchased)
         {
-            var photoPath = $"~/images/{background.Value}";
+            var photoPath = $"~/images/Backgrounds/{background.Value}";
             <div class="card m-3" style="min-width: 18rem; max-width: 30.5%;">
                 <div class="card-header" style="display:inline;">
                     <h3 style="display:inline;">@background.Name</h3>

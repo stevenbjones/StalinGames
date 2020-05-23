@@ -207,7 +207,7 @@ namespace StalinGames.Controllers
                 {
                     if (model.ProfilePicturePath != null)
                     {
-                        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", model.ProfilePicturePath);
+                        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/ProfilePictures", model.ProfilePicturePath);
 
                         System.IO.File.Delete(filePath);
                     }
@@ -341,7 +341,7 @@ namespace StalinGames.Controllers
 
             if (model.Photo != null)
             {
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/ProfilePictures");
                 uniqueFileName = $"{Guid.NewGuid().ToString()}_{model.Photo.FileName}";
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
