@@ -54,7 +54,7 @@
     </div>
 </div>
 
-
+<div class="text-danger" id="Error"></div>
 
 
 
@@ -133,6 +133,21 @@
         function getCard(divFoto, soortSpeler) {
             
             let getal = document.getElementById("Bet").value;
+            
+        if (getal > @Model.Blyats) {
+            document.getElementById("Error").innerHTML = "You don't have enough blyats to spend that much, smart guy.";
+            return;
+        }
+        else if (getal < 0)
+       {
+            document.getElementById("Error").innerHTML = "You have entered an illegal number, please don't do this.";
+            return;
+         
+        }
+        else
+        {
+             document.getElementById("Error").innerHTML = "";
+        }
             let card;
             //Haal random waarde uit array waardes
             let waarde = values[Math.floor(Math.random() * values.length)].charAt(0)
@@ -153,6 +168,7 @@
                     waarde = 13
             }
             if (soortSpeler == "speler") {
+
                 document.getElementById("Bet").disabled = true;
                 totaleWaardeSpeler += parseInt(waarde);
 

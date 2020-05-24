@@ -49,9 +49,45 @@ namespace StalinGames.DAL.Context
             peter.SecurityStamp = Guid.NewGuid().ToString();
             peter.Blyats = 2000;
 
+            ApplicationUser frank = new ApplicationUser();
+            frank.Id = Guid.NewGuid().ToString();
+            frank.UserName = "frank";
+            frank.Email = "frank@Gmail.com";
+            frank.NormalizedUserName = "frank";
+            frank.PasswordHash = passwordHasher.HashPassword(frank, "$User12345");
+            frank.SecurityStamp = Guid.NewGuid().ToString();
+            frank.Blyats = 2000;
+
+            ApplicationUser jan = new ApplicationUser();
+            jan.Id = Guid.NewGuid().ToString();
+            jan.UserName = "jan";
+            jan.Email = "jan@Gmail.com";
+            jan.NormalizedUserName = "jan";
+            jan.PasswordHash = passwordHasher.HashPassword(jan, "$User12345");
+            jan.SecurityStamp = Guid.NewGuid().ToString();
+            jan.Blyats = 2000;
+
+            ApplicationUser eddy = new ApplicationUser();
+            eddy.Id = Guid.NewGuid().ToString();
+            eddy.UserName = "eddy";
+            eddy.Email = "eddy@Gmail.com";
+            eddy.NormalizedUserName = "eddy";
+            eddy.PasswordHash = passwordHasher.HashPassword(eddy, "$User12345");
+            eddy.SecurityStamp = Guid.NewGuid().ToString();
+            eddy.Blyats = 2000;
+
+            ApplicationUser karel = new ApplicationUser();
+            karel.Id = Guid.NewGuid().ToString();
+            karel.UserName = "karel";
+            karel.Email = "karel@Gmail.com";
+            karel.NormalizedUserName = "karel";
+            karel.PasswordHash = passwordHasher.HashPassword(karel, "$User12345");
+            karel.SecurityStamp = Guid.NewGuid().ToString();
+            karel.Blyats = 2000;
+
             #endregion CreateUsers
 
-            modelBuilder.Entity<ApplicationUser>().HasData(jens, frederik, peter, steven);
+            modelBuilder.Entity<ApplicationUser>().HasData(jens, frederik, peter, steven, frank, jan, eddy, karel);
             modelBuilder.Entity<IdentityRole>().HasData(
           new IdentityRole
           {
@@ -94,19 +130,33 @@ namespace StalinGames.DAL.Context
             {
                 UserId = steven.Id,
                 RoleId = "1"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = frank.Id,
+                RoleId = "3"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = jan.Id,
+                RoleId = "3"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = eddy.Id,
+                RoleId = "3"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = karel.Id,
+                RoleId = "3"
             }
 
           );
 
             modelBuilder.Entity<PlayerItem>().HasData(
 
-                new PlayerItem
-                {
-                    ItemID = Guid.NewGuid().ToString(),
-                    Price = 0,
-                    itemType = ItemType.ProfileTitle,
-                    Name = "Gambler"
-                },
+                
                new PlayerItem
                {
                    ItemID = Guid.NewGuid().ToString(),
@@ -180,7 +230,13 @@ namespace StalinGames.DAL.Context
                 }
 
                );
-
+            PlayerItem gambler = new PlayerItem
+            {
+                ItemID = Guid.NewGuid().ToString(),
+                Price = 0,
+                itemType = ItemType.ProfileTitle,
+                Name = "Gambler"
+            };
             PlayerItem wolfOfWallStreet = new PlayerItem
             {
                 ItemID = Guid.NewGuid().ToString(),
@@ -212,7 +268,7 @@ namespace StalinGames.DAL.Context
                 Name = "Ultimate true StalinGames casino master"
             };
 
-            modelBuilder.Entity<PlayerItem>().HasData(wolfOfWallStreet, kingPin, defaultBackground, trueStalinGamesMaster);
+            modelBuilder.Entity<PlayerItem>().HasData(gambler, wolfOfWallStreet, kingPin, defaultBackground, trueStalinGamesMaster);
             jens.ProfileTitle = kingPin.Name;
             jens.BackGround = defaultBackground.Name;
             modelBuilder.Entity<PlayerPurchase>().HasData(
@@ -239,8 +295,62 @@ namespace StalinGames.DAL.Context
                      OrderID = Guid.NewGuid().ToString(),
                      UserID = jens.Id,
                      ItemID = trueStalinGamesMaster.ItemID
+                 },
+                 new PlayerPurchase
+                 {
+                     OrderID = Guid.NewGuid().ToString(),
+                     UserID = eddy.Id,
+                     ItemID = wolfOfWallStreet.ItemID
+                 },
+                 new PlayerPurchase
+                 {
+                     OrderID = Guid.NewGuid().ToString(),
+                     UserID = eddy.Id,
+                     ItemID = defaultBackground.ItemID
+                 },
+                 new PlayerPurchase
+                 {
+                     OrderID = Guid.NewGuid().ToString(),
+                     UserID = frank.Id,
+                     ItemID = defaultBackground.ItemID
+                 },
+                 new PlayerPurchase
+                 {
+                     OrderID = Guid.NewGuid().ToString(),
+                     UserID = jan.Id,
+                     ItemID = defaultBackground.ItemID
+                 },
+                 new PlayerPurchase
+                 {
+                     OrderID = Guid.NewGuid().ToString(),
+                     UserID = karel.Id,
+                     ItemID = defaultBackground.ItemID
                  }
+
                 );
+            frank.BackGround = defaultBackground.Name;
+            jan.BackGround = defaultBackground.Name;
+            eddy.BackGround = defaultBackground.Name;
+            karel.BackGround = defaultBackground.Name;
+
+            frank.ProfileTitle = gambler.Name;
+            jan.ProfileTitle = gambler.Name;
+            eddy.ProfileTitle = gambler.Name;
+            karel.ProfileTitle = gambler.Name;
+                   
+                
+            frank.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            jan.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            eddy.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            karel.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            frank.AccountCreatedDate = DateTime.Now.Date;
+            jan.AccountCreatedDate = DateTime.Now.Date;
+            eddy.AccountCreatedDate = DateTime.Now.Date;
+            karel.AccountCreatedDate = DateTime.Now.Date;
+
+
+
         }
     }
 }

@@ -33,6 +33,7 @@
         <input style="height: auto;" type="number" class="form-control" placeholder="0" id="BetValue">
     </div>
 </div>
+<div class="text-danger" id="Error"></div>
 
 @*<script src="~/lib/jquery/jquery.js"></script>*@
 <script type="text/javascript">
@@ -72,6 +73,21 @@
     function slotmachine() {
 
         let getal = document.getElementById("BetValue").value;
+
+        if (getal > @Model.Blyats) {
+            document.getElementById("Error").innerHTML = "You don't have enough blyats to spend that much, smart guy.";
+            return;
+        }
+        else if (getal < 0)
+       {
+            document.getElementById("Error").innerHTML = "You have entered an illegal number, please don't do this.";
+            return;
+         
+        }
+        else
+        {
+             document.getElementById("Error").innerHTML = "";
+        }
 
         slotOne = Math.floor(Math.random() * 100) + 1;
         slotTwo = Math.floor(Math.random() * 100) + 1;

@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StalinGames.DAL.Migrations
 {
@@ -194,9 +194,9 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "b70e0fe1-6ffa-46c1-b7a9-394cabd3ae1e", "SuperAdmin", "SUPERADMIN" },
-                    { "2", "d724ee23-44c2-4cc5-a5a2-142a4531abe4", "Admin", "ADMIN" },
-                    { "3", "2adca980-c86b-446b-9f61-183c6eb5a13a", "User", "USER" }
+                    { "1", "55c56c99-bcad-4098-b611-96e294070568", "SuperAdmin", "SUPERADMIN" },
+                    { "2", "329ee51d-9554-49d3-ba3a-5bafc97cd870", "Admin", "ADMIN" },
+                    { "3", "c367796e-296b-4a78-b1e0-af0440fd564e", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -204,10 +204,14 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "AccountCreatedDate", "BackGround", "Blyats", "LastGamePlayed", "ProfilePicturePath", "ProfileTitle", "TotalBlyatsLost", "TotalGamesPlayed" },
                 values: new object[,]
                 {
-                    { "043a0cd9-9f01-4921-bb7e-cd46cd852e32", 0, "0964c179-ee1e-42cd-a952-57e6261e1446", "ApplicationUser", "Jens@StalinGames.com", false, false, null, null, "JENS", "AQAAAAEAACcQAAAAEIF69UM6W7Gbn2U8SgzvA32Sp5xQTfuHb7f+8h6pGF9D5V5Ghy7JUc4eQr3xCLIuCQ==", null, false, "3804006e-11e8-40bb-ac43-c5117df402f4", false, "Jens", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Default background", 2000, 0L, null, "KingPin", 0, 0 },
-                    { "b9620fce-cab5-4006-9827-e946f736fbb3", 0, "1380a6d9-df8a-4763-8135-b67a6c496fe3", "ApplicationUser", "frederik@StalinGames.com", false, false, null, null, "FREDERIK", "AQAAAAEAACcQAAAAEHRj2mCSqiteQcPDlosRdbEEYASdzdkBlWIXWqQkAePIK4yXEr+cVvpg2wapoYHQWA==", null, false, "7c24ec87-a994-4963-a2ac-cb9bc0b4446f", false, "frederik", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "a47b16bd-bd1e-45ce-8fb3-dbff1c40c87f", 0, "9259e67e-2d82-4f86-bf34-d0f6a57191f7", "ApplicationUser", "peter@Gmail.com", false, false, null, null, "PETER", "AQAAAAEAACcQAAAAEFUL6tc4/whLWGaoqrG9yg1dvYSaBJY/ZpoKFKst+6CDh5PDY3obZ+ZvM5kiQGtu2A==", null, false, "3de0c5ff-c416-4b0a-b889-a00886b99caf", false, "peter", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "59e2ecb0-5584-4845-9fb6-0c83ac8b0106", 0, "a21293b9-1c77-4cfd-86e5-adb8e6a7688e", "ApplicationUser", "steven@StalinGames.com", false, false, null, null, "steven", "AQAAAAEAACcQAAAAEJzdI82qebWqG/xgQTSqq9FkgY81oqFi+83XOoKhlJm6LDf4eefOdTzxOoFCiR8bAw==", null, false, "c8dfc01c-8788-4462-9bbb-e9badaa4d4ee", false, "steven", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 }
+                    { "9bf697a9-144d-4967-a8cc-28af82c39c35", 0, "057444d5-ee69-479e-9e42-2e03895dba22", "ApplicationUser", "karel@Gmail.com", false, false, null, null, "karel", "AQAAAAEAACcQAAAAEBTyt73+WyaPCrZ470AzuNwWoEFUZWeXUcdGqhfAzk+cSzfx6mwCaP8Wk7bgCLkmRw==", null, false, "7437ada2-f86e-4026-8667-20d683b79e87", false, "karel", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
+                    { "5cbe2019-de2e-46ac-97a0-cf20b01b9626", 0, "5326cba1-5f18-4ad4-ad0b-e8bcb3075d44", "ApplicationUser", "eddy@Gmail.com", false, false, null, null, "eddy", "AQAAAAEAACcQAAAAEJta4I9zTn2dHpC6PO8ULZGqGWj5qpfCtp2p99CPb4+o0o1BbV7kHNTVSPltuxgMVw==", null, false, "5148c92f-a348-4ce4-8da9-96be338c32b3", false, "eddy", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
+                    { "de2409da-5322-44da-85ce-ef5af9c81080", 0, "17ca9f60-2374-4102-8cf9-2f4c8eac6b09", "ApplicationUser", "frank@Gmail.com", false, false, null, null, "frank", "AQAAAAEAACcQAAAAEB2o1vPM3N8NCy1+SK9WGyIrkhZja99l822HvQ7tugLtomE0IF8uc7ju5gFYqI2lSg==", null, false, "6553482c-5f3d-4186-80a1-8dce4667ef5b", false, "frank", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
+                    { "af29d398-5ae0-414c-b5de-07c2e8364a1c", 0, "748ec81b-cac3-4bbe-b7e7-648d289a7ad1", "ApplicationUser", "jan@Gmail.com", false, false, null, null, "jan", "AQAAAAEAACcQAAAAEIvkL711a+bDagutmH0V1mteuWl/TA0ITKpabqc98ivPs+tSR4mwZ1dVi/Xc1R88QQ==", null, false, "cc88d6ac-5463-4d32-9bc6-91ebbefa0864", false, "jan", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
+                    { "dae85a09-79fe-47e2-b733-afd35727520e", 0, "5068c560-9971-4716-8f79-e7e679c88592", "ApplicationUser", "peter@Gmail.com", false, false, null, null, "PETER", "AQAAAAEAACcQAAAAECXpbl1ya79Vl1hqU9OuZI1vQJ7oOGDjchrl1vqqyxT8Ox0czpXFw9lx9Q/zp/ZlMQ==", null, false, "83e70c8f-fc6e-4e7b-9fb9-9cb576193803", false, "peter", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
+                    { "e2e86a6a-fd39-4ebd-b00f-5f39ce9700b8", 0, "7eb882ac-d9af-41dd-b9ae-c13ce35e6b57", "ApplicationUser", "frederik@StalinGames.com", false, false, null, null, "FREDERIK", "AQAAAAEAACcQAAAAEJs+cs9MwYA3OCX5lIY0rQqEe2IGcsedEHaXMfFopaW4rVvUFXFeZc9PW9bx9R3rSg==", null, false, "86647a69-c5f6-4b0b-8459-30fbcb69e5a4", false, "frederik", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
+                    { "e5e1216b-6aa4-49b5-9f05-452e704c377b", 0, "a9f9febc-573d-461a-bf2e-044322003efe", "ApplicationUser", "Jens@StalinGames.com", false, false, null, null, "JENS", "AQAAAAEAACcQAAAAEBpKO9kB4DSai7pNMDYg0CDRZcwNBDNbjKonBuG7LFDUZIQxZ7p4/oYUzPrFkptFfw==", null, false, "09a0e607-6438-4241-b454-5d87440386d5", false, "Jens", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Default background", 2000, 0L, null, "KingPin", 0, 0 },
+                    { "acd885ef-b705-4e8f-89d3-fa52eb1ccc3f", 0, "e32f5eee-dacd-4d8b-a13c-0a51eedd411b", "ApplicationUser", "steven@StalinGames.com", false, false, null, null, "steven", "AQAAAAEAACcQAAAAEEdG82+EfC2ZnDpL+G/MJQeTPZg9Pn+6xRuH4R3qqTiHst3ghCJN/DWnVZLRKLPuyg==", null, false, "e8ad211a-8a89-417f-9e83-6ef957ae848f", false, "steven", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -215,19 +219,20 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "ItemID", "Name", "Price", "Value", "itemType" },
                 values: new object[,]
                 {
-                    { "3986abac-0767-4db7-9417-14f4f4a0f979", "KingPin", 1000000, null, 0 },
-                    { "afbef5e9-1991-49a6-bc2d-c401d69d48e0", "Wolf of Wall Street", 1000000, null, 0 },
-                    { "91eb8406-e5ea-42f6-a118-443575571ffe", "Ultimate true StalinGames casino master", 1000000, "TrueStalinGamesMaster.jpg", 1 },
-                    { "12f488d1-efcb-4be3-a674-7b26ed2fcb41", "Slot machine master", 200000, "SlotMachineMaster.jpg", 1 },
-                    { "534146c6-cdb8-4c03-a025-32cd5c111e0f", "Roulette master", 200000, "RouletteMaster.jpg", 1 },
-                    { "077faa2c-67c4-4a29-8ca0-e9bcf6524a0e", "Ace on fire", 50000, "FireAce.jpg", 1 },
-                    { "4b205760-94dd-4be2-883b-36670ff78db6", "Black jack master", 200000, "BlackJackMaster.jpg", 1 },
-                    { "e7e4ce71-2d18-403f-9dc8-91c990ea0ef5", "Simple card pattern", 5000, "CardPattern.jpg", 1 },
-                    { "a0ba85cb-4c06-4b79-9ffb-fb6a87dbdf66", "Absolute Legend", 100000, null, 0 },
-                    { "b3dc130b-7b12-4254-b367-02c7574d5a84", "Local Champion", 10000, null, 0 },
-                    { "73f31485-0aea-4fb9-b629-a41f6b1c5cdd", "Simp", 2000, null, 0 },
-                    { "ccce3e54-74b8-4fba-bbac-288b07f5a314", "Gambler", 0, null, 0 },
-                    { "c0d66d31-b92e-437b-b752-9495749ecb37", "Casino master", 500000, "CasinoMaster.jpg", 1 }
+                    { "c187ba4f-4127-4dc3-a2e3-d647ea9266dd", "Roulette master", 200000, "RouletteMaster.jpg", 1 },
+                    { "8f560516-670a-4346-800c-d8849972bcb6", "Ultimate true StalinGames casino master", 1000000, "TrueStalinGamesMaster.jpg", 1 },
+                    { "8fd88427-1a99-4c07-92bc-e39db894da9d", "Default background", 0, "DefaultBackground.jpg", 1 },
+                    { "57ff676e-f674-4af4-9b2d-2819aaf83765", "KingPin", 1000000, null, 0 },
+                    { "fd7e6639-3025-4cc6-bc6f-5d2768dd7957", "Wolf of Wall Street", 500000, null, 0 },
+                    { "58a08eda-7ab2-4f68-ad55-b4ac0a1b93d7", "Slot machine master", 200000, "SlotMachineMaster.jpg", 1 },
+                    { "71d0bb5c-e303-43cc-9a87-48bc80f3bde6", "Ace on fire", 50000, "FireAce.jpg", 1 },
+                    { "e20e6ef5-e9d4-4a79-979f-59f22d0374fd", "Absolute Legend", 100000, null, 0 },
+                    { "5d89333d-00b4-4ef5-b402-67c5367ca978", "Simple card pattern", 5000, "CardPattern.jpg", 1 },
+                    { "0064462d-f17f-46a3-a26b-e065090ece2b", "Black jack master", 200000, "BlackJackMaster.jpg", 1 },
+                    { "56e38f48-2e86-428d-90a9-56f6f2c4b2be", "Local Champion", 10000, null, 0 },
+                    { "66f21c6c-ec39-48a5-ad19-3de0b7ffe0f0", "Simp", 2000, null, 0 },
+                    { "983c1dc6-8dd1-4447-b999-7df7158884a6", "Gambler", 0, null, 0 },
+                    { "4c4e5f14-3499-4372-8403-914c43326570", "Casino master", 500000, "CasinoMaster.jpg", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -235,9 +240,11 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "OrderID", "ItemID", "UserID" },
                 values: new object[,]
                 {
-                    { "657256fa-f242-47a9-bfa9-53668416aabd", "3986abac-0767-4db7-9417-14f4f4a0f979", "043a0cd9-9f01-4921-bb7e-cd46cd852e32" },
-                    { "126fe372-08c8-4125-be19-0194d372be0a", "afbef5e9-1991-49a6-bc2d-c401d69d48e0", "043a0cd9-9f01-4921-bb7e-cd46cd852e32" },
-                    { "21a6992d-68c8-4d25-ac89-8461e878798f", "cfcac2df-92e0-4862-9f2b-fa648eb62c90", "043a0cd9-9f01-4921-bb7e-cd46cd852e32" }
+                    { "ca3016e3-401b-430d-a62b-a041721efea1", "8f560516-670a-4346-800c-d8849972bcb6", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
+                    { "092ddc63-7c43-4129-843b-a48313a74fe9", "fd7e6639-3025-4cc6-bc6f-5d2768dd7957", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
+                    { "beb5fddc-a9af-4402-8d1a-94a1f26f2745", "57ff676e-f674-4af4-9b2d-2819aaf83765", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
+                    { "fcf5c83f-970f-47a0-9a43-1d2651ea9bc5", "8fd88427-1a99-4c07-92bc-e39db894da9d", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
+                    { "268f0b06-4e86-4c46-960a-e14ade9c67a0", "fd7e6639-3025-4cc6-bc6f-5d2768dd7957", "5cbe2019-de2e-46ac-97a0-cf20b01b9626" }
                 });
 
             migrationBuilder.InsertData(
@@ -245,10 +252,14 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "UserId", "RoleId" },
                 values: new object[,]
                 {
-                    { "043a0cd9-9f01-4921-bb7e-cd46cd852e32", "1" },
-                    { "b9620fce-cab5-4006-9827-e946f736fbb3", "2" },
-                    { "a47b16bd-bd1e-45ce-8fb3-dbff1c40c87f", "3" },
-                    { "59e2ecb0-5584-4845-9fb6-0c83ac8b0106", "1" }
+                    { "e5e1216b-6aa4-49b5-9f05-452e704c377b", "1" },
+                    { "e2e86a6a-fd39-4ebd-b00f-5f39ce9700b8", "2" },
+                    { "dae85a09-79fe-47e2-b733-afd35727520e", "3" },
+                    { "acd885ef-b705-4e8f-89d3-fa52eb1ccc3f", "1" },
+                    { "de2409da-5322-44da-85ce-ef5af9c81080", "3" },
+                    { "af29d398-5ae0-414c-b5de-07c2e8364a1c", "3" },
+                    { "5cbe2019-de2e-46ac-97a0-cf20b01b9626", "3" },
+                    { "9bf697a9-144d-4967-a8cc-28af82c39c35", "3" }
                 });
 
             migrationBuilder.CreateIndex(

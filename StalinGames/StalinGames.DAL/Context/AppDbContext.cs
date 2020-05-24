@@ -22,9 +22,7 @@ namespace StalinGames.DAL.Context
             //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             //} gaf errors
 
-            //ShopItemsView, ShopItemsViewModel, shop toont u een lijst van backgrounds zoals employees, en een lijst van titles.
-            //card toont een buy optie (of een vinkje als de player het al heeft gekocht.)
-            //als je het koopt krijgt ge zo ne smooth popup van congratulations blabla en dan refresht de site na 4 seconde ofzo
-        }
+
+           }
     }
 }
