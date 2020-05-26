@@ -42,7 +42,13 @@ namespace StalinGames.Controllers
         public async Task<IActionResult> SlotMachine(int getal)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             user.Blyats += getal;
+            user.TotalGamesPlayed++;
+            if (getal < 0)
+            {
+                user.TotalBlyatsLost += Math.Abs(getal);
+            }
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
@@ -58,13 +64,6 @@ namespace StalinGames.Controllers
             //return Ok("Success");
         }
 
-        [HttpPost]
-        public IActionResult SlotMachineTest(int getal)
-        {
-            getal = 69420;
-            return Json(getal);
-            //return Ok("Success");
-        }
 
 
         [HttpGet]
@@ -79,7 +78,13 @@ namespace StalinGames.Controllers
         public async Task<IActionResult> BlackJack(int getal)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             user.Blyats += getal;
+            user.TotalGamesPlayed++;
+            if (getal < 0)
+            {
+                user.TotalBlyatsLost += Math.Abs(getal);
+            }
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
