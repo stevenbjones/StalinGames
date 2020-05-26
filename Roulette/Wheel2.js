@@ -84,23 +84,27 @@ window.addEventListener('load',function(){
       spinAngleStart = Math.random() * 10 + 10;
       spinTime = 5;
       spinTimeTotal = Math.random() * 3 + 4 * 1000;
-      rotateWheel();
+      callRotateWheel();
     }
     
     function rotateWheel() {
       spinTime += 30;
       if(spinTime >= spinTimeTotal) {
-        stopRotateWheel();
+        //stopRotateWheel();
         return;
       }
       var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
       startAngle += (spinAngle * Math.PI / 180);
-      drawRouletteWheel();
-     for(let i = 0 ; i<(Math.floor(Math.random() * 50))  ; i++)
-     {
-       rotateWheel();
-     }
-      stopRotateWheel();
+      drawRouletteWheel();  
+    }
+
+    //Gebruik deze functie om RotateWheel verschillende keren te herhalen
+    function callRotateWheel(){
+      for(let i = 0 ; i<(Math.floor(Math.random() * 50))  ; i++)
+      {
+        rotateWheel();
+      }
+       stopRotateWheel();
     }
     
     function stopRotateWheel() {
@@ -111,9 +115,25 @@ window.addEventListener('load',function(){
       ctx.save();
       ctx.font = 'bold 30px Helvetica, Arial';
       var text = options[index]
+     
+      checkProfit(text);
       console.log(window.gegokteWaarde);
+      console.log(window.Bets);
+      
+
       ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
       ctx.restore();
+    }
+
+    function checkProfit(resultaat){
+
+      for(let i = 1 ; i<window.gegokteWaarde.length ; i++){
+        if(resultaat == (gegokteWaarde[i]) ){
+          //hier komt de winst
+          console.log(`U heeft ${window.Bets[i]} ingezet op ${window.gegokteWaarde[i]} hierdoor wint u ${window.Bets[i] * 10} `)
+        }
+      }
+
     }
     
     function easeOut(t, b, c, d) {

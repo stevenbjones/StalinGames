@@ -4,7 +4,7 @@ window.addEventListener('load',function(){
         let bord = document.querySelector("#bord");
         let div = document.createElement("div");
         let btnTest = document.querySelector("#stopBetting");
-        let bet = 0;      
+        let bet = "";      
         let gegokteWaarden = "";
         
        for(let i = 1 ; i<=36;i++)
@@ -13,18 +13,29 @@ window.addEventListener('load',function(){
             waarde(i);
           })
        }
+       this.document.querySelector("#waardeRood").addEventListener("click",function(){
+
+       })
+       this.document.querySelector("#waardeZwart").addEventListener("click",function(){
+         
+      })
 
        btnTest.addEventListener("click",function(){
-        window.gegokteWaarde = gegokteWaarden;
+     
+        var ArrayGegoksteWaarden = gegokteWaarden.split(",");
+        var ArrayBet = bet.split(",");
+        console.log(ArrayGegoksteWaarden);
+
+        window.gegokteWaarde = ArrayGegoksteWaarden;
+        window.Bets = ArrayBet;
+
        })
 
       
-       function waarde(cijfer){
-      
-         bet = document.getElementById("betvalue").value;
-         gegokteWaarden+= `${cijfer},`
-         console.log(gegokteWaarden);
-         alert(`U gokt ${bet} op ${cijfer}`);
+       function waarde(cijfer){      
+         bet += `${document.getElementById("betvalue").value},`;
+         gegokteWaarden+= `${cijfer},`       
+              
        }
 })
  
