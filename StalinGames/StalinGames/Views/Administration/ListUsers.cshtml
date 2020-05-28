@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ApplicationUser>
+@inject SignInManager<ApplicationUser> signInManager;
 
 @{
     ViewBag.Title = "All Users";
@@ -8,10 +9,16 @@
 
 @if (Model.Any())
 {
+
     <a asp-action="Register" asp-controller="Account" class="btn btn-success mb-3" style="width:auto">
         Add new user
     </a>
-
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("SuperAdmin"))
+    {
+        <a asp-action="ListDeletedUsers" asp-controller="Administration" class="btn btn-primary mb-3" style="width:auto">
+            Show deleted users
+        </a>
+    }
     foreach (var user in Model)
     {
         <div class="card mb-3  bg-dark">
@@ -24,7 +31,7 @@
             <div class="card-footer">
                 <form asp-action="DeleteUser" asp-controller="Administration" asp-route-id="@user.Id" method="post">
                     <a asp-action="EditUser" asp-controller="Administration" asp-route-id="@user.Id" class="btn btn-warning">Edit</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the user: @user.UserName ')">Delete</button>
                 </form>
             </div>
         </div>
@@ -32,7 +39,7 @@
 }
 else
 {
-    <div class="card">
+    <div class="card  bg-dark">
         <div class="card-header">
             No users created yet
         </div>
@@ -40,7 +47,7 @@ else
             <h5 class="card-title">
                 Use the button below to create a user
             </h5>
-            <a class="btn btn-success" style="width:auto" asp-controller="Account" asp-action="Register">
+            <a class="btn btn-warning" style="width:auto" asp-controller="Account" asp-action="Register">
                 Add new user
             </a>
         </div>

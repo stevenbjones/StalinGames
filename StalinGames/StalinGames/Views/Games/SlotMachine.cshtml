@@ -79,7 +79,7 @@
             return;
         }
         else if (getal < 0)
-        {
+       {
             document.getElementById("Error").innerHTML = "You have entered an illegal number, please don't do this.";
             return;
          
@@ -139,7 +139,7 @@
         foto3.appendChild(img3);
 
         let message = document.getElementById("Message");
-        let blyatsLost = 0;
+
         if (img.src == img2.src && img.src == img3.src) {
             switch (true) {
                 case img.src.includes("cherries"):
@@ -174,17 +174,10 @@
             getal = 0 - getal;
             message.innerHTML = "You lose: " + Math.abs(getal) + " Blyats!"
         }
-        let now = new Date();
-        var returnData = {
-            getal: getal,
-            lastGamePlayed: Math.round(now.getTime() / 1000)
-        };
-
-
         $.ajax({
             type: 'POST',
             url: '/Games/SlotMachine',
-            data: returnData,
+            data: { getal: getal },
             success: function (result) {
                 getal = result;
                 document.getElementById("Blyats").value = getal;

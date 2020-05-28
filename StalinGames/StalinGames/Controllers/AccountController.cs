@@ -44,6 +44,11 @@ namespace StalinGames.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
+            if (_signInManager.IsSignedIn(User) && User.IsInRole("User"))
+            {
+                ViewBag.ErrorMessage = "You are not allowed to create a new user while logged in.";
+                return View("Error");
+            }
             return View();
         }
 
@@ -115,6 +120,11 @@ namespace StalinGames.Controllers
                 ViewBag.ErrorMessage = "The specific user with id " + id + " is not found";
                 return View("NotFound", id);
             }
+            if (user.Status == PlayerStatus.Deleted)
+            {
+                ViewBag.ErrorMessage = "The user you are currently trying to view has been deleted. Please contact the support team if this should not be the case.";
+                return View("Error");
+            }
             string backGroundPath = _playerItemRepository.FindByName(user.BackGround).Value;
             PlayerDetailsViewModel model = new PlayerDetailsViewModel()
             {
@@ -138,7 +148,7 @@ namespace StalinGames.Controllers
             if (_userManager.FindByNameAsync(User.Identity.Name).Result != user)
             {
                 ViewBag.ErrorMessage = "You are not allowed to do this action.";
-                return View("NotFound");
+                return View("Error");
             }
 
             var model = new PlayerEditViewModel
@@ -167,10 +177,16 @@ namespace StalinGames.Controllers
                     return View("Error");
                 }
 
-                if (item.itemType == ItemType.ProfileTitle)
+                if (item.Type == ItemType.ProfileTitle)
+                {
                     profileTitleUser.Add(item);
+                }
+
                 else
+                {
                     backgroundPictureUser.Add(item);
+                }
+                   
             }
 
             List<SelectListItem> profileTitlesSelect = new List<SelectListItem>();
@@ -192,7 +208,10 @@ namespace StalinGames.Controllers
         [HttpPost]
         public async Task<IActionResult> PlayerEdit(PlayerEditViewModel model)
         {
+            //de user in var user steken
             var user = await _userManager.FindByIdAsync(model.Id);
+
+            //de passwoorden van de model halen
             model.Password = user.PasswordHash;
             model.ConfirmPassword = user.PasswordHash;
             if (ModelState.IsValid)
@@ -202,7 +221,7 @@ namespace StalinGames.Controllers
                     ViewBag.ErrorMessage = $"User with username = {model.Username} cannot be found";
                     return View("NotFound");
                 }
-
+                //checken voor nieuwe profielfoto
                 if (model.Photo != null)
                 {
                     if (model.ProfilePicturePath != null)
@@ -215,9 +234,11 @@ namespace StalinGames.Controllers
                     user.ProfilePicturePath = ProcessUploadedFile(model);
                 }
 
+
                 user.ProfileTitle = model.ProfileTitle;
                 user.BackGround = model.BackgroundName;
                 bool checkIfUsernameChanged = false; ;
+                //als de username veranderd is maken we checkifusernamechanged true
                 if (model.Username != user.UserName)
                 {
                     user.UserName = model.Username;
@@ -225,9 +246,12 @@ namespace StalinGames.Controllers
                 }
 
                 user.Email = model.Email;
+                user.UpdatedBy = user.Id;
+                user.LastUpdateDate =  DateTime.Now.Date;
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
+                    //als de username veranderd is loggen we de gebruiker uit want de cookie veranderd niet mee waardoor de gebruiker anders nooit meer de website zal kunnen gebruiken
                     if (checkIfUsernameChanged)
                     {
                         await _signInManager.SignOutAsync();
@@ -250,7 +274,8 @@ namespace StalinGames.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+          
+             if (ModelState.IsValid)
             {
                 string _photoFileName = ProcessUploadedFile(model);
 
@@ -261,7 +286,8 @@ namespace StalinGames.Controllers
                     ProfilePicturePath = _photoFileName,
                     Blyats = 2000,
                     LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-                    AccountCreatedDate = DateTime.Now.Date
+                    AccountCreatedDate = DateTime.Now.Date,
+                    Status = PlayerStatus.Active                 
                 };
 
                 IdentityResult identityResult = await _userManager.CreateAsync(user, model.Password);
@@ -275,6 +301,16 @@ namespace StalinGames.Controllers
                     PlayerItem backgroundPictureDefault = _playerItemRepository.FindByName("Default background");
                     _playerPurchasesRepository.Add(user, backgroundPictureDefault);
                     user.BackGround = backgroundPictureDefault.Name;
+
+                    if (_signInManager.IsSignedIn(User))
+                    {
+                        ApplicationUser userSignedIn = await _userManager.FindByNameAsync(User.Identity.Name);
+                        user.CreatedBy = userSignedIn.Id;
+                    }
+                    else
+                    {
+                        user.CreatedBy = user.Id;
+                    }
 
                     if (!_userManager.UpdateAsync(user).Result.Succeeded)
                     {
@@ -315,7 +351,11 @@ namespace StalinGames.Controllers
         {
             if (ModelState.IsValid)
             {
-                var temp = model.Username;
+                if (_userManager.FindByNameAsync(model.Username).Result.Status == PlayerStatus.Deleted)
+                {
+                    ViewBag.ErrorMessage = "The user you are currently trying log into has been deleted. Please contact the support team if this should not be the case.";
+                    return View("Error");
+                }
                 var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
 
                 if (signInResult.Succeeded)
@@ -354,13 +394,7 @@ namespace StalinGames.Controllers
             return uniqueFileName;
         }
 
-        //private List<PlayerPurchase> GetUsersPurchasesByType(ApplicationUser user, ItemType type)
-        //{
-        //    List<>
-        //    for (int i = 0; i < length; i++)
-        //    {
-        //    }
-        //}
+ 
 
         [HttpGet]
         [AllowAnonymous]

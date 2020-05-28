@@ -10,8 +10,8 @@ using StalinGames.DAL.Context;
 namespace StalinGames.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200523194030_adddefaultbackgroundtousers")]
-    partial class adddefaultbackgroundtousers
+    [Migration("20200528115349_status")]
+    partial class status
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,21 +51,21 @@ namespace StalinGames.DAL.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "1ffd62da-1cb8-46ee-95d9-ed8c05b282bf",
+                            ConcurrencyStamp = "63454598-c8c6-434b-a067-1bf346a5cfc1",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "172986b2-802d-41a7-b573-a3a349b31bd9",
+                            ConcurrencyStamp = "63cadd00-d5ea-41ca-8763-e5df51159f0c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "34ab4a34-4f33-41ac-acc0-cabb47a043eb",
+                            ConcurrencyStamp = "911c789b-9f3b-4def-93b6-636733e7a0e4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -229,42 +229,42 @@ namespace StalinGames.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "bf204a27-bceb-4ba4-b254-d51c117160f7",
+                            UserId = "a494ba54-9af3-4d2e-9bb5-44310c517ae1",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "468dac6f-55a6-42d1-824d-e7e4c8224e7f",
+                            UserId = "377e88ca-7356-48be-a2f9-fc32fe94c700",
                             RoleId = "2"
                         },
                         new
                         {
-                            UserId = "03470246-a39c-4f62-9074-01ccceb4c393",
+                            UserId = "ffeaef44-072c-4756-891a-ae37c6b00eba",
                             RoleId = "3"
                         },
                         new
                         {
-                            UserId = "30f6be09-dae8-4366-9889-8ef233b671da",
+                            UserId = "a3e3b09d-ae23-44f1-82c0-ea0bca0e56c8",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "560bf694-fb85-42af-889a-20f8c1c92613",
+                            UserId = "f80aecde-919f-4600-a98f-457aefbdc071",
                             RoleId = "3"
                         },
                         new
                         {
-                            UserId = "30c2d10d-0aac-4095-b796-3d3a63a23216",
+                            UserId = "a865fec4-3757-4330-bc89-90d9cddf8904",
                             RoleId = "3"
                         },
                         new
                         {
-                            UserId = "2476ef9e-6c79-4eb3-b20b-cfd817910843",
+                            UserId = "ee7c1584-fffa-465b-86a5-43f10c62040e",
                             RoleId = "3"
                         },
                         new
                         {
-                            UserId = "d450060a-fe94-4126-b487-0cf8dbb66f1c",
+                            UserId = "710b35e5-af8f-4931-a4d6-95fa05655173",
                             RoleId = "3"
                         });
                 });
@@ -299,11 +299,11 @@ namespace StalinGames.DAL.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("itemType")
-                        .HasColumnType("int");
 
                     b.HasKey("ItemID");
 
@@ -312,109 +312,109 @@ namespace StalinGames.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            ItemID = "cdf24de5-2b7d-4457-bd1b-cad9e31bb6d2",
-                            Name = "Gambler",
-                            Price = 0,
-                            itemType = 0
-                        },
-                        new
-                        {
-                            ItemID = "4a2f9da9-e2df-4363-ba74-8977d84d9e03",
+                            ItemID = "a8e3a7a9-ee97-4a60-94b6-f38025b673c0",
                             Name = "Simp",
                             Price = 2000,
-                            itemType = 0
+                            Type = 0
                         },
                         new
                         {
-                            ItemID = "f3e4d1f9-f3e9-43b1-8111-254da8b412ad",
+                            ItemID = "600aa645-1106-4d4b-95ba-b47067152778",
                             Name = "Local Champion",
                             Price = 10000,
-                            itemType = 0
+                            Type = 0
                         },
                         new
                         {
-                            ItemID = "b7c74320-7258-47e0-bafb-f0a163bd174c",
+                            ItemID = "963e1bed-1db6-499b-b861-d76b95271124",
                             Name = "Absolute Legend",
                             Price = 100000,
-                            itemType = 0
+                            Type = 0
                         },
                         new
                         {
-                            ItemID = "11e5551d-7ea9-4108-9ad2-448dadae0c65",
+                            ItemID = "2683610e-1f1e-4076-bae7-6f92dde0dad3",
                             Name = "Black jack master",
                             Price = 200000,
-                            Value = "BlackJackMaster.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "BlackJackMaster.jpg"
                         },
                         new
                         {
-                            ItemID = "5cdb6c94-64a2-49cd-a395-27188e0fa7d8",
+                            ItemID = "0db18983-b588-4c7f-9444-bcb3df5761ac",
                             Name = "Simple card pattern",
                             Price = 5000,
-                            Value = "CardPattern.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "CardPattern.jpg"
                         },
                         new
                         {
-                            ItemID = "81d91f37-5841-4a6c-87c9-796969eb69d2",
+                            ItemID = "19606388-dea2-4ad5-ab06-8441309b8216",
                             Name = "Casino master",
                             Price = 500000,
-                            Value = "CasinoMaster.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "CasinoMaster.jpg"
                         },
                         new
                         {
-                            ItemID = "b6c42c46-46db-4e79-bf36-b8ebaa61c167",
+                            ItemID = "2ae8d01a-cbd8-45e7-9277-0614abba5a8e",
                             Name = "Ace on fire",
                             Price = 50000,
-                            Value = "FireAce.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "FireAce.jpg"
                         },
                         new
                         {
-                            ItemID = "f0a89e2a-3a35-49ad-83b7-14b5be72b058",
+                            ItemID = "4c1b53ed-ad57-4001-a086-dbb0c5d9c22c",
                             Name = "Roulette master",
                             Price = 200000,
-                            Value = "RouletteMaster.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "RouletteMaster.jpg"
                         },
                         new
                         {
-                            ItemID = "f994ab7a-f25d-4a0a-9bd3-2a56e9cb75d3",
+                            ItemID = "0fa8689d-3d5d-4f57-97e3-6e1670b64695",
                             Name = "Slot machine master",
                             Price = 200000,
-                            Value = "SlotMachineMaster.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "SlotMachineMaster.jpg"
                         },
                         new
                         {
-                            ItemID = "30c87182-b4ea-4b80-8988-24806633823e",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            Name = "Gambler",
+                            Price = 0,
+                            Type = 0
+                        },
+                        new
+                        {
+                            ItemID = "06deddce-0bcb-4fc0-b888-e5b4d84c08f0",
                             Name = "Wolf of Wall Street",
                             Price = 500000,
-                            itemType = 0
+                            Type = 0
                         },
                         new
                         {
-                            ItemID = "01402636-9a0c-48c8-a922-264d118f67c1",
+                            ItemID = "1ee8a279-d8e2-4832-b1e3-d837561ae437",
                             Name = "KingPin",
                             Price = 1000000,
-                            itemType = 0
+                            Type = 0
                         },
                         new
                         {
-                            ItemID = "70a296b4-d952-49a8-8952-e95332c1574d",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
                             Name = "Default background",
                             Price = 0,
-                            Value = "DefaultBackground.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "DefaultBackground.jpg"
                         },
                         new
                         {
-                            ItemID = "51ea3e43-e7ed-4b11-a795-fc39729fdf4a",
+                            ItemID = "47cab2af-c945-4eab-b6a7-a91444d7def8",
                             Name = "Ultimate true StalinGames casino master",
                             Price = 1000000,
-                            Value = "TrueStalinGamesMaster.jpg",
-                            itemType = 1
+                            Type = 1,
+                            Value = "TrueStalinGamesMaster.jpg"
                         });
                 });
 
@@ -438,57 +438,117 @@ namespace StalinGames.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            OrderID = "48552e69-0665-4aa5-8691-ce4b82f3e4e7",
-                            ItemID = "30c87182-b4ea-4b80-8988-24806633823e",
-                            UserID = "bf204a27-bceb-4ba4-b254-d51c117160f7"
+                            OrderID = "1f9962a4-5cd0-4ab2-bbe0-bc705fd721b7",
+                            ItemID = "06deddce-0bcb-4fc0-b888-e5b4d84c08f0",
+                            UserID = "a494ba54-9af3-4d2e-9bb5-44310c517ae1"
                         },
                         new
                         {
-                            OrderID = "89776a87-9e86-4174-985e-79ce839ae773",
-                            ItemID = "01402636-9a0c-48c8-a922-264d118f67c1",
-                            UserID = "bf204a27-bceb-4ba4-b254-d51c117160f7"
+                            OrderID = "35c3aa00-d212-478f-ba1b-79fce996bc51",
+                            ItemID = "1ee8a279-d8e2-4832-b1e3-d837561ae437",
+                            UserID = "a494ba54-9af3-4d2e-9bb5-44310c517ae1"
                         },
                         new
                         {
-                            OrderID = "ebcbd5ae-24ce-417a-a64c-032178fcfa41",
-                            ItemID = "70a296b4-d952-49a8-8952-e95332c1574d",
-                            UserID = "bf204a27-bceb-4ba4-b254-d51c117160f7"
+                            OrderID = "9c8d497b-d9d1-44e1-b47f-fc5a7712358f",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "a494ba54-9af3-4d2e-9bb5-44310c517ae1"
                         },
                         new
                         {
-                            OrderID = "a2e97819-add7-4211-a7f8-4ac4739896c2",
-                            ItemID = "51ea3e43-e7ed-4b11-a795-fc39729fdf4a",
-                            UserID = "bf204a27-bceb-4ba4-b254-d51c117160f7"
+                            OrderID = "8f5602a6-3419-442a-8a8d-79afadaf3dc9",
+                            ItemID = "47cab2af-c945-4eab-b6a7-a91444d7def8",
+                            UserID = "a494ba54-9af3-4d2e-9bb5-44310c517ae1"
                         },
                         new
                         {
-                            OrderID = "a301194d-52cd-4e06-9a85-0c68fcac8b59",
-                            ItemID = "30c87182-b4ea-4b80-8988-24806633823e",
-                            UserID = "2476ef9e-6c79-4eb3-b20b-cfd817910843"
+                            OrderID = "5d098ac9-60c1-4e64-b7bb-c111bc65e820",
+                            ItemID = "06deddce-0bcb-4fc0-b888-e5b4d84c08f0",
+                            UserID = "ee7c1584-fffa-465b-86a5-43f10c62040e"
                         },
                         new
                         {
-                            OrderID = "32325323-15cc-4b43-88b3-b8269fb86293",
-                            ItemID = "70a296b4-d952-49a8-8952-e95332c1574d",
-                            UserID = "2476ef9e-6c79-4eb3-b20b-cfd817910843"
+                            OrderID = "6b0c872e-db34-4d8b-b904-72d8d681599d",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "ee7c1584-fffa-465b-86a5-43f10c62040e"
                         },
                         new
                         {
-                            OrderID = "aca855ba-7245-4d2d-9d19-2aa4fbe027ed",
-                            ItemID = "70a296b4-d952-49a8-8952-e95332c1574d",
-                            UserID = "560bf694-fb85-42af-889a-20f8c1c92613"
+                            OrderID = "20ce8c07-3989-40c3-8434-c55b92668664",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "f80aecde-919f-4600-a98f-457aefbdc071"
                         },
                         new
                         {
-                            OrderID = "28578c96-061b-4c4a-a2e4-5a6271e66965",
-                            ItemID = "70a296b4-d952-49a8-8952-e95332c1574d",
-                            UserID = "30c2d10d-0aac-4095-b796-3d3a63a23216"
+                            OrderID = "300d2bf2-7348-49c7-959b-1b4482d02e3a",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "a865fec4-3757-4330-bc89-90d9cddf8904"
                         },
                         new
                         {
-                            OrderID = "b8e834d5-5c82-4b82-8eb8-57c84a5bfd0d",
-                            ItemID = "70a296b4-d952-49a8-8952-e95332c1574d",
-                            UserID = "d450060a-fe94-4126-b487-0cf8dbb66f1c"
+                            OrderID = "19517288-f484-4251-b806-a409d1b66342",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "710b35e5-af8f-4931-a4d6-95fa05655173"
+                        },
+                        new
+                        {
+                            OrderID = "1317ea73-2cd6-4c5f-8000-ce7a7f490f55",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            UserID = "ee7c1584-fffa-465b-86a5-43f10c62040e"
+                        },
+                        new
+                        {
+                            OrderID = "faf6051b-be32-4127-be03-39667d2b70a4",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            UserID = "f80aecde-919f-4600-a98f-457aefbdc071"
+                        },
+                        new
+                        {
+                            OrderID = "b39f708c-4ecf-4a76-8a70-c4557123c803",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            UserID = "a865fec4-3757-4330-bc89-90d9cddf8904"
+                        },
+                        new
+                        {
+                            OrderID = "68b943c7-2a01-4206-a5ff-3f90873b8d5d",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            UserID = "710b35e5-af8f-4931-a4d6-95fa05655173"
+                        },
+                        new
+                        {
+                            OrderID = "ac0e7aa7-0232-4df0-aa3d-ed32f96bd336",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            UserID = "ffeaef44-072c-4756-891a-ae37c6b00eba"
+                        },
+                        new
+                        {
+                            OrderID = "c7a1ac04-6bb2-45ae-b1dd-40813c2cc493",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            UserID = "377e88ca-7356-48be-a2f9-fc32fe94c700"
+                        },
+                        new
+                        {
+                            OrderID = "78efbb1b-441c-471c-a271-2fbe03d4a745",
+                            ItemID = "df76f660-6140-4c31-a0a5-5372e9b03239",
+                            UserID = "a3e3b09d-ae23-44f1-82c0-ea0bca0e56c8"
+                        },
+                        new
+                        {
+                            OrderID = "e4c23b5d-2595-48f2-b8c6-f2679886820b",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "ffeaef44-072c-4756-891a-ae37c6b00eba"
+                        },
+                        new
+                        {
+                            OrderID = "9d54b50c-8d75-4c01-be0b-1e36b91a8980",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "377e88ca-7356-48be-a2f9-fc32fe94c700"
+                        },
+                        new
+                        {
+                            OrderID = "6f64068d-9055-43d4-9a0e-c5052709716a",
+                            ItemID = "c01cdc9a-29eb-4994-911c-10968260006a",
+                            UserID = "a3e3b09d-ae23-44f1-82c0-ea0bca0e56c8"
                         });
                 });
 
@@ -505,8 +565,14 @@ namespace StalinGames.DAL.Migrations
                     b.Property<int>("Blyats")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("LastGamePlayed")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ProfilePicturePath")
                         .HasColumnType("nvarchar(max)");
@@ -514,174 +580,218 @@ namespace StalinGames.DAL.Migrations
                     b.Property<string>("ProfileTitle")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("TotalBlyatsLost")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalGamesPlayed")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
 
                     b.HasData(
                         new
                         {
-                            Id = "bf204a27-bceb-4ba4-b254-d51c117160f7",
+                            Id = "a494ba54-9af3-4d2e-9bb5-44310c517ae1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2f748198-44e5-439c-9a11-10a8b2efe8b5",
+                            ConcurrencyStamp = "9bd73486-1600-4254-99be-33e61a06f4ff",
                             Email = "Jens@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "JENS",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMI3QzkccFQo7Po5OxCUPUaxpnfPR9RWq7kC7CUODZl5es6E17os8ACCZ3rTYwq4/w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAEbhm9AcpxmE8dd96CoakviSaeb+ZF4+bNd5Dm901YXoQRMV35ZiDBmA8ZwxdnUrg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0f48ca5b-0769-4167-a46c-5295c718bcd2",
+                            SecurityStamp = "c6f93b2d-8cd8-436d-8e29-8ee50c12ca1b",
                             TwoFactorEnabled = false,
                             UserName = "Jens",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BackGround = "Default background",
                             Blyats = 2000,
+                            CreatedBy = "a494ba54-9af3-4d2e-9bb5-44310c517ae1",
                             LastGamePlayed = 0L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProfileTitle = "KingPin",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "468dac6f-55a6-42d1-824d-e7e4c8224e7f",
+                            Id = "377e88ca-7356-48be-a2f9-fc32fe94c700",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c673cf27-ebee-4ae4-b035-a9209d824f7d",
+                            ConcurrencyStamp = "a7c4dc96-0ef5-44c5-aa5d-9b5c30ce2ee7",
                             Email = "frederik@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "FREDERIK",
-                            PasswordHash = "AQAAAAEAACcQAAAAEChF6S7BCice9ozsn4PrU7xGVbmOoJ/lx3Y3DsZOhrcDmmlOKj4eax7IjZiY+7VwrQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI/IGVTMSyTwo5d6/1ODr/1TibplFq2gMjCo8+z2pvscUgex26Em9GmLuHfN8VB3PQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dd13cfed-c062-4c1c-b70f-e3fe8aa28104",
+                            SecurityStamp = "7827107d-ba53-406e-842c-f2bc9f6da123",
                             TwoFactorEnabled = false,
                             UserName = "frederik",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BackGround = "Default background",
                             Blyats = 2000,
+                            CreatedBy = "377e88ca-7356-48be-a2f9-fc32fe94c700",
                             LastGamePlayed = 0L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileTitle = "Gambler",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "03470246-a39c-4f62-9074-01ccceb4c393",
+                            Id = "ffeaef44-072c-4756-891a-ae37c6b00eba",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "38703a77-14a2-4d7e-a5e2-474d1d811855",
+                            ConcurrencyStamp = "59ddd289-041b-4726-ad70-a3f6dfca36a2",
                             Email = "peter@Gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "PETER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEVbRKmFODlCJ8GvT6LoYY/k5Bm3r26plZXbzdP4PcqcH8NpBIMf5CzcSTC0xapJJg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ+3fKo70qUr1sWzqeP5E177HpZnhpKn10f5SxOpVJHnnnWxMh+56Quuz/eEhArebw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a8d46bb-d005-4288-b17c-47a3c68d12b8",
+                            SecurityStamp = "89d2df96-1b3d-4c0f-8dc5-4b0679932ca8",
                             TwoFactorEnabled = false,
                             UserName = "peter",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BackGround = "Default background",
                             Blyats = 2000,
+                            CreatedBy = "ffeaef44-072c-4756-891a-ae37c6b00eba",
                             LastGamePlayed = 0L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileTitle = "Gambler",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "30f6be09-dae8-4366-9889-8ef233b671da",
+                            Id = "a3e3b09d-ae23-44f1-82c0-ea0bca0e56c8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d1e4109d-98ad-4122-b578-b075a2cdd013",
+                            ConcurrencyStamp = "b0fc0ebb-619d-4d18-b5c4-41592c202373",
                             Email = "steven@StalinGames.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "steven",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFTDeZRgXHzlko6MrAxX3Wndp3ymkFZG+GOc17GJso7tbHZBNiYXmtul5Ag/nbV8/Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFYt8uXxR+uj/P4Hcmu9UW8J5logsrsB+SEicBP1MJ/6N+gYjBvgGDpaDo7ja88hVw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "65e82e1a-5ab9-4913-b0f3-0aa7760acebc",
+                            SecurityStamp = "1f2ace47-9cf6-4c24-a117-9e6ccff0b92e",
                             TwoFactorEnabled = false,
                             UserName = "steven",
                             AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BackGround = "Default background",
                             Blyats = 2000,
+                            CreatedBy = "a3e3b09d-ae23-44f1-82c0-ea0bca0e56c8",
                             LastGamePlayed = 0L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileTitle = "Gambler",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "560bf694-fb85-42af-889a-20f8c1c92613",
+                            Id = "f80aecde-919f-4600-a98f-457aefbdc071",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aef9258b-0d26-47c5-a121-cebc68e776ad",
+                            ConcurrencyStamp = "aac01f3c-7d0c-4118-93b0-e1a196c2c8b7",
                             Email = "frank@Gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "frank",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH5/VpsvarcMgsEMoVQqmUnQDDNIit6Dr5ScgWuPr5d+0jLdGJIKFG1JWQ+LWgKX5Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENJpMqqBjgNjc378QbvUMQbJN6jwodNRNg6q7oBe8R6794lB6WAYeBYxGhABSXoGsw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "222c1537-6ba2-4816-b780-894ead8b0947",
+                            SecurityStamp = "d904a86d-8e2f-4b80-b9e9-6694808421d8",
                             TwoFactorEnabled = false,
                             UserName = "frank",
-                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreatedDate = new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            BackGround = "Default background",
                             Blyats = 2000,
-                            LastGamePlayed = 0L,
+                            CreatedBy = "f80aecde-919f-4600-a98f-457aefbdc071",
+                            LastGamePlayed = 1590666829L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileTitle = "Gambler",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "30c2d10d-0aac-4095-b796-3d3a63a23216",
+                            Id = "a865fec4-3757-4330-bc89-90d9cddf8904",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c502366d-84ef-4913-8c9e-08661d0d9dcb",
+                            ConcurrencyStamp = "43f405e3-092c-492a-8b4d-32a63ad1a7cc",
                             Email = "jan@Gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "jan",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHhVEhhy1aWOwa/THDUstxrtdD4Xep/L5M8EXLjvtj2csI8IySbSL06V0nThEH/h1A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJHZM/VhlPC7m9JFo8Z/YUesrocUP/iari5+B5aqURWy/y90YXwUtmroSUBhJowZoQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "897e62ae-425d-446b-bde0-6047319cbdeb",
+                            SecurityStamp = "da008b0a-e001-4910-9c44-f3bac6e09831",
                             TwoFactorEnabled = false,
                             UserName = "jan",
-                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreatedDate = new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            BackGround = "Default background",
                             Blyats = 2000,
-                            LastGamePlayed = 0L,
+                            CreatedBy = "a865fec4-3757-4330-bc89-90d9cddf8904",
+                            LastGamePlayed = 1590666829L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileTitle = "Gambler",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "2476ef9e-6c79-4eb3-b20b-cfd817910843",
+                            Id = "ee7c1584-fffa-465b-86a5-43f10c62040e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cdb40d0a-e294-4627-8fd3-26a03869e0bb",
+                            ConcurrencyStamp = "b4e69bc4-9a72-4616-aeea-8cf666f18141",
                             Email = "eddy@Gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "eddy",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMTSYkERjqul3vNXNTKbNOU4ufcxMvK71FYTM+RQnSRLw41adyDRH/GiWiW4hsWIaA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMTrQGSnbLvWov5Fpmab2dNiL3WnbhKo177ANTWPYUdpud/Evtet7ByBv/oz6T1QBA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b194ce4f-4534-4526-b0d6-39e561b5ac59",
+                            SecurityStamp = "2cf86062-476a-4a2b-9f45-a7bde678ce4a",
                             TwoFactorEnabled = false,
                             UserName = "eddy",
-                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreatedDate = new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            BackGround = "Default background",
                             Blyats = 2000,
-                            LastGamePlayed = 0L,
+                            CreatedBy = "ee7c1584-fffa-465b-86a5-43f10c62040e",
+                            LastGamePlayed = 1590666829L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileTitle = "Gambler",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         },
                         new
                         {
-                            Id = "d450060a-fe94-4126-b487-0cf8dbb66f1c",
+                            Id = "710b35e5-af8f-4931-a4d6-95fa05655173",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f5185b40-1eb0-4abd-bfcb-67fa471b18f4",
+                            ConcurrencyStamp = "e2411ac6-dec0-456f-8b60-2f6543be65dd",
                             Email = "karel@Gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "karel",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDPz1pza0XUaJSr81R327KL51a4FBlQwKIQ5EQ6sSgcyc+dtvXQ5ekoLe9l+ceXP/w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECqP0g663x8qFeTwk0msq9h1G6ZlZOI07x2ZaSTUdjuKjzIk8H1iX71jliGu3mA0RQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c33c63ca-ba3e-4730-b528-f5bcfb5a5e6a",
+                            SecurityStamp = "69f27fa5-4621-4f90-8a98-fcb6fee6f166",
                             TwoFactorEnabled = false,
                             UserName = "karel",
-                            AccountCreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreatedDate = new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            BackGround = "Default background",
                             Blyats = 2000,
-                            LastGamePlayed = 0L,
+                            CreatedBy = "710b35e5-af8f-4931-a4d6-95fa05655173",
+                            LastGamePlayed = 1590666829L,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileTitle = "Gambler",
+                            Status = 0,
                             TotalBlyatsLost = 0,
                             TotalGamesPlayed = 0
                         });

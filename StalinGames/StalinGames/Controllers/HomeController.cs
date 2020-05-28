@@ -58,7 +58,7 @@ namespace StalinGames.Controllers
             List<PlayerItem> backgrounds = new List<PlayerItem>();
             for (int i = 0; i < playerItems.Count(); i++)
             {
-                if (playerItems[i].itemType == ItemType.ProfileTitle)
+                if (playerItems[i].Type == ItemType.ProfileTitle)
                 {
                     profileTitles.Add(playerItems[i]);
                 }
@@ -172,7 +172,7 @@ namespace StalinGames.Controllers
             {
                 for (int j = 0; j < roles.Count; j++)
                 {
-                    if (_userManager.GetRolesAsync(users[i]).Result[0] == roles[j])
+                    if (_userManager.GetRolesAsync(users[i]).Result[0] == roles[j] && users[i] != null && users[i].Status == PlayerStatus.Active)
                     {
                         usersWithCorrectRole.Add(users[i]);
                     }

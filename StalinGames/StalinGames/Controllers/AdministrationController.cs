@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StalinGames.DAL.Models;
 using StalinGames.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,15 +31,29 @@ namespace StalinGames.Controllers
             roles.Add("User");
             if (User.IsInRole("Admin"))
             {
-                users = GetUsersByRole(roles);
+                users = GetUsersByRole(roles, PlayerStatus.Active);
             }
             else if (User.IsInRole("SuperAdmin"))
             {
                 roles.Add("Admin");
-                users = GetUsersByRole(roles);
+                users = GetUsersByRole(roles, PlayerStatus.Active);
             }
             return View(users);
+
         }
+
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpGet]
+        public IActionResult ListDeletedUsers()
+        {
+            List<string> roles = new List<string>();
+            roles.Add("User");
+            roles.Add("Admin");
+            List<ApplicationUser> users = GetUsersByRole(roles, PlayerStatus.Deleted);
+            return View(users);
+        }
+
+        
 
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
@@ -49,6 +64,12 @@ namespace StalinGames.Controllers
             {
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
+            }
+
+            if (user.Status == PlayerStatus.Deleted)
+            {
+                ViewBag.ErrorMessage = "The user you are currently trying to view has been deleted. Please contact the support team if this should not be the case.";
+                return View("Error");
             }
 
             // GetClaimsAsync retunrs the list of user Claims
@@ -84,7 +105,8 @@ namespace StalinGames.Controllers
                     return View("NotFound");
                 }
                 user.Blyats = model.Blyats;
-
+                user.UpdatedBy = user.Id;
+                user.LastUpdateDate = DateTime.Now.Date;
                 await _userManager.RemoveFromRoleAsync(user, _userManager.GetRolesAsync(user).Result[0]);
                 await _userManager.AddToRoleAsync(user, model.Role);
 
@@ -114,60 +136,45 @@ namespace StalinGames.Controllers
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
             }
+            user.Status = PlayerStatus.Deleted;
 
-            var result = await _userManager.DeleteAsync(user);
+            IdentityResult result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
                 return RedirectToAction("ListUsers", "Administration");
             }
-
-            foreach (var error in result.Errors)
+            else
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                ViewBag.ErrorMessage = $"Something went wrong while trying to delete user: {user.UserName}. Please try again later or contact the support team. ";
+                return View("Error");
             }
-
-            return View("ListUsers", "Administration");
         }
 
-        [HttpGet]
-        public IActionResult CreateRole()
-        {
-            return View();
-        }
-
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
-        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
+        public async Task<IActionResult> RestoreUserAsync(string id)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
             {
-                var identityRole = new IdentityRole()
-                {
-                    Name = model.RoleName,
-                };
-
-                var result = await _roleManager.CreateAsync(identityRole);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ListRoles", "Administration");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
             }
+            user.Status = PlayerStatus.Active;
 
-            return View(model);
-        }
+            IdentityResult result = await _userManager.UpdateAsync(user);
 
-        [HttpGet]
-        public IActionResult ListRoles()
-        {
-            var roles = _roleManager.Roles;
-
-            return View(roles);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ListDeletedUsers", "Administration");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = $"Something went wrong while trying to restore user: {user.UserName}. Please try again later or contact the support team. ";
+                return View("Error");
+            }
         }
 
         [HttpGet]
@@ -321,7 +328,7 @@ namespace StalinGames.Controllers
             return RedirectToAction("EditRole", new { Id = roleId });
         }
 
-        public List<ApplicationUser> GetUsersByRole(List<string> roles)
+        public List<ApplicationUser> GetUsersByRole(List<string> roles, PlayerStatus status)
         {
             List<ApplicationUser> users = _userManager.Users.ToList();
 
@@ -331,7 +338,7 @@ namespace StalinGames.Controllers
             {
                 for (int j = 0; j < roles.Count; j++)
                 {
-                    if (_userManager.GetRolesAsync(users[i]).Result[0] == roles[j])
+                    if (_userManager.GetRolesAsync(users[i]).Result[0] == roles[j] && users[i] != null && users[i].Status == status)
                     {
                         usersWithCorrectRole.Add(users[i]);
                     }
@@ -340,5 +347,6 @@ namespace StalinGames.Controllers
 
             return usersWithCorrectRole;
         }
+     
     }
 }
