@@ -1,4 +1,5 @@
 ﻿@model ApplicationUser
+@inject UserManager<ApplicationUser> userManager;
 
 @{
     ViewData["Title"] = "SlotMachine";
@@ -18,7 +19,7 @@
 <div class="card mb-3" style="padding: 1.5em;margin-top: 1em; background-color: #702c2c">
     <div class="card mb-3  bg-dark">
         <div class="card-header" style="font-size: 2.5em; text-align: center">
-            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" asp-for="@Model.Blyats" class="form-control" id="Blyats">
+            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" type="number" value="@Model.Blyats" class="form-control" id="Blyats">
         </div>
     </div>
     <div class="card mb-3  bg-white">
@@ -38,6 +39,7 @@
 @*<script src="~/lib/jquery/jquery.js"></script>*@
 <script type="text/javascript">
     $(document).ready(function () {
+
         let btnSlot = document.querySelector("#btnSpeelSlot");
         btnSlot.addEventListener("click", slotmachine);
     })
@@ -70,19 +72,19 @@
         }
         return result;
     }
-    function slotmachine() {
 
-        let getal = document.getElementById("BetValue").value;
+     function slotmachine() {
 
-        if (getal > @Model.Blyats) {
+         let betValue = Number(document.getElementById("BetValue").value);
+         if (betValue > Number(document.getElementById("Blyats").value)) {
             document.getElementById("Error").innerHTML = "You don't have enough blyats to spend that much, smart guy.";
             return;
-        }
-        else if (getal < 0)
+         }
+         else if (betValue < 0 || betValue.toString().includes(',') || betValue.toString().includes('.'))
        {
             document.getElementById("Error").innerHTML = "You have entered an illegal number, please don't do this.";
             return;
-         
+
         }
         else
         {
@@ -143,45 +145,47 @@
         if (img.src == img2.src && img.src == img3.src) {
             switch (true) {
                 case img.src.includes("cherries"):
-                    getal = getal * 2;
+                    betValue = betValue * 2;
                     break;
                 case img.src.includes("heart"):
-                    getal = getal * 5;
+                    betValue = betValue * 5;
                     break;
                 case img.src.includes("clover"):
-                    getal = getal * 10;
+                    betValue = betValue * 10;
                     break;
                 case img.src.includes("coin"):
-                    getal = getal * 15;
+                    betValue = betValue * 15;
                     break;
                 case img.src.includes("diamond"):
-                    getal = getal * 30;
+                    betValue = betValue * 30;
                     break;
                 case img.src.includes("bar"):
-                    getal = getal * 50;
+                    betValue = betValue * 50;
                     break;
                 case img.src.includes("7"):
-                    getal = getal * 100;
+                    betValue = betValue * 100;
                     break;
                 default:
 
             }
 
-            message.innerHTML = "You win: " + getal + " Blyats!"
+            message.innerHTML = "You win: " + betValue + " Blyats!"
 
         }
         else {
-            getal = 0 - getal;
-            message.innerHTML = "You lose: " + Math.abs(getal) + " Blyats!"
+            betValue = 0 - betValue;
+            message.innerHTML = "You lose: " + Math.abs(betValue) + " Blyats!"
         }
+        let blyats = 0;
         $.ajax({
             type: 'POST',
             url: '/Games/SlotMachine',
-            data: { getal: getal },
+            data: { getal: betValue },
             success: function (result) {
-                getal = result;
-                document.getElementById("Blyats").value = getal;
+               blyats = result;
+                document.getElementById("Blyats").value = blyats;
             }
         });
+        return blyats;
     }
 </script>

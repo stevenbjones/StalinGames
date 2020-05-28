@@ -5,7 +5,9 @@
 }
 
 <h1>All deleted Users</h1>
-
+<a asp-action="ListUsers" asp-controller="Administration" class="btn btn-primary mb-3" style="width:auto">
+    Show all non-deleted users
+</a>
 @if (Model.Any())
 {
 

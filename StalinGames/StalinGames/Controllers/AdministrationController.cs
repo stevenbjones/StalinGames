@@ -23,6 +23,24 @@ namespace StalinGames.Controllers
             _userManager = userManager;
         }
 
+        //[HttpPost]
+        //[HttpGet]
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public async Task<IActionResult> BlyatsCheck(double blyats)
+        {
+            if (blyats < 0)
+            {
+                return Json($"Please do not enter an amount below 0.");
+            }
+            if (blyats.ToString().Contains(',') || blyats.ToString().Contains('.'))
+            {
+                return Json($"Please do not enter comma values.");
+            }
+            return Json(true);
+                    
+            
+        }
         [HttpGet]
         public IActionResult ListUsers()
         {
@@ -91,6 +109,7 @@ namespace StalinGames.Controllers
 
             return View(model);
         }
+        
 
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
@@ -104,7 +123,7 @@ namespace StalinGames.Controllers
                     ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
                     return View("NotFound");
                 }
-                user.Blyats = model.Blyats;
+                user.Blyats = Convert.ToInt32(model.Blyats);
                 user.UpdatedBy = user.Id;
                 user.LastUpdateDate = DateTime.Now.Date;
                 await _userManager.RemoveFromRoleAsync(user, _userManager.GetRolesAsync(user).Result[0]);
@@ -177,156 +196,6 @@ namespace StalinGames.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> EditRole(string id)
-        {
-            var role = await _roleManager.FindByIdAsync(id);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found!";
-                return View("NotFound");
-            }
-
-            var model = new EditRoleViewModel()
-            {
-                Id = role.Id,
-                RoleName = role.Name,
-            };
-
-            var listUser = _userManager.Users.ToList();
-
-            foreach (var user in listUser)
-            {
-                var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
-
-                if (isInRole)
-                {
-                    model.Users.Add(user.UserName);
-                }
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditRole(EditRoleViewModel model)
-        {
-            var role = await _roleManager.FindByIdAsync(model.Id);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found!";
-                return View("NotFound");
-            }
-            else
-            {
-                role.Name = model.RoleName;
-
-                // Update the Role using UpdateAsync
-                var result = await _roleManager.UpdateAsync(role);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ListRoles");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-
-                return View(model);
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EditUsersInRole(string roleId)
-        {
-            ViewBag.roleId = roleId;
-
-            var role = await _roleManager.FindByIdAsync(roleId);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found!";
-                return View("NotFound");
-            }
-
-            var model = new List<UserRoleViewModel>();
-            var listUsers = _userManager.Users.ToList();
-
-            foreach (var user in listUsers)
-            {
-                var userRoleViewModel = new UserRoleViewModel()
-                {
-                    UserId = user.Id,
-                    UserName = user.UserName,
-                };
-
-                var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
-
-                if (isInRole)
-                {
-                    userRoleViewModel.IsSelected = true;
-                }
-                else
-                {
-                    userRoleViewModel.IsSelected = false;
-                }
-
-                model.Add(userRoleViewModel);
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditUsersInRoleAsync(List<UserRoleViewModel> model, string roleId)
-        {
-            var role = await _roleManager.FindByIdAsync(roleId);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found!";
-                return View("NotFound");
-            }
-
-            for (int i = 0; i < model.Count; i++)
-            {
-                var user = await _userManager.FindByIdAsync(model[i].UserId);
-                var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
-
-                IdentityResult result = null;
-
-                if (model[i].IsSelected && !isInRole)
-                {
-                    result = await _userManager.AddToRoleAsync(user, role.Name);
-                }
-                else if (!model[i].IsSelected && isInRole)
-                {
-                    result = await _userManager.RemoveFromRoleAsync(user, role.Name);
-                }
-                else
-                {
-                    continue;
-                }
-
-                if (result.Succeeded)
-                {
-                    if (i < (model.Count - 1))
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        return RedirectToAction("EditRole", new { Id = roleId });
-                    }
-                }
-            }
-
-            return RedirectToAction("EditRole", new { Id = roleId });
-        }
 
         public List<ApplicationUser> GetUsersByRole(List<string> roles, PlayerStatus status)
         {

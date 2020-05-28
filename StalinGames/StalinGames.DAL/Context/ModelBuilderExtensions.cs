@@ -21,6 +21,8 @@ namespace StalinGames.DAL.Context
             jens.PasswordHash = passwordHasher.HashPassword(jens, "$Admin12345");
             jens.SecurityStamp = Guid.NewGuid().ToString();
             jens.Blyats = 2000;
+            jens.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            jens.AccountCreatedDate = DateTime.Now.Date;
             jens.CreatedBy = jens.Id;
             jens.Status = PlayerStatus.Active;
 
@@ -32,6 +34,8 @@ namespace StalinGames.DAL.Context
             steven.PasswordHash = passwordHasher.HashPassword(steven, "$Admin12345");
             steven.SecurityStamp = Guid.NewGuid().ToString();
             steven.Blyats = 2000;
+            steven.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            steven.AccountCreatedDate = DateTime.Now.Date;
             steven.CreatedBy = steven.Id;
             steven.Status = PlayerStatus.Active;
 
@@ -43,6 +47,8 @@ namespace StalinGames.DAL.Context
             frederik.PasswordHash = passwordHasher.HashPassword(frederik, "$Admin12345");
             frederik.SecurityStamp = Guid.NewGuid().ToString();
             frederik.Blyats = 2000;
+            frederik.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            frederik.AccountCreatedDate = DateTime.Now.Date;
             frederik.CreatedBy = frederik.Id;
             frederik.Status = PlayerStatus.Active;
 
@@ -54,6 +60,8 @@ namespace StalinGames.DAL.Context
             peter.PasswordHash = passwordHasher.HashPassword(peter, "$User12345");
             peter.SecurityStamp = Guid.NewGuid().ToString();
             peter.Blyats = 2000;
+            peter.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            peter.AccountCreatedDate = DateTime.Now.Date;
             peter.CreatedBy = peter.Id;
             peter.Status = PlayerStatus.Active;
 

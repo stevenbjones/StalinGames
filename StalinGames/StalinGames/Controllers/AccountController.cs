@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -108,12 +109,14 @@ namespace StalinGames.Controllers
             }
         }
 
+       
+
         [AcceptVerbs("Get", "Post")]
         [AllowAnonymous]
         public IActionResult PlayerDetails(string id)
         {
             ApplicationUser user = _userManager.FindByIdAsync(id).Result;
-            
+
             if (user == null)
             {
                 Response.StatusCode = 404;
@@ -181,12 +184,10 @@ namespace StalinGames.Controllers
                 {
                     profileTitleUser.Add(item);
                 }
-
                 else
                 {
                     backgroundPictureUser.Add(item);
                 }
-                   
             }
 
             List<SelectListItem> profileTitlesSelect = new List<SelectListItem>();
@@ -214,6 +215,8 @@ namespace StalinGames.Controllers
             //de passwoorden van de model halen
             model.Password = user.PasswordHash;
             model.ConfirmPassword = user.PasswordHash;
+          
+     
             if (ModelState.IsValid)
             {
                 if (user == null)
@@ -224,7 +227,14 @@ namespace StalinGames.Controllers
                 //checken voor nieuwe profielfoto
                 if (model.Photo != null)
                 {
-                    if (model.ProfilePicturePath != null)
+                   // we gaan zien of de foto wel een foto is
+
+                        if (!IsImage(model.Photo))
+                        {
+                            ViewBag.ErrorMessage = ("Image validation error", "An error occured while processing your file. Please make sure the file you upload is an image, or contact the support team.");
+                            return View("Error");
+                        }
+                        if (model.ProfilePicturePath != null)
                     {
                         var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/ProfilePictures", model.ProfilePicturePath);
 
@@ -233,7 +243,6 @@ namespace StalinGames.Controllers
 
                     user.ProfilePicturePath = ProcessUploadedFile(model);
                 }
-
 
                 user.ProfileTitle = model.ProfileTitle;
                 user.BackGround = model.BackgroundName;
@@ -247,7 +256,7 @@ namespace StalinGames.Controllers
 
                 user.Email = model.Email;
                 user.UpdatedBy = user.Id;
-                user.LastUpdateDate =  DateTime.Now.Date;
+                user.LastUpdateDate = DateTime.Now.Date;
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
@@ -260,7 +269,6 @@ namespace StalinGames.Controllers
                     await _signInManager.PasswordSignInAsync(user, user.PasswordHash, false, false); //werkt niet
                     return RedirectToAction("PlayerDetails", new { id = user.Id });
                 }
-
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -274,10 +282,20 @@ namespace StalinGames.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
         {
-          
-             if (ModelState.IsValid)
+            
+            if (ModelState.IsValid)
             {
-                string _photoFileName = ProcessUploadedFile(model);
+                if (model.Photo != null)
+                {
+                    // we gaan zien of de foto wel een foto is
+
+                    if (!IsImage(model.Photo))
+                    {
+                        ViewBag.ErrorMessage = "An error occured while processing your file. Please make sure the file you have uploaded is an image, or you can try to contact the support team.";
+                        return View("Error");
+                    }
+                }
+                    string _photoFileName = ProcessUploadedFile(model);
 
                 var user = new ApplicationUser
                 {
@@ -287,7 +305,7 @@ namespace StalinGames.Controllers
                     Blyats = 2000,
                     LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
                     AccountCreatedDate = DateTime.Now.Date,
-                    Status = PlayerStatus.Active                 
+                    Status = PlayerStatus.Active
                 };
 
                 IdentityResult identityResult = await _userManager.CreateAsync(user, model.Password);
@@ -351,15 +369,16 @@ namespace StalinGames.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userManager.FindByNameAsync(model.Username).Result.Status == PlayerStatus.Deleted)
-                {
-                    ViewBag.ErrorMessage = "The user you are currently trying log into has been deleted. Please contact the support team if this should not be the case.";
-                    return View("Error");
-                }
                 var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
 
                 if (signInResult.Succeeded)
                 {
+                    if (_userManager.FindByNameAsync(model.Username).Result.Status == PlayerStatus.Deleted)
+                    {
+                        await _signInManager.SignOutAsync();
+                        ViewBag.ErrorMessage = "The user you are currently trying log into has been deleted. Please contact the support team if this should not be the case.";
+                        return View("Error");
+                    }
                     if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
                         return LocalRedirect(returnUrl);
@@ -377,10 +396,10 @@ namespace StalinGames.Controllers
         private string ProcessUploadedFile(RegisterViewModel model)
         {
             string uniqueFileName = null;
-            var _model = model.Photo;
 
             if (model.Photo != null)
-            {
+            {  
+                
                 var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/ProfilePictures");
                 uniqueFileName = $"{Guid.NewGuid().ToString()}_{model.Photo.FileName}";
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -394,7 +413,35 @@ namespace StalinGames.Controllers
             return uniqueFileName;
         }
 
- 
+        //Kleine versie van code van https://stackoverflow.com/questions/11063900/determine-if-uploaded-file-is-image-any-format-on-mvc
+        //Om te checken of foto die geupload is wel degelijk een foto is en niet bv. een word document
+        public static bool IsImage(IFormFile postedFile)
+        {
+            //-------------------------------------------
+            //  Check the image mime types
+            //-------------------------------------------
+            if (postedFile.ContentType.ToLower() != "image/jpg" &&
+                        postedFile.ContentType.ToLower() != "image/jpeg" &&
+                        postedFile.ContentType.ToLower() != "image/pjpeg" &&
+                        postedFile.ContentType.ToLower() != "image/gif" &&
+                        postedFile.ContentType.ToLower() != "image/x-png" &&
+                        postedFile.ContentType.ToLower() != "image/png")
+            {
+                return false;
+            }
+
+            //-------------------------------------------
+            //  Check the image extension
+            //-------------------------------------------
+            if (Path.GetExtension(postedFile.FileName).ToLower() != ".jpg"
+                && Path.GetExtension(postedFile.FileName).ToLower() != ".png"
+                && Path.GetExtension(postedFile.FileName).ToLower() != ".gif"
+                && Path.GetExtension(postedFile.FileName).ToLower() != ".jpeg")
+            {
+                return false;
+            }
+            return true;
+        }
 
         [HttpGet]
         [AllowAnonymous]
