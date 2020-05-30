@@ -147,14 +147,13 @@ namespace StalinGames.Controllers
         {
             List<ApplicationUser> users = new List<ApplicationUser>();
             List<string> roles = new List<string>() { "User" };
-            foreach (ApplicationUser user in GetUsersByRole(roles))
+            if (userName == null || userName == "")
             {
-                if (userName == null || userName == "")
-                {
-                    users = _userManager.Users.ToList();
-                }
-
-                else if (user.UserName.ToLower().Contains(userName.ToLower()))
+                users = GetUsersByRole(roles);
+            }
+            foreach (ApplicationUser user in GetUsersByRole(roles))
+            {           
+              if (user.UserName.ToLower().Contains(userName.ToLower()))
                     users.Add(user);
             }
             return View(users);
