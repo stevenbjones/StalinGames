@@ -118,6 +118,7 @@
                 btnSpelerGetCard.disabled = true;
 
             }
+            btnSpeelOpnieuw.disabled = false;
             $.ajax({
                 type: 'POST',
                 url: '/Games/Blackjack',
@@ -185,6 +186,7 @@
                     document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(betValue) + " Blyats!";
                     btnSpelerGetCard.disabled = true;
                     btnSpelerStop.disabled = true;
+                    btnSpeelOpnieuw.disabled = false;
 
 
 

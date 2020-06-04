@@ -151,10 +151,13 @@ namespace StalinGames.Controllers
             {
                 users = GetUsersByRole(roles);
             }
-            foreach (ApplicationUser user in GetUsersByRole(roles))
-            {           
-              if (user.UserName.ToLower().Contains(userName.ToLower()))
-                    users.Add(user);
+            else
+            {
+                foreach (ApplicationUser user in GetUsersByRole(roles))
+                {
+                    if (user.UserName.ToLower().Contains(userName.ToLower()))
+                        users.Add(user);
+                }
             }
             return View(users);
         }

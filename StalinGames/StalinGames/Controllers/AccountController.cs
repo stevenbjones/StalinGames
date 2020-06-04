@@ -17,6 +17,7 @@ namespace StalinGames.Controllers
 {
     public class AccountController : Controller
     {
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -110,6 +111,7 @@ namespace StalinGames.Controllers
         }
 
        
+        ///hai
 
         [AcceptVerbs("Get", "Post")]
         [AllowAnonymous]
@@ -309,10 +311,18 @@ namespace StalinGames.Controllers
                 };
 
                 IdentityResult identityResult = await _userManager.CreateAsync(user, model.Password);
-                IdentityResult isUserAddedToUserRole = await _userManager.AddToRoleAsync(user, "User");
+               
 
-                if (identityResult.Succeeded && isUserAddedToUserRole.Succeeded)
+                if (identityResult.Succeeded)
                 {
+                    IdentityResult isUserAddedToUserRole = await _userManager.AddToRoleAsync(user, "User");
+                    if (!isUserAddedToUserRole.Succeeded)
+                    {
+                        await _userManager.DeleteAsync(user);
+                            ViewBag.ErrorMessage = "Error while adding the user to the role. Please try again.";
+                            return View("Error");
+                        
+                    }
                     PlayerItem profileTitleDefault = _playerItemRepository.FindByName("Gambler");
                     _playerPurchasesRepository.Add(user, profileTitleDefault);
                     user.ProfileTitle = profileTitleDefault.Name;
