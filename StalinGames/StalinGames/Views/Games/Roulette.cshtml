@@ -344,13 +344,15 @@
             }
             $.ajax({
                 type: 'POST',
-                url: '/Games/Roulette',
-                data: returnData,
+                url: '/Games/SlotMachine',
+                data: { getal: totaleWinst - totaleInzet },
                 success: function (result) {
-                    getal = totaleWinst - totaleInzet;
-                    document.getElementById("Blyats").value = getal;
+                    blyats = result;
+                    document.getElementById("Blyats").value = blyats;
                 }
             });
+
+            
         }
 
         function easeOut(t, b, c, d) {
