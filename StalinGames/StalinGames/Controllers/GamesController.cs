@@ -28,6 +28,7 @@ namespace StalinGames.Controllers
             _webHostEnvironment = webHostEnvironment;
             _playerPurchasesRepository = playerPurchasesRepository;
             _playerItemRepository = playerItemRepository;
+            
         }
 
         [HttpGet]
@@ -76,6 +77,41 @@ namespace StalinGames.Controllers
 
         [HttpPost]
         public async Task<IActionResult> BlackJack(int getal)
+        {
+            ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            user.Blyats += getal;
+            user.TotalGamesPlayed++;
+            if (getal < 0)
+            {
+                user.TotalBlyatsLost += Math.Abs(getal);
+            }
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Json(user.Blyats);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Error while updating user blyats";
+                return View("Error");
+            }
+
+
+            //return Ok("Success");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Roulette()
+        {
+
+            ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Roulette(int getal)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
             user.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
