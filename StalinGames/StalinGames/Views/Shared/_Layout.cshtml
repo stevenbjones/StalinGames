@@ -63,6 +63,17 @@
             background-color: #3d3d3d;
             color: lightgray;
         }
+        .navbar-dark .navbar-brand {
+            color: #fff;
+            transition: ease-in-out 0.3s;
+            padding-right: 1em;
+        }
+
+            .navbar-dark .navbar-brand:hover {
+                background-color: #750000;
+                transition: ease-in-out 0.3s;
+                border: 1px solid black;
+            }
     </style>
 </head>
 <body>
@@ -108,7 +119,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <img src=@profilePicturePath style="border-radius: 50%; width: 2.5em; margin-right: 2em;">
+                        <img src="@profilePicturePath" style="border-radius: 50%; width: 2.5em; margin-right: 2em;">
                     </li>
 
                     <li class="nav-item">

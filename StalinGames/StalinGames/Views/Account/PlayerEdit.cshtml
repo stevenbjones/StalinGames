@@ -6,8 +6,14 @@
     ViewBag.Title = "Player: " + Model.Username;
     var profilePicturePath = $"/images/ProfilePictures/{Model.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
     var password = Model.Password;
+    
 }
-
+<style>
+    .img-thumbnail {
+        height: 100%;
+        width: 100%;
+    }
+    </style>
 <div class="container">
 
     <hr>
@@ -64,8 +70,12 @@
                             <h6 class="custom-file-input">Upload a different photo...</h6>
                             <br>
                             <input asp-for="Photo" type="file" class="text-center center-block file-upload">
+
+
                             <button type="submit" class="btn btn-success" style="width:auto;">Update</button>
                             <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Cancel</a>
+                            <br>
+                            <span asp-validation-for="Photo" class="text-danger"></span>
                         </form>
                     </div><!--/tab-pane-->
                 </div><!--/tab-content-->

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using StalinGames.DAL.Models;
+using System.Linq;
 
 namespace StalinGames.DAL.Context
 {
@@ -20,9 +22,11 @@ namespace StalinGames.DAL.Context
             //foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             //{
             //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-            //} gaf errors
+            //}
+            //gaf fouten + niet nodig in dit programma, we gebruiken een soft delete ->
+            //gebruikers hebben een Status kolom -> Active is actief, Deleted zijn ze gedelete
+        }
 
-
-           }
+        
     }
 }

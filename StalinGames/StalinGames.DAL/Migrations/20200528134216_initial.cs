@@ -45,10 +45,14 @@ namespace StalinGames.DAL.Migrations
                     ProfilePicturePath = table.Column<string>(nullable: true),
                     LastGamePlayed = table.Column<long>(nullable: true),
                     BackGround = table.Column<string>(nullable: true),
-                    AccountCreatedDate = table.Column<DateTime>(nullable: true),
                     ProfileTitle = table.Column<string>(nullable: true),
                     TotalGamesPlayed = table.Column<int>(nullable: true),
-                    TotalBlyatsLost = table.Column<int>(nullable: true)
+                    TotalBlyatsLost = table.Column<int>(nullable: true),
+                    Status = table.Column<int>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    AccountCreatedDate = table.Column<DateTime>(nullable: true),
+                    UpdatedBy = table.Column<string>(nullable: true),
+                    LastUpdateDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,7 +64,7 @@ namespace StalinGames.DAL.Migrations
                 columns: table => new
                 {
                     ItemID = table.Column<string>(nullable: false),
-                    itemType = table.Column<int>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
                     Price = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Value = table.Column<string>(nullable: true)
@@ -194,45 +198,45 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "55c56c99-bcad-4098-b611-96e294070568", "SuperAdmin", "SUPERADMIN" },
-                    { "2", "329ee51d-9554-49d3-ba3a-5bafc97cd870", "Admin", "ADMIN" },
-                    { "3", "c367796e-296b-4a78-b1e0-af0440fd564e", "User", "USER" }
+                    { "1", "4e1a5903-457c-47b5-afac-5fef012d7126", "SuperAdmin", "SUPERADMIN" },
+                    { "2", "cf932e92-4a0a-452b-b01c-4a6df13bc287", "Admin", "ADMIN" },
+                    { "3", "bb08310d-14d6-4f1e-a0c1-39830fc61edf", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "AccountCreatedDate", "BackGround", "Blyats", "LastGamePlayed", "ProfilePicturePath", "ProfileTitle", "TotalBlyatsLost", "TotalGamesPlayed" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "AccountCreatedDate", "BackGround", "Blyats", "CreatedBy", "LastGamePlayed", "LastUpdateDate", "ProfilePicturePath", "ProfileTitle", "Status", "TotalBlyatsLost", "TotalGamesPlayed", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { "9bf697a9-144d-4967-a8cc-28af82c39c35", 0, "057444d5-ee69-479e-9e42-2e03895dba22", "ApplicationUser", "karel@Gmail.com", false, false, null, null, "karel", "AQAAAAEAACcQAAAAEBTyt73+WyaPCrZ470AzuNwWoEFUZWeXUcdGqhfAzk+cSzfx6mwCaP8Wk7bgCLkmRw==", null, false, "7437ada2-f86e-4026-8667-20d683b79e87", false, "karel", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "5cbe2019-de2e-46ac-97a0-cf20b01b9626", 0, "5326cba1-5f18-4ad4-ad0b-e8bcb3075d44", "ApplicationUser", "eddy@Gmail.com", false, false, null, null, "eddy", "AQAAAAEAACcQAAAAEJta4I9zTn2dHpC6PO8ULZGqGWj5qpfCtp2p99CPb4+o0o1BbV7kHNTVSPltuxgMVw==", null, false, "5148c92f-a348-4ce4-8da9-96be338c32b3", false, "eddy", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "de2409da-5322-44da-85ce-ef5af9c81080", 0, "17ca9f60-2374-4102-8cf9-2f4c8eac6b09", "ApplicationUser", "frank@Gmail.com", false, false, null, null, "frank", "AQAAAAEAACcQAAAAEB2o1vPM3N8NCy1+SK9WGyIrkhZja99l822HvQ7tugLtomE0IF8uc7ju5gFYqI2lSg==", null, false, "6553482c-5f3d-4186-80a1-8dce4667ef5b", false, "frank", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "af29d398-5ae0-414c-b5de-07c2e8364a1c", 0, "748ec81b-cac3-4bbe-b7e7-648d289a7ad1", "ApplicationUser", "jan@Gmail.com", false, false, null, null, "jan", "AQAAAAEAACcQAAAAEIvkL711a+bDagutmH0V1mteuWl/TA0ITKpabqc98ivPs+tSR4mwZ1dVi/Xc1R88QQ==", null, false, "cc88d6ac-5463-4d32-9bc6-91ebbefa0864", false, "jan", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "dae85a09-79fe-47e2-b733-afd35727520e", 0, "5068c560-9971-4716-8f79-e7e679c88592", "ApplicationUser", "peter@Gmail.com", false, false, null, null, "PETER", "AQAAAAEAACcQAAAAECXpbl1ya79Vl1hqU9OuZI1vQJ7oOGDjchrl1vqqyxT8Ox0czpXFw9lx9Q/zp/ZlMQ==", null, false, "83e70c8f-fc6e-4e7b-9fb9-9cb576193803", false, "peter", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "e2e86a6a-fd39-4ebd-b00f-5f39ce9700b8", 0, "7eb882ac-d9af-41dd-b9ae-c13ce35e6b57", "ApplicationUser", "frederik@StalinGames.com", false, false, null, null, "FREDERIK", "AQAAAAEAACcQAAAAEJs+cs9MwYA3OCX5lIY0rQqEe2IGcsedEHaXMfFopaW4rVvUFXFeZc9PW9bx9R3rSg==", null, false, "86647a69-c5f6-4b0b-8459-30fbcb69e5a4", false, "frederik", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 },
-                    { "e5e1216b-6aa4-49b5-9f05-452e704c377b", 0, "a9f9febc-573d-461a-bf2e-044322003efe", "ApplicationUser", "Jens@StalinGames.com", false, false, null, null, "JENS", "AQAAAAEAACcQAAAAEBpKO9kB4DSai7pNMDYg0CDRZcwNBDNbjKonBuG7LFDUZIQxZ7p4/oYUzPrFkptFfw==", null, false, "09a0e607-6438-4241-b454-5d87440386d5", false, "Jens", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Default background", 2000, 0L, null, "KingPin", 0, 0 },
-                    { "acd885ef-b705-4e8f-89d3-fa52eb1ccc3f", 0, "e32f5eee-dacd-4d8b-a13c-0a51eedd411b", "ApplicationUser", "steven@StalinGames.com", false, false, null, null, "steven", "AQAAAAEAACcQAAAAEEdG82+EfC2ZnDpL+G/MJQeTPZg9Pn+6xRuH4R3qqTiHst3ghCJN/DWnVZLRKLPuyg==", null, false, "e8ad211a-8a89-417f-9e83-6ef957ae848f", false, "steven", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2000, 0L, null, null, 0, 0 }
+                    { "2cf2d837-0f65-43b0-8085-9fa576c485e2", 0, "88827873-9de8-4167-b83f-695e195ef5e9", "ApplicationUser", "karel@Gmail.com", false, false, null, null, "karel", "AQAAAAEAACcQAAAAEAsoEjY85Re2JpCngXxmtT1Iyrdi5SSLbLVW9GAwuHPSVZqy1qA10SBjFtfX4gp58A==", null, false, "46e6e506-9959-4c14-b1fe-e7e8698500e7", false, "karel", new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local), "Default background", 2000, "2cf2d837-0f65-43b0-8085-9fa576c485e2", 1590673335L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gambler", 0, 0, 0, null },
+                    { "a63688f1-3bf4-425e-8d01-a82036fa9ed7", 0, "3a9fc742-58da-489a-9958-79731a4e631a", "ApplicationUser", "eddy@Gmail.com", false, false, null, null, "eddy", "AQAAAAEAACcQAAAAEJLzRqzfeHHBx1YX49uL37LghmqOrGioc36eX14WM/fF8iZXJGdm6ej+avHtnMgDCA==", null, false, "f717d20c-4b05-4163-81da-c6ab15633687", false, "eddy", new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local), "Default background", 2000, "a63688f1-3bf4-425e-8d01-a82036fa9ed7", 1590673335L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gambler", 0, 0, 0, null },
+                    { "cf895424-4a41-4ffd-bbb6-bea989caa874", 0, "b2d16a2c-cc98-405f-9ffd-8a8496d070a1", "ApplicationUser", "frank@Gmail.com", false, false, null, null, "frank", "AQAAAAEAACcQAAAAELCGXk2GO/XSBCEB1nApSsYn4TCRuWNPGn0WYiD0O9dMbx6s6AI3XCRWlrjC4xTS3w==", null, false, "108deef5-14db-4516-8fc6-953bb4d0b4dd", false, "frank", new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local), "Default background", 2000, "cf895424-4a41-4ffd-bbb6-bea989caa874", 1590673335L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gambler", 0, 0, 0, null },
+                    { "85423698-f6d8-4e96-a832-b2606b08fe7a", 0, "f0f86459-57d3-48e6-9474-6166b897f44e", "ApplicationUser", "jan@Gmail.com", false, false, null, null, "jan", "AQAAAAEAACcQAAAAEE1Cz9VBJ3V4pEswQhqBeelrc5ArNV9FhnCROIjUHscyOyaKC3Owp9DgiO44xqh26Q==", null, false, "77cb2496-afdf-4878-98ca-62c2cecf7741", false, "jan", new DateTime(2020, 5, 28, 0, 0, 0, 0, DateTimeKind.Local), "Default background", 2000, "85423698-f6d8-4e96-a832-b2606b08fe7a", 1590673335L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gambler", 0, 0, 0, null },
+                    { "cf55a117-bfd3-42be-a332-606dd54aa320", 0, "57b8f2d5-ecc5-4799-aa5b-402450db980d", "ApplicationUser", "peter@Gmail.com", false, false, null, null, "PETER", "AQAAAAEAACcQAAAAEIyv4qJ1/gaMsOk1SogLuJAUGiGg27SAnrKxrlZEEfzHVspEs7jv3QHk8No8mrsjHQ==", null, false, "ddb957af-718d-45c5-ab53-8f3195f7f952", false, "peter", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Default background", 2000, "cf55a117-bfd3-42be-a332-606dd54aa320", 0L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gambler", 0, 0, 0, null },
+                    { "c816484c-94f8-4af5-83fc-dcea7fd00bf1", 0, "71553c34-6573-4978-9634-4b596eac942f", "ApplicationUser", "frederik@StalinGames.com", false, false, null, null, "FREDERIK", "AQAAAAEAACcQAAAAENLAqaEvQDJq0h3xYS19H8lrR+HOky3ZDnDK+61Ag/MhfrMcOC8Hb9tBTiW9IY+8sw==", null, false, "569ecf17-2c97-4800-b43e-25e5e0e45b7c", false, "frederik", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Default background", 2000, "c816484c-94f8-4af5-83fc-dcea7fd00bf1", 0L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gambler", 0, 0, 0, null },
+                    { "bf4eb055-33b5-4419-a85e-031bcd617aef", 0, "bb75ca58-0b08-4889-bd2c-cd0fe560ef04", "ApplicationUser", "Jens@StalinGames.com", false, false, null, null, "JENS", "AQAAAAEAACcQAAAAEBD/6L4wXcAHNa1rxqiPg3kRvBOIAujS2nHe8YR15F4ubAKsqEylXt6LYzh1aUB5/g==", null, false, "86670858-9f0c-433b-848e-2858bfadb695", false, "Jens", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Default background", 2000, "bf4eb055-33b5-4419-a85e-031bcd617aef", 0L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "KingPin", 0, 0, 0, null },
+                    { "b2e25bb9-497c-4ab0-8a69-f532e36bcf9c", 0, "60a3b23a-8f8d-4292-bdc1-d2f10a7dbcd5", "ApplicationUser", "steven@StalinGames.com", false, false, null, null, "steven", "AQAAAAEAACcQAAAAEJ2cRB+fJVQcwCfOgv2SXWrI0ZC3nNak6MEgEUOpHNm2bMLHcFhHU90BlLnsLXK8og==", null, false, "a03447d6-f243-4d49-8cdd-ee910929a8a9", false, "steven", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Default background", 2000, "b2e25bb9-497c-4ab0-8a69-f532e36bcf9c", 0L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gambler", 0, 0, 0, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "PlayerItems",
-                columns: new[] { "ItemID", "Name", "Price", "Value", "itemType" },
+                columns: new[] { "ItemID", "Name", "Price", "Type", "Value" },
                 values: new object[,]
                 {
-                    { "c187ba4f-4127-4dc3-a2e3-d647ea9266dd", "Roulette master", 200000, "RouletteMaster.jpg", 1 },
-                    { "8f560516-670a-4346-800c-d8849972bcb6", "Ultimate true StalinGames casino master", 1000000, "TrueStalinGamesMaster.jpg", 1 },
-                    { "8fd88427-1a99-4c07-92bc-e39db894da9d", "Default background", 0, "DefaultBackground.jpg", 1 },
-                    { "57ff676e-f674-4af4-9b2d-2819aaf83765", "KingPin", 1000000, null, 0 },
-                    { "fd7e6639-3025-4cc6-bc6f-5d2768dd7957", "Wolf of Wall Street", 500000, null, 0 },
-                    { "58a08eda-7ab2-4f68-ad55-b4ac0a1b93d7", "Slot machine master", 200000, "SlotMachineMaster.jpg", 1 },
-                    { "71d0bb5c-e303-43cc-9a87-48bc80f3bde6", "Ace on fire", 50000, "FireAce.jpg", 1 },
-                    { "e20e6ef5-e9d4-4a79-979f-59f22d0374fd", "Absolute Legend", 100000, null, 0 },
-                    { "5d89333d-00b4-4ef5-b402-67c5367ca978", "Simple card pattern", 5000, "CardPattern.jpg", 1 },
-                    { "0064462d-f17f-46a3-a26b-e065090ece2b", "Black jack master", 200000, "BlackJackMaster.jpg", 1 },
-                    { "56e38f48-2e86-428d-90a9-56f6f2c4b2be", "Local Champion", 10000, null, 0 },
-                    { "66f21c6c-ec39-48a5-ad19-3de0b7ffe0f0", "Simp", 2000, null, 0 },
-                    { "983c1dc6-8dd1-4447-b999-7df7158884a6", "Gambler", 0, null, 0 },
-                    { "4c4e5f14-3499-4372-8403-914c43326570", "Casino master", 500000, "CasinoMaster.jpg", 1 }
+                    { "c5e041b3-7517-4127-87a2-3f69fbd60957", "Slot machine master", 200000, 1, "SlotMachineMaster.jpg" },
+                    { "2c4c5b95-7fe1-4692-811f-627008072097", "Ultimate true StalinGames casino master", 1000000, 1, "TrueStalinGamesMaster.jpg" },
+                    { "0324ab62-f514-4a8b-bddd-39cad3f7f006", "Default background", 0, 1, "DefaultBackground.jpg" },
+                    { "edfab11a-6341-4aaa-af8e-e1613cc93b40", "KingPin", 1000000, 0, null },
+                    { "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "Gambler", 0, 0, null },
+                    { "56c353d8-5bf4-48e5-ac79-28982a1daa57", "Roulette master", 200000, 1, "RouletteMaster.jpg" },
+                    { "b1667254-c2e8-4736-81d8-a5f9006ae5e1", "Wolf of Wall Street", 500000, 0, null },
+                    { "47202c9d-de11-49e8-a70e-e6772542ebe7", "Casino master", 500000, 1, "CasinoMaster.jpg" },
+                    { "e5c1f8c8-9cba-4f53-b346-230a70a139b7", "Simple card pattern", 5000, 1, "CardPattern.jpg" },
+                    { "1ec081d6-a310-4e8a-aca8-4e5a255fdbd2", "Black jack master", 200000, 1, "BlackJackMaster.jpg" },
+                    { "48ca6577-c9eb-49b1-bc6f-02f648e5521f", "Absolute Legend", 100000, 0, null },
+                    { "b77c0e0d-045c-4a2f-8c5b-78aeadbc3bd8", "Local Champion", 10000, 0, null },
+                    { "e4542553-52f4-45f4-9456-a1b8860cc6b0", "Simp", 2000, 0, null },
+                    { "c3caace3-b25b-4c3e-8008-b04dc0428a03", "Ace on fire", 50000, 1, "FireAce.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -240,11 +244,25 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "OrderID", "ItemID", "UserID" },
                 values: new object[,]
                 {
-                    { "ca3016e3-401b-430d-a62b-a041721efea1", "8f560516-670a-4346-800c-d8849972bcb6", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
-                    { "092ddc63-7c43-4129-843b-a48313a74fe9", "fd7e6639-3025-4cc6-bc6f-5d2768dd7957", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
-                    { "beb5fddc-a9af-4402-8d1a-94a1f26f2745", "57ff676e-f674-4af4-9b2d-2819aaf83765", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
-                    { "fcf5c83f-970f-47a0-9a43-1d2651ea9bc5", "8fd88427-1a99-4c07-92bc-e39db894da9d", "e5e1216b-6aa4-49b5-9f05-452e704c377b" },
-                    { "268f0b06-4e86-4c46-960a-e14ade9c67a0", "fd7e6639-3025-4cc6-bc6f-5d2768dd7957", "5cbe2019-de2e-46ac-97a0-cf20b01b9626" }
+                    { "55423ed8-5830-47f7-aa52-23b7bfea4004", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "cf55a117-bfd3-42be-a332-606dd54aa320" },
+                    { "349778d5-34df-442b-9b2a-142f9e63b017", "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "b2e25bb9-497c-4ab0-8a69-f532e36bcf9c" },
+                    { "e27807a7-48c5-4de5-9e4a-fafee02f50b4", "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "c816484c-94f8-4af5-83fc-dcea7fd00bf1" },
+                    { "b6ca8ddc-bcf6-43d1-8d75-181f1d8e546d", "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "cf55a117-bfd3-42be-a332-606dd54aa320" },
+                    { "ebf67922-41bd-45a7-8a11-6c75b094b95d", "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "2cf2d837-0f65-43b0-8085-9fa576c485e2" },
+                    { "7e5e6436-6f09-4be5-97e1-fd0b475d22fc", "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "85423698-f6d8-4e96-a832-b2606b08fe7a" },
+                    { "ee42d1cb-2753-4298-b97f-9d712800a71d", "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "cf895424-4a41-4ffd-bbb6-bea989caa874" },
+                    { "1378f5fd-509c-40d5-a367-ef10d1e2ee70", "c6e73f10-d06e-49d8-99e4-11eaf012a6e0", "a63688f1-3bf4-425e-8d01-a82036fa9ed7" },
+                    { "4b5ab78c-68ee-4f83-88a9-08325379c683", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "a63688f1-3bf4-425e-8d01-a82036fa9ed7" },
+                    { "9145c792-4320-45e8-a180-4133c139bea4", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "85423698-f6d8-4e96-a832-b2606b08fe7a" },
+                    { "609fd33c-281d-4312-b030-bda79b1d15a8", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "cf895424-4a41-4ffd-bbb6-bea989caa874" },
+                    { "71b88d57-3ad1-4a9d-871a-96fa1a6387ab", "b1667254-c2e8-4736-81d8-a5f9006ae5e1", "a63688f1-3bf4-425e-8d01-a82036fa9ed7" },
+                    { "b3f6483d-084c-42e2-87f5-c2eab193a951", "2c4c5b95-7fe1-4692-811f-627008072097", "bf4eb055-33b5-4419-a85e-031bcd617aef" },
+                    { "30f79c9f-2c7a-40ca-b8aa-e103f5e6d0fe", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "bf4eb055-33b5-4419-a85e-031bcd617aef" },
+                    { "a7cfb39d-4699-4ea2-a2e9-e25e5946bd6e", "edfab11a-6341-4aaa-af8e-e1613cc93b40", "bf4eb055-33b5-4419-a85e-031bcd617aef" },
+                    { "6af571a4-5296-4547-a3fb-58c637de73b0", "b1667254-c2e8-4736-81d8-a5f9006ae5e1", "bf4eb055-33b5-4419-a85e-031bcd617aef" },
+                    { "e75386e0-0ef9-4017-a3f2-a23a82e53fc6", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "c816484c-94f8-4af5-83fc-dcea7fd00bf1" },
+                    { "b6113494-58b9-4534-ae9c-e321f3fc75f3", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "2cf2d837-0f65-43b0-8085-9fa576c485e2" },
+                    { "1ba4edfe-d4c4-41a9-8307-1bc800cc0f11", "0324ab62-f514-4a8b-bddd-39cad3f7f006", "b2e25bb9-497c-4ab0-8a69-f532e36bcf9c" }
                 });
 
             migrationBuilder.InsertData(
@@ -252,14 +270,14 @@ namespace StalinGames.DAL.Migrations
                 columns: new[] { "UserId", "RoleId" },
                 values: new object[,]
                 {
-                    { "e5e1216b-6aa4-49b5-9f05-452e704c377b", "1" },
-                    { "e2e86a6a-fd39-4ebd-b00f-5f39ce9700b8", "2" },
-                    { "dae85a09-79fe-47e2-b733-afd35727520e", "3" },
-                    { "acd885ef-b705-4e8f-89d3-fa52eb1ccc3f", "1" },
-                    { "de2409da-5322-44da-85ce-ef5af9c81080", "3" },
-                    { "af29d398-5ae0-414c-b5de-07c2e8364a1c", "3" },
-                    { "5cbe2019-de2e-46ac-97a0-cf20b01b9626", "3" },
-                    { "9bf697a9-144d-4967-a8cc-28af82c39c35", "3" }
+                    { "bf4eb055-33b5-4419-a85e-031bcd617aef", "1" },
+                    { "c816484c-94f8-4af5-83fc-dcea7fd00bf1", "2" },
+                    { "cf55a117-bfd3-42be-a332-606dd54aa320", "3" },
+                    { "b2e25bb9-497c-4ab0-8a69-f532e36bcf9c", "1" },
+                    { "cf895424-4a41-4ffd-bbb6-bea989caa874", "3" },
+                    { "85423698-f6d8-4e96-a832-b2606b08fe7a", "3" },
+                    { "a63688f1-3bf4-425e-8d01-a82036fa9ed7", "3" },
+                    { "2cf2d837-0f65-43b0-8085-9fa576c485e2", "3" }
                 });
 
             migrationBuilder.CreateIndex(

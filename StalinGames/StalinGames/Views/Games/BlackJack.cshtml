@@ -30,7 +30,7 @@
 <div class="card mb-3  bg-white">
     <div class="card mb-3  bg-dark">
         <div class="card-header" style="font-size: 2.5em; text-align: center">
-            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" asp-for="@Model.Blyats" class="form-control" id="Blyats">
+            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" value="@Model.Blyats" class="form-control" id="Blyats">
 
 
         </div>
@@ -101,50 +101,50 @@
         });
 
         function dealerSpeelt() {
-            let getal = document.getElementById("Bet").value;
+            let betValue = document.getElementById("Bet").value;
             while (totaleWaardeDealer <= totaleWaardeSpeler) {
                 getCard(kaartDealer, "dealer")
             }
             if (totaleWaardeDealer <= 21) {
-                
+
                 btnSpelerGetCard.disabled = true;
                 btnSpelerStop.disabled = true;
-                getal = 0 - getal;
-                document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(getal) + " Blyats!";
+                betValue = 0 - betValue;
+                document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(betValue) + " Blyats!";
 
             }
             else {
-                
-               let result = Number(getal) + (Number(getal) * 1.5);
-                 document.getElementById("Message").innerHTML = "Player wins! you win " + result + " Blyats!";
+
+                betValue = Number(betValue) + (Number(betValue) * 1.5);
+                 document.getElementById("Message").innerHTML = "Player wins! you win " + betValue + " Blyats!";
                 btnSpelerGetCard.disabled = true;
 
             }
+            btnSpeelOpnieuw.disabled = false;
             $.ajax({
                 type: 'POST',
                 url: '/Games/Blackjack',
-                data: { getal: getal },
+                data: { getal: betValue },
                 success: function (result) {
-                    getal = result;
-                    document.getElementById("Blyats").value = getal;
+                    betValue = result;
+                    document.getElementById("Blyats").value = betValue;
                 }
             });
 
         }
 
         function getCard(divFoto, soortSpeler) {
-            
-            let getal = document.getElementById("Bet").value;
-            
-        if (getal > @Model.Blyats) {
+
+                let betValue = Number(document.getElementById("Bet").value);
+         if (betValue > Number(document.getElementById("Blyats").value)) {
             document.getElementById("Error").innerHTML = "You don't have enough blyats to spend that much, smart guy.";
             return;
-        }
-        else if (getal < 0)
+         }
+         else if (betValue < 0 || betValue.toString().includes(',') || betValue.toString().includes('.'))
        {
             document.getElementById("Error").innerHTML = "You have entered an illegal number, please don't do this.";
             return;
-         
+
         }
         else
         {
@@ -172,6 +172,7 @@
             if (soortSpeler == "speler") {
 
                 document.getElementById("Bet").disabled = true;
+                btnSpeelOpnieuw.disabled = true;
                 totaleWaardeSpeler += parseInt(waarde);
 
                 console.log(totaleWaardeSpeler);
@@ -182,21 +183,22 @@
 
                 document.querySelector("#WaardeSpeler").innerHTML = `Score speler: ${totaleWaardeSpeler}`;
                 if (totaleWaardeSpeler > 21) {
-                   
-                    getal = 0 - getal;
-                       document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(getal) + " Blyats!";
+
+                    betValue = 0 - betValue;
+                    document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(betValue) + " Blyats!";
                     btnSpelerGetCard.disabled = true;
                     btnSpelerStop.disabled = true;
+                    btnSpeelOpnieuw.disabled = false;
 
-                   
+
 
                     $.ajax({
                         type: 'POST',
                         url: '/Games/Blackjack',
-                        data: { getal: getal },
+                        data: { getal: betValue },
                         success: function (result) {
-                            getal = result;
-                             document.getElementById("Blyats").value = getal;
+                            betValue = result;
+                            document.getElementById("Blyats").value = betValue;
                         }
                     });
                 }
@@ -212,9 +214,9 @@
                 totaleWaardeDealer += parseInt(waarde);
                 document.querySelector("#WaardeDealer").innerHTML = `Score dealer: ${totaleWaardeDealer}`
 
-                
+
             }
-      
+
         }
     })
 </script>

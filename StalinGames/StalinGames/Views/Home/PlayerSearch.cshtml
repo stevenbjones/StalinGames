@@ -14,7 +14,7 @@
         var profilePicturePath = $"/images/ProfilePictures/{user.ProfilePicturePath ?? "DefaultProfilePicture.jpg"}";
         <div class="card mb-3  bg-dark">
             <div class="card-body">
-                <img style="width: 10em;"src=@profilePicturePath>
+                <img style="width: 10em;" src=@profilePicturePath>
                 <h5 style="display: inline; vertical-align: top; margin-left: 1em;" class="card-title">@user.UserName</h5>
             </div>
             <div class="card-footer">
@@ -26,18 +26,10 @@
     }
 }
 else
-{
-    <div class="card">
+{ 
+    <div class="card mb-3  bg-dark">
         <div class="card-header">
-            No users created yet
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Use the button below to create a user
-            </h5>
-            <a class="btn btn-success" style="width:auto" asp-controller="Account" asp-action="Register">
-                Add new user
-            </a>
+            No users found
         </div>
     </div>
 }
