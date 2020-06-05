@@ -180,7 +180,7 @@
         $.ajax({
             type: 'POST',
             url: '/Games/SlotMachine',
-            data: { getal: betValue },
+            data: { value: betValue },
             success: function (result) {
                blyats = result;
                 document.getElementById("Blyats").value = blyats;

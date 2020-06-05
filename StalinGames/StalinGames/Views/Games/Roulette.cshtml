@@ -25,9 +25,9 @@
 
 
     #rouletteCard {
-         margin-left: 13%;
+         margin-left: 8%;
         display: inline-flex;
-    width: 50%;
+
         position: absolute;
         margin-top: 7%;
     }
@@ -49,48 +49,55 @@
 <div class="card mb-3 bg-dark" style="padding: 1.5em;margin-top: 1em;background-color: #702c2c " id="rouletteCard">
     <div class="card mb-3  bg-dark">
         <div class="card-header" style="font-size: 2.5em; text-align: center">
-            <span id="Message">Play</span> <input disabled="" style="width: 6em; display:inline; float:right;" type="number" value="285755" class="form-control" id="Blyats">
+            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" type="number" value="@Model.Blyats" class="form-control" id="Blyats">
         </div>
     </div>
     <div class="card mb-3  bg-dark">
         <div class="card-body">
             <div id="board" class="board">
-                <div>
-                    <button id="value1" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">1</button>
-                    <button id="value2" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">2</button>
-                    <button id="value3" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">3</button>
-                </div>
+               
+                    <div>
+                        <div>
+                            <button id="value1" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">1</button>
+                            <button id="value2" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">2</button>
+                            <button id="value2" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">2</button>
 
-                <div>
-                    <button id="value4" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">4</button>
-                    <button id="value5" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">5</button>
-                    <button id="value6" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">6</button>
-                </div>
+                            <button id="value1" class="btn black" style="  font-size:1.5em;color:white;">1</button>
+                            <button id="value3" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">3</button>
+                            <button id="value3" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">3</button>
+                        </div>
+                    </div>
 
-                <div>
-                    <button id="value7" class="btn black"  style="/* width: 25%; */font-size:1.5em;color:white;">7</button>
-                    <button id="value8" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">8</button>
-                    <button id="value9" class="btn black"  style="/* width: 25%; */font-size:1.5em;color:white;">9</button>
-                </div>
+                    <div>
+                        <button id="value4" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">4</button>
+                        <button id="value5" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">5</button>
+                        <button id="value6" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">6</button>
+                    </div>
 
-                <div>
-                    <button id="value10" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">10</button>
-                    <button id="value11" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">11</button>
-                    <button id="value12" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">12</button>
-                </div>
+                    <div>
+                        <button id="value7" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">7</button>
+                        <button id="value8" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">8</button>
+                        <button id="value9" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">9</button>
+                    </div>
 
-                <div>
-                    <button id="value13" class="btn black"  style="/* width: 25%; */font-size:1.5em;color:white;">13</button>
-                    <button id="value14" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">14</button>
-                    <button id="value15" class="btn black"  style="/* width: 25%; */font-size:1.5em;color:white;">15</button>
-                </div>
+                    <div>
+                        <button id="value10" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">10</button>
+                        <button id="value11" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">11</button>
+                        <button id="value12" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">12</button>
+                    </div>
 
-                <div>
-                    <button id="value16" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">16</button>
-                    <button id="value17" class="btn black"  style="/* width: 25%; */font-size:1.5em;color:white;">17</button>
-                    <button id="value18" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">18</button>
-                </div>
+                    <div>
+                        <button id="value13" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">13</button>
+                        <button id="value14" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">14</button>
+                        <button id="value15" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">15</button>
+                    </div>
 
+                    <div>
+                        <button id="value16" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">16</button>
+                        <button id="value17" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">17</button>
+                        <button id="value18" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">18</button>
+                    </div>
+    
                 <div>
                     <button id="value19" class="btn black" style="/* width: 25%; */font-size:1.5em;color:white;">19</button>
                     <button id="value20" class="btn red"  style="/* width: 25%; */font-size:1.5em;color:white;">20</button>
@@ -127,7 +134,7 @@
                 </div>
                 <div>
                     <button id="valuered" class="btn red" style="/* width: 25%; */font-size:1.5em;color:white;">red</button>
-                    <button id="valueblack" class="btn black"  style="/* width: 25%; */font-size:1.5em;color:white;">black</button>               
+                    <button id="valueblack" class="btn black"  style="width: 4em; font-size:1.5em;color:white;">black</button>               
                 </div>
             </div>
         </div>
@@ -343,12 +350,9 @@
                         if (resultaat == ( GambledValues[i])) {
                             //hier komt de winst
                             console.log(`U heeft ${Bets[i]} ingezet op ${ GambledValues[i]} hierdoor wint u ${Bets[i] * 100} `)
-                            totaleWinst += pareInt(Bets[i]) * 100;
+                            totaleWinst += Bets[i] * 100;
                         }
-                        if (Bets[i] != "") {
-                            totaleInzet += parseInt(Bets[i]);
-                        }
-                       
+                        totaleInzet += Bets[i];
                     }
 
                     switch (GambledColor) {
@@ -378,12 +382,10 @@
 
                         // code block
                     }
-
-                    let number = totaleWinst - totaleInzet
                     $.ajax({
                         type: 'POST',
-                        url: '/Games/Roulette',
-                        data: { getal: number },
+                        url: '/Games/SlotMachine',
+                        data: { value: totaleWinst - totaleInzet },
                         success: function (result) {
                             blyats = result;
                             document.getElementById("Blyats").value = blyats;
