@@ -343,9 +343,12 @@
                         if (resultaat == ( GambledValues[i])) {
                             //hier komt de winst
                             console.log(`U heeft ${Bets[i]} ingezet op ${ GambledValues[i]} hierdoor wint u ${Bets[i] * 100} `)
-                            totaleWinst += Bets[i] * 100;
+                            totaleWinst += pareInt(Bets[i]) * 100;
                         }
-                        totaleInzet += Bets[i];
+                        if (Bets[i] != "") {
+                            totaleInzet += parseInt(Bets[i]);
+                        }
+                       
                     }
 
                     switch (GambledColor) {
@@ -375,10 +378,12 @@
 
                         // code block
                     }
+
+                    let number = totaleWinst - totaleInzet
                     $.ajax({
                         type: 'POST',
-                        url: '/Games/SlotMachine',
-                        data: { getal: totaleWinst - totaleInzet },
+                        url: '/Games/Roulette',
+                        data: { getal: number },
                         success: function (result) {
                             blyats = result;
                             document.getElementById("Blyats").value = blyats;
