@@ -343,16 +343,19 @@
                 }
 
                 function checkProfit(resultaat) {
-                    let totaleInzet = 0;
-                    let totaleWinst = 0;
+                    var  totaleInzet = 0;
+                    var  totaleWinst = 0;
 
-                    for (let i = 1; i <  GambledValues.length; i++) {
-                        if (resultaat == ( GambledValues[i])) {
+                    for (let i = 1; i < GambledValues.length; i++) {
+                        if (resultaat == (GambledValues[i])) {
                             //hier komt de winst
-                            console.log(`U heeft ${Bets[i]} ingezet op ${ GambledValues[i]} hierdoor wint u ${Bets[i] * 100} `)
-                            totaleWinst += Bets[i] * 100;
+                            console.log(`U heeft ${Bets[i]} ingezet op ${GambledValues[i]} hierdoor wint u ${Bets[i] * 100} `)
+                            totaleWinst += pareInt(Bets[i]) * 100;
                         }
-                        totaleInzet += Bets[i];
+                        if (Bets[i] != "") {
+                            totaleInzet += parseInt(Bets[i]);
+                        }
+
                     }
 
                     switch (GambledColor) {
@@ -362,30 +365,32 @@
                         case "red":
                             if (resultaat % 2 == 0) {
                                 console.log(`U heeft ${BetOnColor} ingezet op red, hierdoor wint u ${BetOnColor * 10}`)
-                                totaleWinst += BetOnColor * 10;
+                                totaleWinst += parseInt(BetOnColor) * 10;
                             }
                             else {
                                 console.log("het was black" + BetOnColor + "Verloren")
-                                totaleInzet += BetOnColor
+                                totaleInzet += parseInt(BetOnColor)
                             }
                             break;
                         case "black":
                             if (resultaat % 2 != 0) {
                                 console.log(`U heeft ${BetOnColor} ingezet op black, hierdoor wint u ${BetOnColor * 10}`)
-                                totaleWinst += BetOnColor * 10;
+                                totaleWinst += parseInt(BetOnColor) * 10;
                             }
                             else {
                                 console.log("het was red" + BetOnColor + "Verloren")
-                                totaleInzet += BetOnColor
+                                totaleInzet += parseInt(BetOnColor)
                             }
                             break;
 
                         // code block
                     }
+
+                    let number = totaleWinst - totaleInzet
                     $.ajax({
                         type: 'POST',
-                        url: '/Games/SlotMachine',
-                        data: { value: totaleWinst - totaleInzet },
+                        url: '/Games/Roulette',
+                        data: { value: number },
                         success: function (result) {
                             blyats = result;
                             document.getElementById("Blyats").value = blyats;
