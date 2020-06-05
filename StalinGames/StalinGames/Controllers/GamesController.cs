@@ -40,15 +40,15 @@ namespace StalinGames.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SlotMachine(int value)
+        public async Task<IActionResult> SlotMachine(int getal)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
             user.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            user.Blyats += value;
+            user.Blyats += getal;
             user.TotalGamesPlayed++;
-            if (value < 0)
+            if (getal < 0)
             {
-                user.TotalBlyatsLost += Math.Abs(value);
+                user.TotalBlyatsLost += Math.Abs(getal);
             }
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -76,15 +76,15 @@ namespace StalinGames.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlackJack(int value)
+        public async Task<IActionResult> BlackJack(int getal)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
             user.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            user.Blyats += value;
+            user.Blyats += getal;
             user.TotalGamesPlayed++;
-            if (value < 0)
+            if (getal < 0)
             {
-                user.TotalBlyatsLost += Math.Abs(value);
+                user.TotalBlyatsLost += Math.Abs(getal);
             }
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -111,15 +111,15 @@ namespace StalinGames.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Roulette(int value)
+        public async Task<IActionResult> Roulette(int getal)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
             user.LastGamePlayed = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            user.Blyats += value;
+            user.Blyats += getal;
             user.TotalGamesPlayed++;
-            if (value < 0)
+            if (getal < 0)
             {
-                user.TotalBlyatsLost += Math.Abs(value);
+                user.TotalBlyatsLost += Math.Abs(getal);
             }
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
