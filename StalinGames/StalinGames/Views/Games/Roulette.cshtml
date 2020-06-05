@@ -16,351 +16,362 @@
     }
 
     .bord {
+      /*
         transform: rotate(270deg);
         margin-top: -50%;
         margin-left: -20em;
+      */
     }
 
     input {
         margin: 5em;
         padding: 5em;
     }
+    #rouletteCard{
+       /* margin-left: 100%;*/
+    }
+    #canvas{
+       /* margin-left:50%; */
+    }
+    .container{
+        margin-left: 0em;
+    }
+
+
 </style>
 
-<div>
-    <button id="Spinwheel">spin</button>
-</div>
+    <div class="card mb-3  bg-dark" id="rouletteCard">
+        <div class="card-header" style="font-size: 2.5em; text-align: center">
+            <span id="Message">Play</span> <input disabled style="width: 6em; display:inline; float:right;" type="number" value="@Model.Blyats" class="form-control" id="Blyats">
+            <button id="Spinwheel">spin</button>
+        </div>
+    </div>    
+    <canvas id="canvas" height="500em" width="500em"></canvas>       
 
-<div class="card-header" style="font-size: 2.5em; text-align: center">
-<span id="Message">Play</span>
-<input disabled style="width: 6em; display:inline; float:right;" asp-for="@Model.Blyats" class="form-control" id="Blyats">
- </div>
+    <div id="bord" class="bord">
+        <div>
+            <span id="waarde1" class="zwart"> 1 </span>
+            <span id="waarde2" class="rood"> 2 </span>
+            <span id="waarde3" class="zwart"> 3 </span>
+        </div>
 
-<canvas id="canvas" width="800px" height="800px"></canvas>
-<div id="bord" class="bord">
-    <div>
-        <span id="waarde1" class="zwart"> 1 </span>
-        <span id="waarde2" class="rood"> 2 </span>
-        <span id="waarde3" class="zwart"> 3 </span>
+        <div>
+            <span id="waarde4" class="rood"> 4 </span>
+            <span id="waarde5" class="zwart"> 5 </span>
+            <span id="waarde6" class="rood"> 6 </span>
+        </div>
+
+        <div>
+            <span id="waarde7" class="zwart"> 7 </span>
+            <span id="waarde8" class="rood"> 8 </span>
+            <span id="waarde9" class="zwart"> 9 </span>
+        </div>
+
+        <div>
+            <span id="waarde10" class="rood"> 10 </span>
+            <span id="waarde11" class="zwart"> 11 </span>
+            <span id="waarde12" class="rood"> 12 </span>
+        </div>
+
+        <div>
+            <span id="waarde13" class="zwart"> 13 </span>
+            <span id="waarde14" class="rood"> 14 </span>
+            <span id="waarde15" class="zwart"> 15 </span>
+        </div>
+
+        <div>
+            <span id="waarde16" class="rood"> 16 </span>
+            <span id="waarde17" class="zwart"> 17 </span>
+            <span id="waarde18" class="rood"> 18 </span>
+        </div>
+
+        <div>
+            <span id="waarde19" class="zwart"> 19 </span>
+            <span id="waarde20" class="rood"> 20 </span>
+            <span id="waarde21" class="zwart"> 21 </span>
+        </div>
+
+        <div>
+            <span id="waarde22" class="rood"> 22 </span>
+            <span id="waarde23" class="zwart"> 23 </span>
+            <span id="waarde24" class="rood"> 24 </span>
+        </div>
+
+        <div>
+            <span id="waarde25" class="zwart"> 25 </span>
+            <span id="waarde26" class="rood"> 26 </span>
+            <span id="waarde27" class="zwart"> 27 </span>
+        </div>
+
+        <div>
+            <span id="waarde28" class="rood"> 28 </span>
+            <span id="waarde29" class="zwart"> 29 </span>
+            <span id="waarde30" class="rood"> 30 </span>
+        </div>
+        <div>
+            <span id="waarde31" class="zwart"> 31 </span>
+            <span id="waarde32" class="rood"> 32 </span>
+            <span id="waarde33" class="zwart"> 33 </span>
+        </div>
+
+        <div>
+            <span id="waarde34" class="rood"> 34 </span>
+            <span id="waarde35" class="zwart"> 35 </span>
+            <span id="waarde36" class="rood"> 36 </span>
+        </div>
+        <div>
+            <span id="waardeRood" class="rood"> Rood </span>
+            <span id="waardeZwart" class="zwart"> Zwart </span>
+        </div>
+
+        <div>Geef value mee</div>
+        <input type="text" id="betvalue">
+        <button id="stopBetting">Stop betting</button>
+
     </div>
 
-    <div>
-        <span id="waarde4" class="rood"> 4 </span>
-        <span id="waarde5" class="zwart"> 5 </span>
-        <span id="waarde6" class="rood"> 6 </span>
-    </div>
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
 
-    <div>
-        <span id="waarde7" class="zwart"> 7 </span>
-        <span id="waarde8" class="rood"> 8 </span>
-        <span id="waarde9" class="zwart"> 9 </span>
-    </div>
+            /*************Wheel variabelen******************* */
+            var options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36"];
 
-    <div>
-        <span id="waarde10" class="rood"> 10 </span>
-        <span id="waarde11" class="zwart"> 11 </span>
-        <span id="waarde12" class="rood"> 12 </span>
-    </div>
+            var startAngle = 0;
+            var arc = Math.PI / (options.length / 2);
+            var spinTimeout = null;
 
-    <div>
-        <span id="waarde13" class="zwart"> 13 </span>
-        <span id="waarde14" class="rood"> 14 </span>
-        <span id="waarde15" class="zwart"> 15 </span>
-    </div>
+            var spinArcStart = 10;
+            var spinTime = 0;
+            var spinTimeTotal = 0;
 
-    <div>
-        <span id="waarde16" class="rood"> 16 </span>
-        <span id="waarde17" class="zwart"> 17 </span>
-        <span id="waarde18" class="rood"> 18 </span>
-    </div>
+            var ctx;
+            this.document.getElementById("Spinwheel").addEventListener("click", spin);
 
-    <div>
-        <span id="waarde19" class="zwart"> 19 </span>
-        <span id="waarde20" class="rood"> 20 </span>
-        <span id="waarde21" class="zwart"> 21 </span>
-    </div>
+            /*********Script variabelen***************** */
+            let btnStopBetting = document.querySelector("#stopBetting");
+            let bet = "";
+            let gegokteWaarden = "";
+            let gegokteKleur = "";
 
-    <div>
-        <span id="waarde22" class="rood"> 22 </span>
-        <span id="waarde23" class="zwart"> 23 </span>
-        <span id="waarde24" class="rood"> 24 </span>
-    </div>
+            //Teken bord
+            for (let i = 1; i <= 36; i++) {
+                this.document.querySelector(`#waarde${i}`).addEventListener("click", function () {
+                    waarde(i);
+                })
+            }
 
-    <div>
-        <span id="waarde25" class="zwart"> 25 </span>
-        <span id="waarde26" class="rood"> 26 </span>
-        <span id="waarde27" class="zwart"> 27 </span>
-    </div>
+            //Knop voor op rood te gokken
+            this.document.querySelector("#waardeRood").addEventListener("click", function () {
+                if (gegokteKleur.includes("Rood")) {
+                    alert("U kan niet 2 keer op rood gokken");
+                    return;
+                }
+                else {
+                    gegokteKleur = "Rood"
+                    window.betOpKleur = document.getElementById("betvalue").value;
+                }
 
-    <div>
-        <span id="waarde28" class="rood"> 28 </span>
-        <span id="waarde29" class="zwart"> 29 </span>
-        <span id="waarde30" class="rood"> 30 </span>
-    </div>
-    <div>
-        <span id="waarde31" class="zwart"> 31 </span>
-        <span id="waarde32" class="rood"> 32 </span>
-        <span id="waarde33" class="zwart"> 33 </span>
-    </div>
-
-    <div>
-        <span id="waarde34" class="rood"> 34 </span>
-        <span id="waarde35" class="zwart"> 35 </span>
-        <span id="waarde36" class="rood"> 36 </span>
-    </div>
-    <div>
-        <span id="waardeRood" class="rood"> Rood </span>
-        <span id="waardeZwart" class="zwart"> Zwart </span>
-    </div>
-
-    <div>Geef value mee</div>
-    <input type="text" id="betvalue">
-    <button id="stopBetting">Stop betting</button>
-
-</div>
-
-<script type="text/javascript">
-    window.addEventListener('load', function () {
-
-        /*************Wheel variabelen******************* */
-        var options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36"];
-
-        var startAngle = 0;
-        var arc = Math.PI / (options.length / 2);
-        var spinTimeout = null;
-
-        var spinArcStart = 10;
-        var spinTime = 0;
-        var spinTimeTotal = 0;
-
-        var ctx;
-        this.document.getElementById("Spinwheel").addEventListener("click", spin);
-
-        /*********Script variabelen***************** */
-        let btnStopBetting = document.querySelector("#stopBetting");
-        let bet = "";
-        let gegokteWaarden = "";
-        let gegokteKleur = "";
-
-        //Teken bord
-        for (let i = 1; i <= 36; i++) {
-            this.document.querySelector(`#waarde${i}`).addEventListener("click", function () {
-                waarde(i);
+                //knop voor op zwart te gokken
             })
-        }
+            this.document.querySelector("#waardeZwart").addEventListener("click", function () {
+                if (gegokteKleur.includes("Zwart")) {
+                    alert("U kan niet 2 keer op zwart gokken");
+                    return;
+                }
+                else {
+                    gegokteKleur = "Zwart"
+                    window.betOpKleur = document.getElementById("betvalue").value;
+                }
+            })
 
-        //Knop voor op rood te gokken
-        this.document.querySelector("#waardeRood").addEventListener("click", function () {
-            if (gegokteKleur.includes("Rood")) {
-                alert("U kan niet 2 keer op rood gokken");
-                return;
+
+            btnStopBetting.addEventListener("click", function () {
+
+                var ArrayGegoksteWaarden = gegokteWaarden.split(",");
+                var ArrayBet = bet.split(",");
+                console.log(ArrayGegoksteWaarden);
+
+                window.gegokteWaarde = ArrayGegoksteWaarden;
+                window.gegokteKleur = gegokteKleur;
+                window.betOpKleur = betOpKleur;
+                window.Bets = ArrayBet;
+
+            })
+
+            //Voeg gegogkte waarden toe in een array
+            function waarde(cijfer) {
+                bet += `${document.getElementById("betvalue").value},`;
+                gegokteWaarden += `${cijfer},`
+
             }
-            else {
-                gegokteKleur = "Rood"
-                window.betOpKleur = document.getElementById("betvalue").value;
-            }
 
-            //knop voor op zwart te gokken
-        })
-        this.document.querySelector("#waardeZwart").addEventListener("click", function () {
-            if (gegokteKleur.includes("Zwart")) {
-                alert("U kan niet 2 keer op zwart gokken");
-                return;
-            }
-            else {
-                gegokteKleur = "Zwart"
-                window.betOpKleur = document.getElementById("betvalue").value;
-            }
-        })
+            //Teken roulette
+            function drawRouletteWheel() {
+                var canvas = document.getElementById("canvas");
+                if (canvas.getContext) {
+                    var outsideRadius = 200;
+                    var textRadius = 160;
+                    var insideRadius = 125;
+
+                    ctx = canvas.getContext("2d");
+                    ctx.clearRect(0, 0, 500, 500);
+
+                    ctx.strokeStyle = "black";
+                    ctx.lineWidth = 2;
+
+                    ctx.font = 'bold 12px Helvetica, Arial';
+
+                    for (var i = 0; i < options.length; i++) {
+                        var angle = startAngle + i * arc;
+                        //ctx.fillStyle = colors[i];
+                        if (i % 2 == 0) {
+                            //zwart
+                            ctx.fillStyle = "#000000"
+                        }
+                        else {
+                            //rood
+                            ctx.fillStyle = "#F50A0A"
+                        }
 
 
-        btnStopBetting.addEventListener("click", function () {
+                        ctx.beginPath();
+                        ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
+                        ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
+                        ctx.stroke();
+                        ctx.fill();
 
-            var ArrayGegoksteWaarden = gegokteWaarden.split(",");
-            var ArrayBet = bet.split(",");
-            console.log(ArrayGegoksteWaarden);
-
-            window.gegokteWaarde = ArrayGegoksteWaarden;
-            window.gegokteKleur = gegokteKleur;
-            window.betOpKleur = betOpKleur;
-            window.Bets = ArrayBet;
-
-        })
-
-        //Voeg gegogkte waarden toe in een array
-        function waarde(cijfer) {
-            bet += `${document.getElementById("betvalue").value},`;
-            gegokteWaarden += `${cijfer},`
-
-        }
-
-        //Teken roulette
-        function drawRouletteWheel() {
-            var canvas = document.getElementById("canvas");
-            if (canvas.getContext) {
-                var outsideRadius = 200;
-                var textRadius = 160;
-                var insideRadius = 125;
-
-                ctx = canvas.getContext("2d");
-                ctx.clearRect(0, 0, 500, 500);
-
-                ctx.strokeStyle = "black";
-                ctx.lineWidth = 2;
-
-                ctx.font = 'bold 12px Helvetica, Arial';
-
-                for (var i = 0; i < options.length; i++) {
-                    var angle = startAngle + i * arc;
-                    //ctx.fillStyle = colors[i];
-                    if (i % 2 == 0) {
-                        //zwart
-                        ctx.fillStyle = "#000000"
+                        ctx.save();
+                        ctx.shadowOffsetX = -1;
+                        ctx.shadowOffsetY = -1;
+                        ctx.shadowBlur = 0;
+                        ctx.shadowColor = "rgb(220,220,220)";
+                        ctx.fillStyle = "black";
+                        ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius,
+                            250 + Math.sin(angle + arc / 2) * textRadius);
+                        ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                        var text = options[i];
+                        ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                        ctx.restore();
                     }
-                    else {
-                        //rood
-                        ctx.fillStyle = "#F50A0A"
-                    }
 
-
-                    ctx.beginPath();
-                    ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
-                    ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
-                    ctx.stroke();
-                    ctx.fill();
-
-                    ctx.save();
-                    ctx.shadowOffsetX = -1;
-                    ctx.shadowOffsetY = -1;
-                    ctx.shadowBlur = 0;
-                    ctx.shadowColor = "rgb(220,220,220)";
+                    //Arrow
                     ctx.fillStyle = "black";
-                    ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius,
-                        250 + Math.sin(angle + arc / 2) * textRadius);
-                    ctx.rotate(angle + arc / 2 + Math.PI / 2);
-                    var text = options[i];
-                    ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
-                    ctx.restore();
+                    ctx.beginPath();
+                    ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
+                    ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
+                    ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
+                    ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
+                    ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
+                    ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
+                    ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
+                    ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
+                    ctx.fill();
+                }
+            }
+
+            function spin() {
+                spinAngleStart = Math.random() * 10 + 10;
+                spinTime = 5;
+                spinTimeTotal = Math.random() * 3 + 4 * 1000;
+                callRotateWheel();
+            }
+
+            function rotateWheel() {
+                spinTime += 30;
+                if (spinTime >= spinTimeTotal) {
+                    //stopRotateWheel();
+                    return;
+                }
+                var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+                startAngle += (spinAngle * Math.PI / 180);
+                drawRouletteWheel();
+            }
+
+            //Gebruik deze functie om RotateWheel verschillende keren te herhalen
+            function callRotateWheel() {
+                for (let i = 0; i < (Math.floor(Math.random() * 50)); i++) {
+                    rotateWheel();
+                }
+                stopRotateWheel();
+            }
+
+            function stopRotateWheel() {
+                clearTimeout(spinTimeout);
+                var degrees = startAngle * 180 / Math.PI + 90;
+                var arcd = arc * 180 / Math.PI;
+                var index = Math.floor((360 - degrees % 360) / arcd);
+                ctx.save();
+                ctx.font = 'bold 30px Helvetica, Arial';
+                var text = options[index]
+
+                checkProfit(text);
+                console.log(window.gegokteWaarde);
+                console.log(window.Bets);
+                console.log(window.gegokteKleur);
+
+                ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
+                ctx.restore();
+            }
+
+            function checkProfit(resultaat) {
+                let totaleInzet = 0;
+                let totaleWinst = 0;
+
+                for (let i = 1; i < window.gegokteWaarde.length; i++) {
+                    if (resultaat == (gegokteWaarde[i])) {
+                        //hier komt de winst
+                        console.log(`U heeft ${window.Bets[i]} ingezet op ${window.gegokteWaarde[i]} hierdoor wint u ${window.Bets[i] * 100} `)
+                        totaleWinst += window.Bets[i] * 100;
+                    }
+                    totaleInzet += window.Bets[i];
                 }
 
-                //Arrow
-                ctx.fillStyle = "black";
-                ctx.beginPath();
-                ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
-                ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
-                ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
-                ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
-                ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
-                ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
-                ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
-                ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
-                ctx.fill();
-            }
-        }
+                switch (window.gegokteKleur) {
+                    case "":
+                        console.log("geen gok op kleur");
+                        break;
+                    case "Rood":
+                        if (resultaat % 2 == 0) {
+                            console.log(`U heeft ${window.betOpKleur} ingezet op rood, hierdoor wint u ${window.betOpKleur * 10}`)
+                            totaleWinst += window.betOpKleur * 10;
+                        }
+                        else {
+                            console.log("het was zwart" + window.betOpKleur + "Verloren")
+                            totaleInzet += window.betOpKleur
+                        }
+                        break;
+                    case "Zwart":
+                        if (resultaat % 2 != 0) {
+                            console.log(`U heeft ${window.betOpKleur} ingezet op zwart, hierdoor wint u ${window.betOpKleur * 10}`)
+                            totaleWinst += window.betOpKleur * 10;
+                        }
+                        else {
+                            console.log("het was rood" + window.betOpKleur + "Verloren")
+                            totaleInzet += window.betOpKleur
+                        }
+                        break;
 
-        function spin() {
-            spinAngleStart = Math.random() * 10 + 10;
-            spinTime = 5;
-            spinTimeTotal = Math.random() * 3 + 4 * 1000;
-            callRotateWheel();
-        }
+                    // code block
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/Games/SlotMachine',
+                    data: { getal: totaleWinst - totaleInzet },
+                    success: function (result) {
+                        blyats = result;
+                        document.getElementById("Blyats").value = blyats;
+                    }
+                });
 
-        function rotateWheel() {
-            spinTime += 30;
-            if (spinTime >= spinTimeTotal) {
-                //stopRotateWheel();
-                return;
+
             }
-            var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-            startAngle += (spinAngle * Math.PI / 180);
+
+            function easeOut(t, b, c, d) {
+                var ts = (t /= d) * t;
+                var tc = ts * t;
+                return b + c * (tc + -3 * ts + 3 * t);
+            }
+
             drawRouletteWheel();
-        }
-
-        //Gebruik deze functie om RotateWheel verschillende keren te herhalen
-        function callRotateWheel() {
-            for (let i = 0; i < (Math.floor(Math.random() * 50)); i++) {
-                rotateWheel();
-            }
-            stopRotateWheel();
-        }
-
-        function stopRotateWheel() {
-            clearTimeout(spinTimeout);
-            var degrees = startAngle * 180 / Math.PI + 90;
-            var arcd = arc * 180 / Math.PI;
-            var index = Math.floor((360 - degrees % 360) / arcd);
-            ctx.save();
-            ctx.font = 'bold 30px Helvetica, Arial';
-            var text = options[index]
-
-            checkProfit(text);
-            console.log(window.gegokteWaarde);
-            console.log(window.Bets);
-            console.log(window.gegokteKleur);
-
-            ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
-            ctx.restore();
-        }
-
-        function checkProfit(resultaat) {
-            let totaleInzet = 0;
-            let totaleWinst = 0;
-
-            for (let i = 1; i < window.gegokteWaarde.length; i++) {
-                if (resultaat == (gegokteWaarde[i])) {
-                    //hier komt de winst
-                    console.log(`U heeft ${window.Bets[i]} ingezet op ${window.gegokteWaarde[i]} hierdoor wint u ${window.Bets[i] * 100} `)
-                    totaleWinst += window.Bets[i] * 100;
-                }
-                totaleInzet += window.Bets[i];
-            }
-
-            switch (window.gegokteKleur) {
-                case "":
-                    console.log("geen gok op kleur");
-                    break;
-                case "Rood":
-                    if (resultaat % 2 == 0) {
-                        console.log(`U heeft ${window.betOpKleur} ingezet op rood, hierdoor wint u ${window.betOpKleur * 10}`)
-                        totaleWinst += window.betOpKleur * 10;
-                    }
-                    else {
-                        console.log("het was zwart" + window.betOpKleur + "Verloren")
-                        totaleInzet += window.betOpKleur
-                    }
-                    break;
-                case "Zwart":
-                    if (resultaat % 2 != 0) {
-                        console.log(`U heeft ${window.betOpKleur} ingezet op zwart, hierdoor wint u ${window.betOpKleur * 10}`)
-                        totaleWinst += window.betOpKleur * 10;
-                    }
-                    else {
-                        console.log("het was rood" + window.betOpKleur + "Verloren")
-                        totaleInzet += window.betOpKleur
-                    }
-                    break;
-
-                // code block
-            }
-            $.ajax({
-                type: 'POST',
-                url: '/Games/SlotMachine',
-                data: { getal: totaleWinst - totaleInzet },
-                success: function (result) {
-                    blyats = result;
-                    document.getElementById("Blyats").value = blyats;
-                }
-            });
-
-            
-        }
-
-        function easeOut(t, b, c, d) {
-            var ts = (t /= d) * t;
-            var tc = ts * t;
-            return b + c * (tc + -3 * ts + 3 * t);
-        }
-
-        drawRouletteWheel();
-    })
-</script>
+        })
+    </script>
