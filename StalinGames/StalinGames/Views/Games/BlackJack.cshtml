@@ -32,22 +32,22 @@
         </div>
     </div>
     <div class="card-body" style="height: 7em; background-color: #702c2c">
-        <div class="img-inline" id="FotoDealer"></div>
+        <div class="img-inline" id="ImageDealer"></div>
     </div>
 </div>
-<div id="WaardeDealer">Dealer score: </div>
+<div id="valueDealer">Dealer score: </div>
 
 
-<div id="WaardeSpeler">Player score: </div>
+<div id="valuePlayer">Player score: </div>
 
 <div class="card mb-3  bg-white">
     <div class="card-body" style="height: 14em; background-color: #702c2c">
-        <div class="img-inline" id="FotoKaartSpeler">Player:</div>
+        <div class="img-inline" id="ImagePlayer">Player:</div>
     </div>
     <div class="card mb-3" style="display: flex;flex: auto;flex-direction: row;  background-color: #702c2c; height: 4em;">
-         <button class="btn bg-success" style="width: 17%; font-size:1.5em;color:white;" id="btnSpelerGetCard">Add card</button>
-        <button class="btn bg-danger" style="width: 15%; font-size:1.5em;color:white;" id="btnSpelerStop">Stop</button>
-        <button class="btn bg-warning" style="width: 25%;font-size:1.5em;color:white;" id="btnSpeelOpnieuw">New game</button>
+         <button class="btn bg-success" style="width: 17%; font-size:1.5em;color:white;" id="btnPlayerGetCard">Add card</button>
+        <button class="btn bg-danger" style="width: 15%; font-size:1.5em;color:white;" id="btnPlayerStop">Stop</button>
+        <button class="btn bg-warning" style="width: 25%;font-size:1.5em;color:white;" id="btnNewGame">New game</button>
         <input style="height: auto;" type="number" class="form-control" placeholder="0" id="Bet">
     </div>
 </div>
@@ -66,45 +66,45 @@
 
 
 
-        //Var die gebruikt wordt om totale waarde van kaarten te bereken
-        let totaleWaardeSpeler = 0;
-        let totaleWaardeDealer = 0;
+        //Var die gebruikt wordt om totale value van kaarten te bereken
+        let totalValuePlayer = 0;
+        let totalValueDealer = 0;
 
         //2 divs waar foto's ingestoken worden
-        let kaartDealer = document.querySelector("#FotoDealer");
-        let kaartSpeler = document.querySelector("#FotoKaartSpeler");
+        let cardDealer = document.querySelector("#ImageDealer");
+        let cardPlayer = document.querySelector("#ImagePlayer");
 
         //buttons
-        let btnSpelerGetCard = document.querySelector("#btnSpelerGetCard");
-        let btnSpelerStop = document.querySelector("#btnSpelerStop");
-        let btnSpeelOpnieuw = document.querySelector("#btnSpeelOpnieuw");
+        let btnPlayerGetCard = document.querySelector("#btnPlayerGetCard");
+        let btnPlayerStop = document.querySelector("#btnPlayerStop");
+        let btnNewGame = document.querySelector("#btnNewGame");
 
         //Eerste kaart van dealer
-        getCard(kaartDealer, "dealer")
+        getCard(cardDealer, "dealer")
 
-        //Button om kaart aan speler te geven
-        btnSpelerGetCard.addEventListener("click", function () {
-            getCard(kaartSpeler, "speler")
+        //Button om kaart aan player te geven
+        btnPlayerGetCard.addEventListener("click", function () {
+            getCard(cardPlayer, "player")
         });
 
-        //Button Stop van speler
-        btnSpelerStop.addEventListener("click", function () {
-            dealerSpeelt();
+        //Button Stop van player
+        btnPlayerStop.addEventListener("click", function () {
+            turnDealer();
         });
 
-        btnSpeelOpnieuw.addEventListener("click", function () {
+        btnNewGame.addEventListener("click", function () {
             location.reload();
         });
 
-        function dealerSpeelt() {
+        function turnDealer() {
             let betValue = document.getElementById("Bet").value;
-            while (totaleWaardeDealer <= totaleWaardeSpeler) {
-                getCard(kaartDealer, "dealer")
+            while (totalValueDealer <= totalValuePlayer) {
+                getCard(cardDealer, "dealer")
             }
-            if (totaleWaardeDealer <= 21) {
+            if (totalValueDealer <= 21) {
 
-                btnSpelerGetCard.disabled = true;
-                btnSpelerStop.disabled = true;
+                btnPlayerGetCard.disabled = true;
+                btnPlayerStop.disabled = true;
                 betValue = 0 - betValue;
                 document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(betValue) + " Blyats!";
 
@@ -113,14 +113,14 @@
 
                 betValue = Number(betValue) + (Number(betValue) * 1.5);
                  document.getElementById("Message").innerHTML = "Player wins! you win " + betValue + " Blyats!";
-                btnSpelerGetCard.disabled = true;
+                btnPlayerGetCard.disabled = true;
 
             }
-            btnSpeelOpnieuw.disabled = false;
+            btnNewGame.disabled = false;
             console.log(betValue);
             $.ajax({
                 type: 'POST',
-                url: '/Games/Blackjack',
+                url: '/Games/PlayGame',
                 data: { value: betValue },
                 success: function (result) {
                     betValue = result;
@@ -130,7 +130,7 @@
 
         }
 
-        function getCard(divFoto, soortSpeler) {
+        function getCard(divFoto, playerType) {
 
                 let betValue = Number(document.getElementById("Bet").value);
          if (betValue > Number(document.getElementById("Blyats").value)) {
@@ -148,50 +148,50 @@
              document.getElementById("Error").innerHTML = "";
         }
             let card;
-            //Haal random waarde uit array waardes
-            let waarde = values[Math.floor(Math.random() * values.length)].charAt(0)
+            //Haal random value uit array values
+            let value = values[Math.floor(Math.random() * values.length)].charAt(0)
             //Haal random symbool uit array symbols
             let symbool = suits[Math.floor(Math.random() * suits.length)].charAt(0)
 
             //Maak kaart
-            card = waarde + symbool;
+            card = value + symbool;
 
-            switch (waarde) {
+            switch (value) {
                 case "J":
-                    waarde = 11
+                    value = 11
                     break;
                 case "Q":
-                    waarde = 12
+                    value = 12
                     break;
                 case "K":
-                    waarde = 13
+                    value = 13
             }
-            if (soortSpeler == "speler") {
+            if (playerType == "player") {
 
                 document.getElementById("Bet").disabled = true;
-                btnSpeelOpnieuw.disabled = true;
-                totaleWaardeSpeler += parseInt(waarde);
+                btnNewGame.disabled = true;
+                totalValuePlayer += parseInt(value);
 
-                console.log(totaleWaardeSpeler);
+                console.log(totalValuePlayer);
                 let img = document.createElement("img");
                 img.setAttribute("src", `/images/Cards/${card}.jpg`);
                 img.classList.add("img-blackjack-player");
                 divFoto.appendChild(img);
 
-                document.querySelector("#WaardeSpeler").innerHTML = `Score speler: ${totaleWaardeSpeler}`;
-                if (totaleWaardeSpeler > 21) {
+                document.querySelector("#valuePlayer").innerHTML = `Score player: ${totalValuePlayer}`;
+                if (totalValuePlayer > 21) {
 
                     betValue = 0 - betValue;
                     document.getElementById("Message").innerHTML = "Dealer wins! you lose " + Math.abs(betValue) + " Blyats!";
-                    btnSpelerGetCard.disabled = true;
-                    btnSpelerStop.disabled = true;
-                    btnSpeelOpnieuw.disabled = false;
+                    btnPlayerGetCard.disabled = true;
+                    btnPlayerStop.disabled = true;
+                    btnNewGame.disabled = false;
 
 
 
                     $.ajax({
                         type: 'POST',
-                        url: '/Games/Blackjack',
+                        url: '/Games/PlayGame',
                         data: { value: betValue },
                         success: function (result) {
                             betValue = result;
@@ -200,16 +200,16 @@
                     });
                 }
             }
-            if (soortSpeler == "dealer") {
+            if (playerType == "dealer") {
 
-                console.log(totaleWaardeSpeler);
+                console.log(totalValuePlayer);
                 let img = document.createElement("img");
                 img.setAttribute("src", `/images/Cards/${card}.jpg`);
                 img.classList.add("img-blackjack-dealer");
                 divFoto.appendChild(img);
 
-                totaleWaardeDealer += parseInt(waarde);
-                document.querySelector("#WaardeDealer").innerHTML = `Score dealer: ${totaleWaardeDealer}`
+                totalValueDealer += parseInt(value);
+                document.querySelector("#valueDealer").innerHTML = `Score dealer: ${totalValueDealer}`
 
 
             }

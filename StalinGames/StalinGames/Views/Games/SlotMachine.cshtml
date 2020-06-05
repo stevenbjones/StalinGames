@@ -24,9 +24,9 @@
     </div>
     <div class="card mb-3  bg-white">
         <div class="card-body" style="height: 22em;">
-            <div class="img-inline" id="foto1"></div>
-            <div class="img-inline" id="foto2"></div>
-            <div class="img-inline" id="foto3"></div>
+            <div class="img-inline" id="image1"></div>
+            <div class="img-inline" id="image2"></div>
+            <div class="img-inline" id="image3"></div>
         </div>
     </div>
     <div class="card mb-3  bg-primary" style="display: flex;flex: auto;flex-direction: row;">
@@ -99,9 +99,9 @@
         let slotTwoValue = convertPercentageToValue(slotTwo);
         let slotThreeValue = convertPercentageToValue(slotThree);
 
-        let foto1 = document.querySelector("#foto1");
-        let foto2 = document.querySelector("#foto2");
-        let foto3 = document.querySelector("#foto3");
+        let image1 = document.querySelector("#image1");
+        let image2 = document.querySelector("#image2");
+        let image3 = document.querySelector("#image3");
 
        let cherriesUrl = "/images/WebsitePictures/GamesPictures/SlotMachine/cherries.png";
         let   heartUrl = "/images/WebsitePictures/GamesPictures/SlotMachine/heart.png";
@@ -111,9 +111,9 @@
         let sevenUrl = "/images/WebsitePictures/GamesPictures/SlotMachine/7.png";
         let barUrl = "/images/WebsitePictures/GamesPictures/SlotMachine/bar.png";
 
-        foto1.innerHTML = "";
-        foto2.innerHTML = "";
-        foto3.innerHTML = "";
+        image1.innerHTML = "";
+        image2.innerHTML = "";
+        image3.innerHTML = "";
 
         var dict = {
             "1": cherriesUrl,
@@ -128,17 +128,17 @@
         let img = document.createElement("img");
         img.setAttribute("src", `${dict[slotOneValue]}`);
         img.classList.add("img-slotmachine");
-        foto1.appendChild(img);
+        image1.appendChild(img);
 
         let img2 = document.createElement("img");
         img2.setAttribute("src", `${dict[slotTwoValue]}`);
         img2.classList.add("img-slotmachine");
-        foto2.appendChild(img2);
+        image2.appendChild(img2);
 
         let img3 = document.createElement("img");
         img3.setAttribute("src", `${dict[slotThreeValue]}`);
         img3.classList.add("img-slotmachine");
-        foto3.appendChild(img3);
+        image3.appendChild(img3);
 
         let message = document.getElementById("Message");
 
@@ -179,7 +179,7 @@
         let blyats = 0;
         $.ajax({
             type: 'POST',
-            url: '/Games/SlotMachine',
+            url: '/Games/PlayGame',
             data: { value: betValue },
             success: function (result) {
                blyats = result;
